@@ -1,0 +1,1073 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="ExpertSystemUnit/EclipseLink">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="2.6">
+    <schema id="1" name="expert_system">
+      <visible>1</visible>
+    </schema>
+    <schema id="2" name="information_schema"/>
+    <schema id="3" name="mysql"/>
+    <schema id="4" name="performance_schema"/>
+    <schema id="5" name="CityDiagnosisV2"/>
+    <schema id="6" name="city_diagnosis_v3"/>
+    <schema id="7" name="finance"/>
+    <schema id="8" name="gephi"/>
+    <schema id="9" name="irasdb"/>
+    <schema id="10" name="sonar"/>
+    <schema id="11" name="test"/>
+    <schema id="12" name="ZJ716"/>
+    <table id="13" parent="1" name="booster_mc"/>
+    <table id="14" parent="1" name="disc_caliper"/>
+    <table id="15" parent="1" name="disc_rotor"/>
+    <table id="16" parent="1" name="drum_caliper"/>
+    <table id="17" parent="1" name="drum_rotor"/>
+    <table id="18" parent="1" name="instance_lib"/>
+    <table id="19" parent="1" name="meta_calculate_list"/>
+    <table id="20" parent="1" name="model_process"/>
+    <table id="21" parent="1" name="model_process_list"/>
+    <table id="22" parent="1" name="pedal"/>
+    <table id="23" parent="1" name="privilege"/>
+    <table id="24" parent="1" name="role"/>
+    <table id="25" parent="1" name="role_prrivilege"/>
+    <table id="26" parent="1" name="units"/>
+    <table id="27" parent="1" name="user"/>
+    <table id="28" parent="1" name="vehicle"/>
+    <table id="29" parent="1" name="basic_vehicle"/>
+    <table id="30" parent="1" name="configuration"/>
+    <table id="31" parent="1" name="basic_apply"/>
+    <table id="32" parent="1" name="basic_control"/>
+    <table id="33" parent="1" name="basic_disc_brake"/>
+    <table id="34" parent="1" name="basic_drum_brake"/>
+    <table id="35" parent="1" name="basic_tire_wheel"/>
+    <column id="36" parent="13" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="37" parent="13" name="apply_vw">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="38" parent="13" name="bst_size">
+      <comment>Booster size</comment>
+      <data-type>double|0</data-type>
+    </column>
+    <column id="39" parent="13" name="bst_gain">
+      <comment>Booster Gain</comment>
+      <data-type>double|0</data-type>
+    </column>
+    <column id="40" parent="13" name="bst_F_total">
+      <comment>Total Booster Force</comment>
+      <data-type>double|0</data-type>
+    </column>
+    <column id="41" parent="13" name="bst_F_eff">
+      <comment>Booster Force Efficiency</comment>
+      <data-type>double|0</data-type>
+    </column>
+    <column id="42" parent="13" name="bst_T_eff">
+      <comment>Booster Travel Efficiency</comment>
+      <data-type>double|0</data-type>
+    </column>
+    <column id="43" parent="13" name="bst_F_ls_np">
+      <comment>Force Loss – No Power</comment>
+      <data-type>double|0</data-type>
+    </column>
+    <column id="44" parent="13" name="bst_F_ls_wp">
+      <comment>Force Loss – with Power</comment>
+      <data-type>double|0</data-type>
+    </column>
+    <column id="45" parent="13" name="bst_F_jmp">
+      <comment>Jump in Force</comment>
+      <data-type>double|0</data-type>
+    </column>
+    <column id="46" parent="13" name="bst_T_ls">
+      <comment>Travel Loss</comment>
+      <data-type>double|0</data-type>
+    </column>
+    <column id="47" parent="13" name="mcd_d">
+      <comment>mcd Bore Diameter</comment>
+      <data-type>double|0</data-type>
+    </column>
+    <column id="48" parent="13" name="mcd_travel">
+      <comment>mcd Travel Efficiency</comment>
+      <data-type>double|0</data-type>
+    </column>
+    <column id="49" parent="13" name="bst_mc_spl">
+      <comment>Master Cylinder Supplier</comment>
+      <data-type>varchar(100)|0</data-type>
+    </column>
+    <key id="50" parent="13" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="51" parent="14" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="52" parent="14" name="discC_ID">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="53" parent="14" name="apply_vw">
+      <data-type>text|0</data-type>
+    </column>
+    <column id="54" parent="14" name="clp_type">
+      <comment>Caliper Type</comment>
+      <data-type>varchar(100)|0</data-type>
+    </column>
+    <column id="55" parent="14" name="pst_d">
+      <comment>Caliper Piston Diameter</comment>
+      <data-type>double|0</data-type>
+    </column>
+    <column id="56" parent="14" name="pst_num">
+      <comment># of Piston per Caliper</comment>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="57" parent="14" name="hf_P">
+      <comment>Caliper hold off Pressure</comment>
+      <data-type>double|0</data-type>
+    </column>
+    <column id="58" parent="14" name="PVcurve">
+      <comment>Caliper PV curve</comment>
+      <data-type>varchar(200)|0</data-type>
+    </column>
+    <column id="59" parent="14" name="lin_mu">
+      <comment>Post-bunished lining mu</comment>
+      <data-type>double|0</data-type>
+    </column>
+    <column id="60" parent="14" name="lin_wear_lim">
+      <comment>Lining Wear Limit</comment>
+      <data-type>double|0</data-type>
+    </column>
+    <column id="61" parent="14" name="lin_mat">
+      <comment>Lining Material</comment>
+      <data-type>varchar(200)|0</data-type>
+    </column>
+    <key id="62" parent="14" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="63" parent="15" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="64" parent="15" name="discR_ID">
+      <data-type>text|0</data-type>
+    </column>
+    <column id="65" parent="15" name="apply_vw">
+      <data-type>text|0</data-type>
+    </column>
+    <column id="66" parent="15" name="rt_type">
+      <comment>Rotor Type</comment>
+      <data-type>varchar(200)|0</data-type>
+    </column>
+    <column id="67" parent="15" name="rt_efc_r">
+      <comment>Rotor Effective Radius</comment>
+      <data-type>double|0</data-type>
+    </column>
+    <column id="68" parent="15" name="rt_dia_out">
+      <comment>Rotor Outer Diameter</comment>
+      <data-type>double|0</data-type>
+    </column>
+    <column id="69" parent="15" name="rt_mat">
+      <comment>Rotor Manufacturer</comment>
+      <data-type>varchar(100)|0</data-type>
+    </column>
+    <key id="70" parent="15" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="71" parent="16" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="72" parent="16" name="drumC_ID">
+      <data-type>text|0</data-type>
+    </column>
+    <column id="73" parent="16" name="apply_vw">
+      <data-type>text|0</data-type>
+    </column>
+    <column id="74" parent="16" name="clp_type">
+      <comment>Caliper Type</comment>
+      <data-type>varchar(100)|0</data-type>
+    </column>
+    <column id="75" parent="16" name="pst_d">
+      <comment>Caliper Piston Diameter</comment>
+      <data-type>double|0</data-type>
+    </column>
+    <column id="76" parent="16" name="pst_num">
+      <comment># of Piston per Caliper</comment>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="77" parent="16" name="hf_P">
+      <comment>Caliper hold off Pressure</comment>
+      <data-type>double|0</data-type>
+    </column>
+    <column id="78" parent="16" name="PVcurve">
+      <comment>Caliper PV curve</comment>
+      <data-type>varchar(200)|0</data-type>
+    </column>
+    <column id="79" parent="16" name="lin_mu">
+      <comment>Post-bunished lining mu</comment>
+      <data-type>double|0</data-type>
+    </column>
+    <column id="80" parent="16" name="lin_wear_lim">
+      <comment>Lining Wear Limit</comment>
+      <data-type>text|0</data-type>
+    </column>
+    <column id="81" parent="16" name="lin_mat">
+      <comment>Lining Material</comment>
+      <data-type>varchar(100)|0</data-type>
+    </column>
+    <key id="82" parent="16" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="83" parent="17" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="84" parent="17" name="drumR_ID">
+      <data-type>text|0</data-type>
+    </column>
+    <column id="85" parent="17" name="apply_vw">
+      <data-type>text|0</data-type>
+    </column>
+    <column id="86" parent="17" name="rt_type">
+      <comment>Rotor Type</comment>
+      <data-type>varchar(100)|0</data-type>
+    </column>
+    <column id="87" parent="17" name="rt_efc_r">
+      <comment>Rotor Effective Radius</comment>
+      <data-type>double|0</data-type>
+    </column>
+    <column id="88" parent="17" name="rt_dia_out">
+      <data-type>text|0</data-type>
+    </column>
+    <column id="89" parent="17" name="rt_mat">
+      <comment>Rotor Manufacturer</comment>
+      <data-type>varchar(100)|0</data-type>
+    </column>
+    <key id="90" parent="17" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="91" parent="18" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+      <sequence-identity>1</sequence-identity>
+    </column>
+    <column id="92" parent="18" name="w">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="93" parent="18" name="hg">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="94" parent="18" name="wr">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="95" parent="18" name="car_L">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="96" parent="18" name="car_slr">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="97" parent="18" name="frtCaliper">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="98" parent="18" name="frtRotor">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="99" parent="18" name="rrCaliper">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="100" parent="18" name="rrRotor">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="101" parent="18" name="bst_mc">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="102" parent="18" name="ped">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="103" parent="18" name="user_id">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="104" parent="18" name="gene_time">
+      <mandatory>1</mandatory>
+      <data-type>timestamp|0</data-type>
+      <default-expression>CURRENT_TIMESTAMP</default-expression>
+    </column>
+    <column id="105" parent="18" name="eva_id">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="106" parent="18" name="type">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <key id="107" parent="18" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="108" parent="19" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="109" parent="19" name="desc">
+      <data-type>varchar(200)|0</data-type>
+    </column>
+    <column id="110" parent="19" name="invoke_desc_json">
+      <data-type>text|0</data-type>
+    </column>
+    <key id="111" parent="19" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="112" parent="20" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="113" parent="20" name="input_json">
+      <data-type>text|0</data-type>
+    </column>
+    <column id="114" parent="20" name="output_json">
+      <data-type>text|0</data-type>
+    </column>
+    <column id="115" parent="20" name="meta_cal_id">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <key id="116" parent="20" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="117" parent="21" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="118" parent="21" name="process_json">
+      <data-type>text|0</data-type>
+    </column>
+    <column id="119" parent="21" name="process_dec">
+      <data-type>varchar(200)|0</data-type>
+    </column>
+    <key id="120" parent="21" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="121" parent="22" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="122" parent="22" name="ped_type">
+      <comment>0为定踏板比，1为变踏板比</comment>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="123" parent="22" name="ped_ratio">
+      <comment>Pedal Ratio</comment>
+      <data-type>double|0</data-type>
+    </column>
+    <column id="124" parent="22" name="ped_F_eff">
+      <comment>Pedal Force Efficiency</comment>
+      <data-type>double|0</data-type>
+    </column>
+    <column id="125" parent="22" name="ped_T_eff">
+      <comment>Pedal Travel Efficiency</comment>
+      <data-type>double|0</data-type>
+    </column>
+    <column id="126" parent="22" name="ped_spl">
+      <comment>Pedal Supplier</comment>
+      <data-type>varchar(100)|0</data-type>
+    </column>
+    <key id="127" parent="22" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="128" parent="23" name="privilege_id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+      <default-expression>&apos;0&apos;</default-expression>
+    </column>
+    <column id="129" parent="23" name="privilege_name">
+      <data-type>varchar(60)|0</data-type>
+    </column>
+    <column id="130" parent="23" name="comment">
+      <data-type>text|0</data-type>
+    </column>
+    <key id="131" parent="23" name="PRIMARY">
+      <columns>privilege_id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="132" parent="24" name="role_id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+      <default-expression>&apos;0&apos;</default-expression>
+    </column>
+    <column id="133" parent="24" name="role_name">
+      <data-type>varchar(60)|0</data-type>
+    </column>
+    <column id="134" parent="24" name="comment">
+      <data-type>text|0</data-type>
+    </column>
+    <key id="135" parent="24" name="PRIMARY">
+      <columns>role_id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="136" parent="25" name="role_id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+      <default-expression>&apos;0&apos;</default-expression>
+    </column>
+    <column id="137" parent="25" name="privilege_id">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <key id="138" parent="25" name="PRIMARY">
+      <columns>role_id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="139" parent="26" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+      <sequence-identity>1</sequence-identity>
+    </column>
+    <column id="140" parent="26" name="attri_name">
+      <data-type>varchar(60)|0</data-type>
+    </column>
+    <column id="141" parent="26" name="unit_name">
+      <data-type>varchar(100)|0</data-type>
+    </column>
+    <key id="142" parent="26" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="143" parent="27" name="user_id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+      <sequence-identity>1</sequence-identity>
+    </column>
+    <column id="144" parent="27" name="user_name">
+      <data-type>varchar(60)|0</data-type>
+    </column>
+    <column id="145" parent="27" name="gender">
+      <data-type>varchar(30)|0</data-type>
+    </column>
+    <column id="146" parent="27" name="password">
+      <data-type>varchar(200)|0</data-type>
+    </column>
+    <column id="147" parent="27" name="mobile_num">
+      <data-type>varchar(40)|0</data-type>
+    </column>
+    <column id="148" parent="27" name="role_id">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <key id="149" parent="27" name="PRIMARY">
+      <columns>user_id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="150" parent="28" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="151" parent="28" name="car_MY">
+      <comment>Year</comment>
+      <data-type>varchar(60)|0</data-type>
+    </column>
+    <column id="152" parent="28" name="lvw_w">
+      <comment>LLVW</comment>
+      <data-type>double|0</data-type>
+    </column>
+    <column id="153" parent="28" name="lvw_hg">
+      <comment>CG Height</comment>
+      <data-type>double|0</data-type>
+    </column>
+    <column id="154" parent="28" name="lvw_wr">
+      <comment>Front %</comment>
+      <data-type>double|0</data-type>
+    </column>
+    <column id="155" parent="28" name="gvw_w">
+      <comment>GVW</comment>
+      <data-type>double|0</data-type>
+    </column>
+    <column id="156" parent="28" name="gvw_hg">
+      <comment>CG Height</comment>
+      <data-type>double|0</data-type>
+    </column>
+    <column id="157" parent="28" name="gvw_wr">
+      <comment>Front %</comment>
+      <data-type>double|0</data-type>
+    </column>
+    <column id="158" parent="28" name="car_L">
+      <comment>Wheelbase Length</comment>
+      <data-type>double|0</data-type>
+    </column>
+    <column id="159" parent="28" name="car_slr">
+      <comment>Tire Static Loaded Radius</comment>
+      <data-type>double|0</data-type>
+    </column>
+    <column id="160" parent="28" name="frtCaliper">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="161" parent="28" name="frtRotor">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="162" parent="28" name="rrCaliper">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="163" parent="28" name="rrRotor">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="164" parent="28" name="bst_mc">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="165" parent="28" name="ped">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <key id="166" parent="28" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="167" parent="29" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+      <sequence-identity>1</sequence-identity>
+    </column>
+    <column id="168" parent="29" name="description">
+      <data-type>text|0</data-type>
+    </column>
+    <column id="169" parent="29" name="carModel">
+      <data-type>varchar(128)|0</data-type>
+    </column>
+    <column id="170" parent="29" name="carYear">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="171" parent="29" name="carDA">
+      <data-type>varchar(128)|0</data-type>
+    </column>
+    <column id="172" parent="29" name="carAddInfo">
+      <data-type>varchar(128)|0</data-type>
+    </column>
+    <column id="173" parent="29" name="lvw_m">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="174" parent="29" name="lvw_frt_r">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="175" parent="29" name="lvw_cgh">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="176" parent="29" name="gvw_m">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="177" parent="29" name="gvw_frt_r">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="178" parent="29" name="gvw_cgh">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="179" parent="29" name="L">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="180" parent="29" name="vmax">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="181" parent="29" name="coast_decel">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="182" parent="29" name="Cd">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="183" parent="29" name="A">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="184" parent="29" name="notes">
+      <data-type>text|0</data-type>
+    </column>
+    <key id="185" parent="29" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="186" parent="30" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+      <sequence-identity>1</sequence-identity>
+    </column>
+    <column id="187" parent="30" name="description">
+      <data-type>varchar(200)|0</data-type>
+    </column>
+    <column id="188" parent="30" name="vehicle_desc">
+      <data-type>varchar(200)|0</data-type>
+    </column>
+    <column id="189" parent="30" name="front_corner_desc">
+      <data-type>varchar(200)|0</data-type>
+    </column>
+    <column id="190" parent="30" name="rear_corner_desc">
+      <data-type>varchar(200)|0</data-type>
+    </column>
+    <column id="191" parent="30" name="pedal_desc">
+      <data-type>varchar(200)|0</data-type>
+    </column>
+    <column id="192" parent="30" name="ABS_contral_vave_desc">
+      <data-type>varchar(200)|0</data-type>
+    </column>
+    <column id="193" parent="30" name="master_cylinder_desc">
+      <data-type>varchar(200)|0</data-type>
+    </column>
+    <column id="194" parent="30" name="booster_desc">
+      <data-type>varchar(200)|0</data-type>
+    </column>
+    <column id="195" parent="30" name="rear_corner_num">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="196" parent="30" name="front_corner_num">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="197" parent="30" name="note">
+      <data-type>text|0</data-type>
+    </column>
+    <key id="198" parent="30" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="199" parent="31" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+      <sequence-identity>1</sequence-identity>
+    </column>
+    <column id="200" parent="31" name="description">
+      <data-type>text|0</data-type>
+    </column>
+    <column id="201" parent="31" name="ped_ratio">
+      <data-type>text|0</data-type>
+    </column>
+    <column id="202" parent="31" name="ped_F_eff">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="203" parent="31" name="ped_T_eff">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="204" parent="31" name="ped_type">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="205" parent="31" name="bst_size">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="206" parent="31" name="bst_gain">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="207" parent="31" name="bst_F_total">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="208" parent="31" name="bst_F_eff">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="209" parent="31" name="bst_T_eff">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="210" parent="31" name="bst_F_ls_np">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="211" parent="31" name="bst_F_ls_wp">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="212" parent="31" name="bst_F_jmp">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="213" parent="31" name="bst_T_ls">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="214" parent="31" name="bst_vcm">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="215" parent="31" name="alt_bst_vcm">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="216" parent="31" name="mcd_d">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="217" parent="31" name="mcd_F_eff">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="218" parent="31" name="mcd_T_eff">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="219" parent="31" name="apy_F_eff">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="220" parent="31" name="apy_T_eff">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="221" parent="31" name="notes">
+      <data-type>text|0</data-type>
+    </column>
+    <key id="222" parent="31" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="223" parent="32" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+      <sequence-identity>1</sequence-identity>
+    </column>
+    <column id="224" parent="32" name="description">
+      <data-type>text|0</data-type>
+    </column>
+    <column id="225" parent="32" name="eff_abs_frt">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="226" parent="32" name="eff_abs_rr">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="227" parent="32" name="peak_tire">
+      <data-type>varchar(128)|0</data-type>
+    </column>
+    <column id="228" parent="32" name="eff_drive">
+      <data-type>varchar(128)|0</data-type>
+    </column>
+    <column id="229" parent="32" name="notes">
+      <data-type>text|0</data-type>
+    </column>
+    <key id="230" parent="32" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="231" parent="33" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+      <sequence-identity>1</sequence-identity>
+    </column>
+    <column id="232" parent="33" name="description">
+      <data-type>text|0</data-type>
+    </column>
+    <column id="233" parent="33" name="pst_d">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="234" parent="33" name="pst_num">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="235" parent="33" name="pst_area">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="236" parent="33" name="hf_P">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="237" parent="33" name="PVcurve">
+      <data-type>text|0</data-type>
+    </column>
+    <column id="238" parent="33" name="PV_k">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="239" parent="33" name="PV_b">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="240" parent="33" name="PV_c">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="241" parent="33" name="lin_mat">
+      <data-type>varchar(128)|0</data-type>
+    </column>
+    <column id="242" parent="33" name="lin_mu">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="243" parent="33" name="lin_mu_k">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="244" parent="33" name="lin_mu_e">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="245" parent="33" name="lin_mu_np">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="246" parent="33" name="lin_area">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="247" parent="33" name="lin_wear_lim">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="248" parent="33" name="frt_rt_temp_in">
+      <data-type>text|0</data-type>
+    </column>
+    <column id="249" parent="33" name="frt_lin_wear_out">
+      <data-type>text|0</data-type>
+    </column>
+    <column id="250" parent="33" name="frt_lin_frict_out">
+      <data-type>text|0</data-type>
+    </column>
+    <column id="251" parent="33" name="per_corner">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="252" parent="33" name="rt_type_V">
+      <data-type>varchar(128)|0</data-type>
+    </column>
+    <column id="253" parent="33" name="rt_swp_area_V">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="254" parent="33" name="rt_efc_r_V">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="255" parent="33" name="rt_dia_out_V">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="256" parent="33" name="rt_dia_in_V">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="257" parent="33" name="rt_in_ck_t_V">
+      <data-type>text|0</data-type>
+    </column>
+    <column id="258" parent="33" name="rt_out_ck_t_V">
+      <data-type>text|0</data-type>
+    </column>
+    <column id="259" parent="33" name="rt_t_V">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="260" parent="33" name="rt_van_num_V">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="261" parent="33" name="rt_van_len_V">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="262" parent="33" name="rt_vane_high_V">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="263" parent="33" name="rt_van_t_V">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="264" parent="33" name="rt_wm_V">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="265" parent="33" name="rt_wa_V">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="266" parent="33" name="rho_V">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="267" parent="33" name="CC_50_V">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="268" parent="33" name="CC_80_V">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="269" parent="33" name="CVR_50_V">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="270" parent="33" name="CVR_80_V">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="271" parent="33" name="rt_temp_in_V">
+      <data-type>text|0</data-type>
+    </column>
+    <column id="272" parent="33" name="rt_spec_out_V">
+      <data-type>text|0</data-type>
+    </column>
+    <column id="273" parent="33" name="rt_type_S">
+      <data-type>varchar(128)|0</data-type>
+    </column>
+    <column id="274" parent="33" name="rt_swp_area_S">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="275" parent="33" name="rt_efc_r_S">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="276" parent="33" name="rt_dia_out_S">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="277" parent="33" name="rt_dia_in_S">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="278" parent="33" name="rt_t_S">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="279" parent="33" name="rt_wm_S">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="280" parent="33" name="rt_wa_S">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="281" parent="33" name="rho_S">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="282" parent="33" name="CC_50_S">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="283" parent="33" name="CC_80_S">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="284" parent="33" name="CVR_50_S">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="285" parent="33" name="CVR_80_S">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="286" parent="33" name="rt_temp_in_S">
+      <data-type>text|0</data-type>
+    </column>
+    <column id="287" parent="33" name="rt_spec_out_S">
+      <data-type>text|0</data-type>
+    </column>
+    <column id="288" parent="33" name="notes">
+      <data-type>text|0</data-type>
+    </column>
+    <key id="289" parent="33" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="290" parent="34" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+      <sequence-identity>1</sequence-identity>
+    </column>
+    <column id="291" parent="34" name="description">
+      <data-type>text|0</data-type>
+    </column>
+    <column id="292" parent="34" name="C_dia">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="293" parent="34" name="Pst_num">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="294" parent="34" name="Pst_area">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="295" parent="34" name="C_hp">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="296" parent="34" name="PVcurve">
+      <data-type>text|0</data-type>
+    </column>
+    <column id="297" parent="34" name="PV_k">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="298" parent="34" name="PV_b">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="299" parent="34" name="PV_c">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="300" parent="34" name="lin_mat">
+      <data-type>varchar(128)|0</data-type>
+    </column>
+    <column id="301" parent="34" name="lin_mu">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="302" parent="34" name="lin_mu_k">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="303" parent="34" name="lin_mu_e">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="304" parent="34" name="lin_mu_np">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="305" parent="34" name="lin_area">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="306" parent="34" name="lin_wear_lim">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="307" parent="34" name="frt_rt_temp_in">
+      <data-type>text|0</data-type>
+    </column>
+    <column id="308" parent="34" name="frt_lin_wear_out">
+      <data-type>text|0</data-type>
+    </column>
+    <column id="309" parent="34" name="frt_lin_frict_out">
+      <data-type>text|0</data-type>
+    </column>
+    <column id="310" parent="34" name="per_corner">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="311" parent="34" name="rt_type">
+      <data-type>varchar(128)|0</data-type>
+    </column>
+    <column id="312" parent="34" name="rt_efc_r">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="313" parent="34" name="Od_dm">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="314" parent="34" name="Id_dm">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="315" parent="34" name="Th_dm">
+      <data-type>text|0</data-type>
+    </column>
+    <column id="316" parent="34" name="Wd_dm">
+      <data-type>text|0</data-type>
+    </column>
+    <column id="317" parent="34" name="Jth_dm">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="318" parent="34" name="rt_vane_high">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="319" parent="34" name="rt_wm">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="320" parent="34" name="rt_wa">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="321" parent="34" name="rho">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="322" parent="34" name="CC_50">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="323" parent="34" name="CC_80">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="324" parent="34" name="CVR_50">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="325" parent="34" name="CVR_80">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="326" parent="34" name="rt_temp_in">
+      <data-type>text|0</data-type>
+    </column>
+    <column id="327" parent="34" name="rt_spec_out">
+      <data-type>text|0</data-type>
+    </column>
+    <column id="328" parent="34" name="notes">
+      <data-type>text|0</data-type>
+    </column>
+    <key id="329" parent="34" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="330" parent="35" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+      <sequence-identity>1</sequence-identity>
+    </column>
+    <column id="331" parent="35" name="description">
+      <data-type>text|0</data-type>
+    </column>
+    <column id="332" parent="35" name="lvw_tr_frt">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="333" parent="35" name="lvw_tr_rr">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="334" parent="35" name="gvw_tr_frt">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="335" parent="35" name="gvw_tr_rr">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="336" parent="35" name="peak_adhes_long">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="337" parent="35" name="peak_adhes_lat">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="338" parent="35" name="trac_coeff">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="339" parent="35" name="s">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="340" parent="35" name="F_R">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="341" parent="35" name="notes">
+      <data-type>text|0</data-type>
+    </column>
+    <key id="342" parent="35" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+  </database-model>
+</dataSource>
