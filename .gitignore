@@ -1,0 +1,7 @@
+*.class
+ExpertSystem.iml
+*.jar
+*.war
+*.ear
+.DS_Store
+.idea/*
