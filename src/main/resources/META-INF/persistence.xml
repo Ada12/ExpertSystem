@@ -27,10 +27,10 @@
         <class>entity.BasicDrumBrakeEntity</class>
         <class>entity.BasicTireWheelEntity</class>
         <properties>
-            <property name="eclipselink.jdbc.url" value="jdbc:mysql://localhost:3306/expert_system"/>
+            <property name="eclipselink.jdbc.url" value="jdbc:mysql://180.169.165.19:3306/expert_system"/>
             <property name="eclipselink.jdbc.driver" value="com.mysql.jdbc.Driver"/>
             <property name="eclipselink.jdbc.user" value="root"/>
-            <property name="eclipselink.jdbc.password" value="508805"/>
+            <property name="eclipselink.jdbc.password" value="Tongji@123456"/>
         </properties>
     </persistence-unit>
 </persistence>

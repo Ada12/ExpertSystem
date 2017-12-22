@@ -143,18 +143,11 @@
             <systemPath>${project.basedir}/lib/main.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>manual-test</groupId>
+            <groupId>manual-external</groupId>
             <artifactId>self1</artifactId>
             <version>1</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/testMain.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>manual-print</groupId>
-            <artifactId>self2</artifactId>
-            <version>1</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/testPrint.jar</systemPath>
+            <systemPath>${project.basedir}/lib/ExternalMatlab.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.mathworks.toolbox</groupId>
