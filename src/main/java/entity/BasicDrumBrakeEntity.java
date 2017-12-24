@@ -3,7 +3,7 @@ package entity;
 import javax.persistence.*;
 
 /**
- * Created by yangchen on 17/11/18.
+ * Created by yangchen on 17/12/23.
  */
 @Entity
 @Table(name = "basic_drum_brake", schema = "expert_system", catalog = "")
@@ -28,28 +28,14 @@ public class BasicDrumBrakeEntity {
     private String frtRtTempIn;
     private String frtLinWearOut;
     private String frtLinFrictOut;
-    private Double perCorner;
+    private Double inPerCorner;
     private String rtType;
-    private Double rtEfcR;
-    private Double odDm;
-    private Double idDm;
-    private String thDm;
-    private String wdDm;
-    private Double jthDm;
-    private Double rtVaneHigh;
-    private Double rtWm;
-    private Double rtWa;
-    private Double rho;
-    private Double cc50;
-    private Double cc80;
-    private Double cvr50;
-    private Double cvr80;
-    private String rtTempIn;
-    private String rtSpecOut;
+    private Integer rtId;
     private String notes;
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     public int getId() {
         return id;
     }
@@ -249,13 +235,13 @@ public class BasicDrumBrakeEntity {
     }
 
     @Basic
-    @Column(name = "per_corner")
-    public Double getPerCorner() {
-        return perCorner;
+    @Column(name = "in_per_corner")
+    public Double getInPerCorner() {
+        return inPerCorner;
     }
 
-    public void setPerCorner(Double perCorner) {
-        this.perCorner = perCorner;
+    public void setInPerCorner(Double inPerCorner) {
+        this.inPerCorner = inPerCorner;
     }
 
     @Basic
@@ -269,163 +255,13 @@ public class BasicDrumBrakeEntity {
     }
 
     @Basic
-    @Column(name = "rt_efc_r")
-    public Double getRtEfcR() {
-        return rtEfcR;
+    @Column(name = "rt_id")
+    public Integer getRtId() {
+        return rtId;
     }
 
-    public void setRtEfcR(Double rtEfcR) {
-        this.rtEfcR = rtEfcR;
-    }
-
-    @Basic
-    @Column(name = "Od_dm")
-    public Double getOdDm() {
-        return odDm;
-    }
-
-    public void setOdDm(Double odDm) {
-        this.odDm = odDm;
-    }
-
-    @Basic
-    @Column(name = "Id_dm")
-    public Double getIdDm() {
-        return idDm;
-    }
-
-    public void setIdDm(Double idDm) {
-        this.idDm = idDm;
-    }
-
-    @Basic
-    @Column(name = "Th_dm")
-    public String getThDm() {
-        return thDm;
-    }
-
-    public void setThDm(String thDm) {
-        this.thDm = thDm;
-    }
-
-    @Basic
-    @Column(name = "Wd_dm")
-    public String getWdDm() {
-        return wdDm;
-    }
-
-    public void setWdDm(String wdDm) {
-        this.wdDm = wdDm;
-    }
-
-    @Basic
-    @Column(name = "Jth_dm")
-    public Double getJthDm() {
-        return jthDm;
-    }
-
-    public void setJthDm(Double jthDm) {
-        this.jthDm = jthDm;
-    }
-
-    @Basic
-    @Column(name = "rt_vane_high")
-    public Double getRtVaneHigh() {
-        return rtVaneHigh;
-    }
-
-    public void setRtVaneHigh(Double rtVaneHigh) {
-        this.rtVaneHigh = rtVaneHigh;
-    }
-
-    @Basic
-    @Column(name = "rt_wm")
-    public Double getRtWm() {
-        return rtWm;
-    }
-
-    public void setRtWm(Double rtWm) {
-        this.rtWm = rtWm;
-    }
-
-    @Basic
-    @Column(name = "rt_wa")
-    public Double getRtWa() {
-        return rtWa;
-    }
-
-    public void setRtWa(Double rtWa) {
-        this.rtWa = rtWa;
-    }
-
-    @Basic
-    @Column(name = "rho")
-    public Double getRho() {
-        return rho;
-    }
-
-    public void setRho(Double rho) {
-        this.rho = rho;
-    }
-
-    @Basic
-    @Column(name = "CC_50")
-    public Double getCc50() {
-        return cc50;
-    }
-
-    public void setCc50(Double cc50) {
-        this.cc50 = cc50;
-    }
-
-    @Basic
-    @Column(name = "CC_80")
-    public Double getCc80() {
-        return cc80;
-    }
-
-    public void setCc80(Double cc80) {
-        this.cc80 = cc80;
-    }
-
-    @Basic
-    @Column(name = "CVR_50")
-    public Double getCvr50() {
-        return cvr50;
-    }
-
-    public void setCvr50(Double cvr50) {
-        this.cvr50 = cvr50;
-    }
-
-    @Basic
-    @Column(name = "CVR_80")
-    public Double getCvr80() {
-        return cvr80;
-    }
-
-    public void setCvr80(Double cvr80) {
-        this.cvr80 = cvr80;
-    }
-
-    @Basic
-    @Column(name = "rt_temp_in")
-    public String getRtTempIn() {
-        return rtTempIn;
-    }
-
-    public void setRtTempIn(String rtTempIn) {
-        this.rtTempIn = rtTempIn;
-    }
-
-    @Basic
-    @Column(name = "rt_spec_out")
-    public String getRtSpecOut() {
-        return rtSpecOut;
-    }
-
-    public void setRtSpecOut(String rtSpecOut) {
-        this.rtSpecOut = rtSpecOut;
+    public void setRtId(Integer rtId) {
+        this.rtId = rtId;
     }
 
     @Basic
@@ -467,24 +303,9 @@ public class BasicDrumBrakeEntity {
             return false;
         if (frtLinFrictOut != null ? !frtLinFrictOut.equals(that.frtLinFrictOut) : that.frtLinFrictOut != null)
             return false;
-        if (perCorner != null ? !perCorner.equals(that.perCorner) : that.perCorner != null) return false;
+        if (inPerCorner != null ? !inPerCorner.equals(that.inPerCorner) : that.inPerCorner != null) return false;
         if (rtType != null ? !rtType.equals(that.rtType) : that.rtType != null) return false;
-        if (rtEfcR != null ? !rtEfcR.equals(that.rtEfcR) : that.rtEfcR != null) return false;
-        if (odDm != null ? !odDm.equals(that.odDm) : that.odDm != null) return false;
-        if (idDm != null ? !idDm.equals(that.idDm) : that.idDm != null) return false;
-        if (thDm != null ? !thDm.equals(that.thDm) : that.thDm != null) return false;
-        if (wdDm != null ? !wdDm.equals(that.wdDm) : that.wdDm != null) return false;
-        if (jthDm != null ? !jthDm.equals(that.jthDm) : that.jthDm != null) return false;
-        if (rtVaneHigh != null ? !rtVaneHigh.equals(that.rtVaneHigh) : that.rtVaneHigh != null) return false;
-        if (rtWm != null ? !rtWm.equals(that.rtWm) : that.rtWm != null) return false;
-        if (rtWa != null ? !rtWa.equals(that.rtWa) : that.rtWa != null) return false;
-        if (rho != null ? !rho.equals(that.rho) : that.rho != null) return false;
-        if (cc50 != null ? !cc50.equals(that.cc50) : that.cc50 != null) return false;
-        if (cc80 != null ? !cc80.equals(that.cc80) : that.cc80 != null) return false;
-        if (cvr50 != null ? !cvr50.equals(that.cvr50) : that.cvr50 != null) return false;
-        if (cvr80 != null ? !cvr80.equals(that.cvr80) : that.cvr80 != null) return false;
-        if (rtTempIn != null ? !rtTempIn.equals(that.rtTempIn) : that.rtTempIn != null) return false;
-        if (rtSpecOut != null ? !rtSpecOut.equals(that.rtSpecOut) : that.rtSpecOut != null) return false;
+        if (rtId != null ? !rtId.equals(that.rtId) : that.rtId != null) return false;
         if (notes != null ? !notes.equals(that.notes) : that.notes != null) return false;
 
         return true;
@@ -512,24 +333,9 @@ public class BasicDrumBrakeEntity {
         result = 31 * result + (frtRtTempIn != null ? frtRtTempIn.hashCode() : 0);
         result = 31 * result + (frtLinWearOut != null ? frtLinWearOut.hashCode() : 0);
         result = 31 * result + (frtLinFrictOut != null ? frtLinFrictOut.hashCode() : 0);
-        result = 31 * result + (perCorner != null ? perCorner.hashCode() : 0);
+        result = 31 * result + (inPerCorner != null ? inPerCorner.hashCode() : 0);
         result = 31 * result + (rtType != null ? rtType.hashCode() : 0);
-        result = 31 * result + (rtEfcR != null ? rtEfcR.hashCode() : 0);
-        result = 31 * result + (odDm != null ? odDm.hashCode() : 0);
-        result = 31 * result + (idDm != null ? idDm.hashCode() : 0);
-        result = 31 * result + (thDm != null ? thDm.hashCode() : 0);
-        result = 31 * result + (wdDm != null ? wdDm.hashCode() : 0);
-        result = 31 * result + (jthDm != null ? jthDm.hashCode() : 0);
-        result = 31 * result + (rtVaneHigh != null ? rtVaneHigh.hashCode() : 0);
-        result = 31 * result + (rtWm != null ? rtWm.hashCode() : 0);
-        result = 31 * result + (rtWa != null ? rtWa.hashCode() : 0);
-        result = 31 * result + (rho != null ? rho.hashCode() : 0);
-        result = 31 * result + (cc50 != null ? cc50.hashCode() : 0);
-        result = 31 * result + (cc80 != null ? cc80.hashCode() : 0);
-        result = 31 * result + (cvr50 != null ? cvr50.hashCode() : 0);
-        result = 31 * result + (cvr80 != null ? cvr80.hashCode() : 0);
-        result = 31 * result + (rtTempIn != null ? rtTempIn.hashCode() : 0);
-        result = 31 * result + (rtSpecOut != null ? rtSpecOut.hashCode() : 0);
+        result = 31 * result + (rtId != null ? rtId.hashCode() : 0);
         result = 31 * result + (notes != null ? notes.hashCode() : 0);
         return result;
     }

@@ -3,7 +3,7 @@ package entity;
 import javax.persistence.*;
 
 /**
- * Created by yangchen on 17/11/17.
+ * Created by yangchen on 17/12/23.
  */
 @Entity
 @Table(name = "basic_control", schema = "expert_system", catalog = "")
@@ -18,6 +18,7 @@ public class BasicControlEntity {
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     public int getId() {
         return id;
     }

@@ -3,11 +3,11 @@ package entity;
 import javax.persistence.*;
 
 /**
- * Created by yangchen on 17/11/17.
+ * Created by yangchen on 17/12/23.
  */
 @Entity
-@Table(name = "basic_tire_wheel", schema = "expert_system", catalog = "")
-public class BasicTireWheelEntity {
+@Table(name = "basic_tire", schema = "expert_system", catalog = "")
+public class BasicTireEntity {
     private int id;
     private String description;
     private Double lvwTrFrt;
@@ -23,6 +23,7 @@ public class BasicTireWheelEntity {
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     public int getId() {
         return id;
     }
@@ -146,7 +147,7 @@ public class BasicTireWheelEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        BasicTireWheelEntity that = (BasicTireWheelEntity) o;
+        BasicTireEntity that = (BasicTireEntity) o;
 
         if (id != that.id) return false;
         if (description != null ? !description.equals(that.description) : that.description != null) return false;

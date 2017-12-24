@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import service.BasicService;
+import service.MatlabManualCalculate;
 
 import javax.naming.ldap.BasicControl;
 import javax.servlet.http.HttpServletRequest;
@@ -80,53 +81,32 @@ public class BasicController {
     @RequestMapping(value = "basic/apply/add", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<Map<String, Object>> addNewBasicApply(
-            @RequestParam("description") String description,
-            @RequestParam("pedRatio") String pedRatio,
-            @RequestParam("pedFEff") String pedFEff,
-            @RequestParam("pedTEff") String pedTEff,
-            @RequestParam("pedType") String pedType,
-            @RequestParam("bstSize") String bstSize,
-            @RequestParam("bstGain") String bstGain,
-            @RequestParam("bstFTotal") String bstFTotal,
-            @RequestParam("bstFEff") String bstFEff,
-            @RequestParam("bstTEff") String bstTEff,
-            @RequestParam("bstFLsNp") String bstFLsNp,
-            @RequestParam("bstFLsWp") String bstFLsWp,
-            @RequestParam("bstFJmp") String bstFJmp,
-            @RequestParam("bstTLs") String bstTLs,
-            @RequestParam("bstVcm") String bstVcm,
-            @RequestParam("altBstVcm") String altBstVcm,
-            @RequestParam("mcdD") String mcdD,
-            @RequestParam("mcdFEff") String mcdFEff,
-            @RequestParam("mcdTEff") String mcdTEff,
-            @RequestParam("apyFEff") String apyFEff,
-            @RequestParam("apyTEff") String apyTEff,
-            @RequestParam("notes") String notes
+            @RequestBody Map<String, Object> params
     ) {
-        BasicApplyEntity entity = new BasicApplyEntity();
         try {
-            entity.setDescription(description);
-            entity.setPedRatio(pedRatio);
-            entity.setPedFEff(Double.valueOf(pedFEff));
-            entity.setApyTEff(Double.valueOf(pedTEff));
-            entity.setPedType(Integer.valueOf(pedType));
-            entity.setBstSize(Double.valueOf(bstSize));
-            entity.setBstGain(Double.valueOf(bstGain));
-            entity.setBstFTotal(Double.valueOf(bstFTotal));
-            entity.setBstFEff(Double.valueOf(bstFEff));
-            entity.setBstTEff(Double.valueOf(bstTEff));
-            entity.setBstFLsNp(Double.valueOf(bstFLsNp));
-            entity.setBstFLsWp(Double.valueOf(bstFLsWp));
-            entity.setBstFJmp(Double.valueOf(bstFJmp));
-            entity.setBstTLs(Double.valueOf(bstTLs));
-            entity.setBstVcm(Double.valueOf(bstVcm));
-            entity.setAltBstVcm(Double.valueOf(altBstVcm));
-            entity.setMcdD(Double.valueOf(mcdD));
-            entity.setMcdFEff(Double.valueOf(mcdFEff));
-            entity.setMcdTEff(Double.valueOf(mcdTEff));
-            entity.setApyFEff(Double.valueOf(apyFEff));
-            entity.setApyTEff(Double.valueOf(apyTEff));
-            entity.setNotes(notes);
+            BasicApplyEntity entity = new BasicApplyEntity();
+            entity.setDescription(String.valueOf(params.get("description")));
+            entity.setPedRatio(String.valueOf(params.get("pedRatio")));
+            entity.setPedFEff(Double.valueOf(params.get("pedFEff").toString()));
+            entity.setPedTEff((Double.valueOf(params.get("pedTEff").toString())));
+            entity.setPedType(Integer.valueOf(params.get("pedType").toString()));
+            entity.setBstSize(Double.valueOf(params.get("bstSize").toString()));
+            entity.setBstGain(Double.valueOf(params.get("bstGain").toString()));
+            entity.setBstFTotal(Double.valueOf(params.get("bstFTotal").toString()));
+            entity.setBstFEff(Double.valueOf(params.get("bstFEff").toString()));
+            entity.setBstTEff(Double.valueOf(params.get("bstTEff").toString()));
+            entity.setBstFLsNp(Double.valueOf(params.get("bstFLsNp").toString()));
+            entity.setBstFLsWp(Double.valueOf(params.get("bstFLsWp").toString()));
+            entity.setBstFJmp((Double.valueOf(params.get("bstFJmp").toString())));
+            entity.setBstTLs(Double.valueOf(params.get("bstTLs").toString()));
+            entity.setBstVcm(Double.valueOf(params.get("bstVcm").toString()));
+            entity.setAltBstVcm(Double.valueOf(params.get("altBstVcm").toString()));
+            entity.setMcdD((Double.valueOf(params.get("mcdD").toString())));
+            entity.setMcdFEff(Double.valueOf(params.get("mcdFEff").toString()));
+            entity.setMcdTEff(Double.valueOf(params.get("mcdTEff").toString()));
+            entity.setApyFEff(Double.valueOf(params.get("apyFEff").toString()));
+            entity.setApyTEff(Double.valueOf(params.get("apyTEff").toString()));
+            entity.setNotes((String) params.get("notes"));
             return getResponseBody(basicService.addNewApply(entity));
         } catch (Exception e) {
             System.out.println(e);
@@ -173,21 +153,16 @@ public class BasicController {
     @RequestMapping(value = "basic/control/add", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<Map<String, Object>> addNewBasicControl(
-            @RequestParam("description") String description,
-            @RequestParam("effAbsFrt") String effAbsFrt,
-            @RequestParam("effAbsRr") String effAbsRr,
-            @RequestParam("peakTire") String peakTire,
-            @RequestParam("effDrive") String effDrive,
-            @RequestParam("notes") String notes
+            @RequestBody Map<String, Object> params
     ) {
-        BasicControlEntity entity = new BasicControlEntity();
         try {
-            entity.setDescription(description);
-            entity.setEffAbsFrt(Double.valueOf(effAbsFrt));
-            entity.setEffAbsRr(Double.valueOf(effAbsRr));
-            entity.setPeakTire(peakTire);
-            entity.setEffDrive(effDrive);
-            entity.setNotes(notes);
+            BasicControlEntity entity = new BasicControlEntity();
+            entity.setDescription(params.get("description").toString());
+            entity.setEffAbsFrt(Double.valueOf(params.get("effAbsFrt").toString()));
+            entity.setEffAbsRr(Double.valueOf(params.get("effAbsRr").toString()));
+            entity.setPeakTire(params.get("peakTire").toString());
+            entity.setEffDrive(params.get("effDrive").toString());
+            entity.setNotes(params.get("notes").toString());
             return getResponseBody(basicService.addNewControl(entity));
         } catch (Exception e) {
             System.out.println(e);
@@ -215,7 +190,17 @@ public class BasicController {
     public ResponseEntity<Map<String, Object>> getBasicDiscBrake(
             @RequestParam("description") String description
     ) {
-        return getResponseBody(basicService.getBasicDiscBrake(description));
+        Map<String, Object> map = new HashMap<String, Object>();
+        BasicDiscBrakeEntity basicDiscBrakeEntity = basicService.getBasicDiscBrake(description);
+        map.put("caliperLining", basicDiscBrakeEntity);
+        if (basicDiscBrakeEntity.getRtType().equals("Vented") || basicDiscBrakeEntity.getRtType().equals("vented")) {
+            map.put("rotor", basicService.getBasicVentedRotor(basicDiscBrakeEntity.getRtId()));
+        } else if (basicDiscBrakeEntity.getRtType().equals("Solid") || basicDiscBrakeEntity.getRtType().equals("solid")) {
+            map.put("rotor", basicService.getBasicSolidRotor(basicDiscBrakeEntity.getRtId()));
+        } else {
+            map.put("rotor", basicService.getBasicDrumRotor(basicDiscBrakeEntity.getRtId()));
+        }
+        return getResponseBody(map);
     }
 
     @RequestMapping(value = "basic/discBrake/check", method = RequestMethod.POST)
@@ -234,127 +219,109 @@ public class BasicController {
     @RequestMapping(value = "basic/discBrake/add", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<Map<String, Object>> addNewBasicDiscBrake(
-            @RequestParam("description") String description,
-            @RequestParam("pstD") String pstD,
-            @RequestParam("pstNum") String pstNum,
-            @RequestParam("pstArea") String pstArea,
-            @RequestParam("hfP") String hfP,
-            @RequestParam("pVcurve") String pVcurve,
-            @RequestParam("pvK") String pvK,
-            @RequestParam("pvB") String pvB,
-            @RequestParam("pvC") String pvC,
-            @RequestParam("linMat") String linMat,
-            @RequestParam("linMu") String linMu,
-            @RequestParam("linMuK") String linMuK,
-            @RequestParam("linMuE") String linMuE,
-            @RequestParam("linMuNp") String linMuNp,
-            @RequestParam("linArea") String linArea,
-            @RequestParam("linWearLim") String linWearLim,
-            @RequestParam("frtRtTempIn") String frtRtTempIn,
-            @RequestParam("frtLinWearOut") String frtLinWearOut,
-            @RequestParam("frtLinFrictOut") String frtLinFrictOut,
-            @RequestParam("perCorner") String perCorner,
-            @RequestParam("rtTypeV") String rtTypeV,
-            @RequestParam("rtSwpAreaV") String rtSwpAreaV,
-            @RequestParam("rtEfcRV") String rtEfcRV,
-            @RequestParam("rtDiaOutV") String rtDiaOutV,
-            @RequestParam("rtDiaInV") String rtDiaInV,
-            @RequestParam("rtInCkTV") String rtInCkTV,
-            @RequestParam("rtOutCkTV") String rtOutCkTV,
-            @RequestParam("rtTV") String rtTV,
-            @RequestParam("rtVanNumV") String rtVanNumV,
-            @RequestParam("rtVanLenV") String rtVanLenV,
-            @RequestParam("rtVaneHighV") String rtVaneHighV,
-            @RequestParam("rtVanTV") String rtVanTV,
-            @RequestParam("rtWmV") String rtWmV,
-            @RequestParam("rtWaV") String rtWaV,
-            @RequestParam("rhoV") String rhoV,
-            @RequestParam("cc50V") String cc50V,
-            @RequestParam("cc80V") String cc80V,
-            @RequestParam("cvr50V") String cvr50V,
-            @RequestParam("cvr80V") String cvr80V,
-            @RequestParam("rtTempInV") String rtTempInV,
-            @RequestParam("rtSpecOutV") String rtSpecOutV,
-            @RequestParam("rtTypeS") String rtTypeS,
-            @RequestParam("rtSwpAreaS") String rtSwpAreaS,
-            @RequestParam("rtEfcRS") String rtEfcRS,
-            @RequestParam("rtDiaOutS") String rtDiaOutS,
-            @RequestParam("rtDiaInS") String rtDiaInS,
-            @RequestParam("rtTS") String rtTS,
-            @RequestParam("rtWmS") String rtWmS,
-            @RequestParam("rtWaS") String rtWaS,
-            @RequestParam("rhoS") String rhoS,
-            @RequestParam("cc50S") String cc50S,
-            @RequestParam("cc80S") String cc80S,
-            @RequestParam("cvr50S") String cvr50S,
-            @RequestParam("cvr80S") String cvr80S,
-            @RequestParam("rtTempInS") String rtTempInS,
-            @RequestParam("rtSpecOutS") String rtSpecOutS,
-            @RequestParam("notes") String notes
+            @RequestBody Map<String, Map<String, Object>> params
     ) {
-        BasicDiscBrakeEntity entity = new BasicDiscBrakeEntity();
-        try {
-            entity.setDescription(description);
-            entity.setPstD(Double.valueOf(pstD));
-            entity.setPstNum(Integer.valueOf(pstNum));
-            entity.setPstArea(Double.valueOf(pstArea));
-            entity.setHfP(Double.valueOf(hfP));
-            entity.setpVcurve(pVcurve);
-            entity.setPvK(Double.valueOf(pvK));
-            entity.setPvB(Double.valueOf(pvB));
-            entity.setPvC(Double.valueOf(pvC));
-            entity.setLinMat(linMat);
-            entity.setLinMu(Double.valueOf(linMu));
-            entity.setLinMuK(Double.valueOf(linMuK));
-            entity.setLinMuE(Double.valueOf(linMuE));
-            entity.setLinMuNp(Double.valueOf(linMuNp));
-            entity.setLinArea(Double.valueOf(linArea));
-            entity.setLinWearLim(Double.valueOf(linWearLim));
-            entity.setFrtRtTempIn(frtRtTempIn);
-            entity.setFrtLinWearOut(frtLinWearOut);
-            entity.setFrtLinFrictOut(frtLinFrictOut);
-            entity.setPerCorner(Double.valueOf(perCorner));
-            entity.setRtTypeV(rtTypeV);
-            entity.setRtSwpAreaV(Double.valueOf(rtSwpAreaV));
-            entity.setRtEfcRV(Double.valueOf(rtEfcRV));
-            entity.setRtDiaOutV(Double.valueOf(rtDiaOutV));
-            entity.setRtDiaInV(Double.valueOf(rtDiaInV));
-            entity.setRtInCkTV(rtInCkTV);
-            entity.setRtOutCkTV(rtOutCkTV);
-            entity.setRtTV(Double.valueOf(rtTV));
-            entity.setRtVanNumV(Integer.valueOf(rtVanNumV));
-            entity.setRtVanLenV(Double.valueOf(rtVanLenV));
-            entity.setRtVaneHighV(Double.valueOf(rtVaneHighV));
-            entity.setRtVanTV(Double.valueOf(rtVanTV));
-            entity.setRtWmV(Double.valueOf(rtWmV));
-            entity.setRtWaV(Double.valueOf(rtWaV));
-            entity.setRhoV(Double.valueOf(rhoV));
-            entity.setCc50V(Double.valueOf(cc50V));
-            entity.setCc80V(Double.valueOf(cc80V));
-            entity.setCvr50V(Double.valueOf(cvr50V));
-            entity.setCvr80V(Double.valueOf(cvr80V));
-            entity.setRtTempInV(rtTempInV);
-            entity.setRtSpecOutV(rtSpecOutV);
-            entity.setRtTypeS(rtTypeS);
-            entity.setRtSwpAreaS(Double.valueOf(rtSwpAreaS));
-            entity.setRtEfcRS(Double.valueOf(rtEfcRS));
-            entity.setRtDiaOutS(Double.valueOf(rtDiaOutS));
-            entity.setRtDiaInS(Double.valueOf(rtDiaInS));
-            entity.setRtTS(Double.valueOf(rtTS));
-            entity.setRtWmS(Double.valueOf(rtWmS));
-            entity.setRtWaS(Double.valueOf(rtWaS));
-            entity.setRhoS(Double.valueOf(rhoS));
-            entity.setCc50S(Double.valueOf(cc50S));
-            entity.setCc80S(Double.valueOf(cc80S));
-            entity.setCvr50S(Double.valueOf(cvr50S));
-            entity.setCvr80S(Double.valueOf(cvr80S));
-            entity.setRtTempInS(rtTempInS);
-            entity.setRtSpecOutS(rtSpecOutS);
-            entity.setNotes(notes);
-            return getResponseBody(basicService.addNewDiscBrake(entity));
-        } catch (Exception e) {
-            System.out.println(e);
-            return getResponseBody(false);
+        Map<String, Object> caliperLining = params.get("caliperLining");
+        BasicDiscBrakeEntity basicDiscBrakeEntity = new BasicDiscBrakeEntity();
+        basicDiscBrakeEntity.setDescription(caliperLining.get("description").toString());
+        basicDiscBrakeEntity.setPstD(Double.valueOf(caliperLining.get("pstD").toString()));
+        basicDiscBrakeEntity.setPstNum(Integer.valueOf(caliperLining.get("pstNum").toString()));
+        basicDiscBrakeEntity.setPstArea(Double.valueOf(caliperLining.get("pstArea").toString()));
+        basicDiscBrakeEntity.setHfP(Double.valueOf(caliperLining.get("hfP").toString()));
+        basicDiscBrakeEntity.setpVcurve(caliperLining.get("pVcurve").toString());
+        basicDiscBrakeEntity.setPvK(Double.valueOf(caliperLining.get("pvK").toString()));
+        basicDiscBrakeEntity.setPvB(Double.valueOf(caliperLining.get("pvB").toString()));
+        basicDiscBrakeEntity.setPvC(Double.valueOf(caliperLining.get("pvC").toString()));
+        basicDiscBrakeEntity.setLinMat(caliperLining.get("linMat").toString());
+        basicDiscBrakeEntity.setLinMu(Double.valueOf(caliperLining.get("linMu").toString()));
+        basicDiscBrakeEntity.setLinMuK(Double.valueOf(caliperLining.get("linMuK").toString()));
+        basicDiscBrakeEntity.setLinMuE(Double.valueOf(caliperLining.get("linMuE").toString()));
+        basicDiscBrakeEntity.setLinMuNp(Double.valueOf(caliperLining.get("linMuNp").toString()));
+        basicDiscBrakeEntity.setLinArea(Double.valueOf(caliperLining.get("linArea").toString()));
+        basicDiscBrakeEntity.setLinWearLim(Double.valueOf(caliperLining.get("linWearLim").toString()));
+        basicDiscBrakeEntity.setFrtRtTempIn(caliperLining.get("frtRtTempIn").toString());
+        basicDiscBrakeEntity.setFrtLinWearOut(caliperLining.get("frtLinWearOut").toString());
+        basicDiscBrakeEntity.setFrtLinFrictOut(caliperLining.get("frtLinFrictOut").toString());
+        basicDiscBrakeEntity.setInPerCorner(Double.valueOf(caliperLining.get("inPerCorner").toString()));
+        basicDiscBrakeEntity.setRtType(caliperLining.get("rtType").toString());
+        basicDiscBrakeEntity.setNotes(caliperLining.get("notes").toString());
+        Map<String, Object> rotor = params.get("rotor");
+        Object realRotor = getRealRotor(rotor, basicDiscBrakeEntity.getRtType());
+        return getResponseBody(basicService.addNewDiscBrake(basicDiscBrakeEntity, realRotor));
+//        try {
+//
+//        } catch (Exception e) {
+//            System.out.println(e);
+//            return getResponseBody(false);
+//        }
+    }
+
+    public Object getRealRotor(Map<String, Object> rotor, String type) {
+        if (type.equals("Vented") || type.equals("vented")) {
+            BasicVentedRotorEntity basicVentedRotorEntity = new BasicVentedRotorEntity();
+            basicVentedRotorEntity.setRtSwpArea(Double.valueOf(rotor.get("rtSwpArea").toString()));
+            basicVentedRotorEntity.setRtEfcR(Double.valueOf(rotor.get("rtEfcR").toString()));
+            basicVentedRotorEntity.setRtDiaOut(Double.valueOf(rotor.get("rtDiaOut").toString()));
+            basicVentedRotorEntity.setRtDiaIn(Double.valueOf(rotor.get("rtDiaIn").toString()));
+            basicVentedRotorEntity.setRtCkIn(rotor.get("rtCkIn").toString());
+            basicVentedRotorEntity.setRtCkOut(rotor.get("rtCkOut").toString());
+            basicVentedRotorEntity.setRtT(Double.valueOf(rotor.get("rtT").toString()));
+            basicVentedRotorEntity.setRtVanNum(Integer.valueOf(rotor.get("rtVanNum").toString()));
+            basicVentedRotorEntity.setRtVanLen(Double.valueOf(rotor.get("rtVanLen").toString()));
+            basicVentedRotorEntity.setRtVaneHigh(Double.valueOf(rotor.get("rtVaneHigh").toString()));
+            basicVentedRotorEntity.setRtVanT(Double.valueOf(rotor.get("rtVanT").toString()));
+            basicVentedRotorEntity.setRtWm(Double.valueOf(rotor.get("rtWm").toString()));
+            basicVentedRotorEntity.setRtWa(Double.valueOf(rotor.get("rtWa").toString()));
+            basicVentedRotorEntity.setRho(Double.valueOf(rotor.get("rho").toString()));
+            basicVentedRotorEntity.setCc50(Double.valueOf(rotor.get("cc50").toString()));
+            basicVentedRotorEntity.setCc80(Double.valueOf(rotor.get("cc80").toString()));
+            basicVentedRotorEntity.setCc110(Double.valueOf(rotor.get("cc110").toString()));
+            basicVentedRotorEntity.setCvr50(Double.valueOf(rotor.get("cvr50").toString()));
+            basicVentedRotorEntity.setCvr80(Double.valueOf(rotor.get("cvr80").toString()));
+            basicVentedRotorEntity.setCvr110(Double.valueOf(rotor.get("cvr110").toString()));
+            basicVentedRotorEntity.setRtTempIn(rotor.get("rtTempIn").toString());
+            basicVentedRotorEntity.setRtSpecOut(rotor.get("rtSpecOut").toString());
+            return basicVentedRotorEntity;
+        } else if (type.equals("Solid") || type.equals("solid")) {
+            BasicSolidRotorEntity basicSolidRotorEntity = new BasicSolidRotorEntity();
+            basicSolidRotorEntity.setRtSwpArea(Double.valueOf(rotor.get("rtSwpArea").toString()));
+            basicSolidRotorEntity.setRtEfcR(Double.valueOf(rotor.get("rtEfcR").toString()));
+            basicSolidRotorEntity.setRtDiaOut(Double.valueOf(rotor.get("rtDiaOut").toString()));
+            basicSolidRotorEntity.setRtDiaIn(Double.valueOf(rotor.get("rtDiaIn").toString()));
+            basicSolidRotorEntity.setRtT(Double.valueOf(rotor.get("rtT").toString()));
+            basicSolidRotorEntity.setRtWm(Double.valueOf(rotor.get("rtWm").toString()));
+            basicSolidRotorEntity.setRtWa(Double.valueOf(rotor.get("rtWa").toString()));
+            basicSolidRotorEntity.setRho(Double.valueOf(rotor.get("rho").toString()));
+            basicSolidRotorEntity.setCc50(Double.valueOf(rotor.get("cc50").toString()));
+            basicSolidRotorEntity.setCc80(Double.valueOf(rotor.get("cc80").toString()));
+            basicSolidRotorEntity.setCc110(Double.valueOf(rotor.get("cc110").toString()));
+            basicSolidRotorEntity.setCvr50(Double.valueOf(rotor.get("cvr50").toString()));
+            basicSolidRotorEntity.setCvr80(Double.valueOf(rotor.get("cvr80").toString()));
+            basicSolidRotorEntity.setCvr110(Double.valueOf(rotor.get("cvr110").toString()));
+            basicSolidRotorEntity.setRtTempIn(rotor.get("rtTempIn").toString());
+            basicSolidRotorEntity.setRtSpecOut(rotor.get("rtSpecOut").toString());
+            return basicSolidRotorEntity;
+        } else {
+            BasicDrumRotorEntity basicDrumRotorEntity = new BasicDrumRotorEntity();
+            basicDrumRotorEntity.setRtEfcR(Double.valueOf(rotor.get("rtEfcR").toString()));
+            basicDrumRotorEntity.setOdDm(Double.valueOf(rotor.get("odDm").toString()));
+            basicDrumRotorEntity.setIdDm(Double.valueOf(rotor.get("idDm").toString()));
+            basicDrumRotorEntity.setThDm(Double.valueOf(rotor.get("thDm").toString()));
+            basicDrumRotorEntity.setWdDm(Double.valueOf(rotor.get("wdDm").toString()));
+            basicDrumRotorEntity.setJthDm(Double.valueOf(rotor.get("jthDm").toString()));
+            basicDrumRotorEntity.setRtVaneHigh(Double.valueOf(rotor.get("rtVaneHigh").toString()));
+            basicDrumRotorEntity.setRtWm(Double.valueOf(rotor.get("rtWm").toString()));
+            basicDrumRotorEntity.setRtWa(Double.valueOf(rotor.get("rtWa").toString()));
+            basicDrumRotorEntity.setRho(Double.valueOf(rotor.get("rho").toString()));
+            basicDrumRotorEntity.setCc50(Double.valueOf(rotor.get("cc50").toString()));
+            basicDrumRotorEntity.setCc80(Double.valueOf(rotor.get("cc80").toString()));
+            basicDrumRotorEntity.setCc110(Double.valueOf(rotor.get("cc110").toString()));
+            basicDrumRotorEntity.setCvr50(Double.valueOf(rotor.get("cvr50").toString()));
+            basicDrumRotorEntity.setCvr80(Double.valueOf(rotor.get("cvr80").toString()));
+            basicDrumRotorEntity.setCvr110(Double.valueOf(rotor.get("cvr110").toString()));
+            basicDrumRotorEntity.setDmTempIn(rotor.get("dmTempIn").toString());
+            basicDrumRotorEntity.setDmTempOut(rotor.get("dmTempOut").toString());
+            return basicDrumRotorEntity;
         }
     }
 
@@ -378,7 +345,17 @@ public class BasicController {
     public ResponseEntity<Map<String, Object>> getBasicDrumBrake(
             @RequestParam("description") String description
     ) {
-        return getResponseBody(basicService.getBasicDrumBrake(description));
+        Map<String, Object> map = new HashMap<String, Object>();
+        BasicDrumBrakeEntity basicDiscBrakeEntity = basicService.getBasicDrumBrake(description);
+        map.put("caliperLining", basicDiscBrakeEntity);
+        if (basicDiscBrakeEntity.getRtType().equals("Vented") || basicDiscBrakeEntity.getRtType().equals("vented")) {
+            map.put("rotor", basicService.getBasicVentedRotor(basicDiscBrakeEntity.getRtId()));
+        } else if (basicDiscBrakeEntity.getRtType().equals("Solid") || basicDiscBrakeEntity.getRtType().equals("solid")) {
+            map.put("rotor", basicService.getBasicSolidRotor(basicDiscBrakeEntity.getRtId()));
+        } else {
+            map.put("rotor", basicService.getBasicDrumRotor(basicDiscBrakeEntity.getRtId()));
+        }
+        return getResponseBody(map);
     }
 
     @RequestMapping(value = "basic/drumBrake/check", method = RequestMethod.POST)
@@ -397,83 +374,36 @@ public class BasicController {
     @RequestMapping(value = "basic/drumBrake/add", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<Map<String, Object>> addNewBasicDrumBrake(
-            @RequestParam("description") String description,
-            @RequestParam("cDia") String cDia,
-            @RequestParam("pstNum") String pstNum,
-            @RequestParam("pstArea") String pstArea,
-            @RequestParam("cHp") String cHp,
-            @RequestParam("pVcurve") String pVcurve,
-            @RequestParam("pvK") String pvK,
-            @RequestParam("pvB") String pvB,
-            @RequestParam("pvC") String pvC,
-            @RequestParam("linMat") String linMat,
-            @RequestParam("linMu") String linMu,
-            @RequestParam("linMuK") String linMuK,
-            @RequestParam("linMuE") String linMuE,
-            @RequestParam("linMuNp") String linMuNp,
-            @RequestParam("linArea") String linArea,
-            @RequestParam("linWearLim") String linWearLim,
-            @RequestParam("frtRtTempIn") String frtRtTempIn,
-            @RequestParam("frtLinWearOut") String frtLinWearOut,
-            @RequestParam("frtLinFrictOut") String frtLinFrictOut,
-            @RequestParam("perCorner") String perCorner,
-            @RequestParam("rtType") String rtType,
-            @RequestParam("rtEfcR") String rtEfcR,
-            @RequestParam("odDm") String odDm,
-            @RequestParam("idDm") String idDm,
-            @RequestParam("thDm") String thDm,
-            @RequestParam("wdDm") String wdDm,
-            @RequestParam("jthDm") String jthDm,
-            @RequestParam("rtVaneHigh") String rtVaneHigh,
-            @RequestParam("rtWm") String rtWm,
-            @RequestParam("rtWa") String rtWa,
-            @RequestParam("rho") String rho,
-            @RequestParam("cc50") String cc50,
-            @RequestParam("cc80") String cc80,
-            @RequestParam("cvr50") String cvr50,
-            @RequestParam("cvr80") String cvr80,
-            @RequestParam("rtTempIn") String rtTempIn,
-            @RequestParam("rtSpecOut") String rtSpecOut,
-            @RequestParam("notes") String notes
+            @RequestBody Map<String, Map<String, Object>> params
     ) {
-        BasicDrumBrakeEntity entity = new BasicDrumBrakeEntity();
         try {
-            entity.setDescription(description);
-            entity.setcHp(Double.valueOf(cHp));
-            entity.setpVcurve(pVcurve);
-            entity.setPvK(Double.valueOf(pvK));
-            entity.setPvB(Double.valueOf(pvB));
-            entity.setPvC(Double.valueOf(pvC));
-            entity.setLinMat(linMat);
-            entity.setLinMu(Double.valueOf(linMu));
-            entity.setLinMuK(Double.valueOf(linMuK));
-            entity.setLinMuE(Double.valueOf(linMuE));
-            entity.setLinMuNp(Double.valueOf(linMuNp));
-            entity.setLinArea(Double.valueOf(linArea));
-            entity.setLinWearLim(Double.valueOf(linWearLim));
-            entity.setFrtRtTempIn(frtRtTempIn);
-            entity.setFrtLinWearOut(frtLinWearOut);
-            entity.setFrtLinFrictOut(frtLinFrictOut);
-            entity.setPerCorner(Double.valueOf(perCorner));
-            entity.setRtType(rtType);
-            entity.setRtEfcR(Double.valueOf(rtEfcR));
-            entity.setOdDm(Double.valueOf(odDm));
-            entity.setIdDm(Double.valueOf(idDm));
-            entity.setThDm(thDm);
-            entity.setWdDm(wdDm);
-            entity.setJthDm(Double.valueOf(jthDm));
-            entity.setRtVaneHigh(Double.valueOf(rtVaneHigh));
-            entity.setRtWm(Double.valueOf(rtWm));
-            entity.setRtWa(Double.valueOf(rtWa));
-            entity.setRho(Double.valueOf(rho));
-            entity.setCc50(Double.valueOf(cc50));
-            entity.setCc80(Double.valueOf(cc80));
-            entity.setCvr50(Double.valueOf(cvr50));
-            entity.setCvr80(Double.valueOf(cvr80));
-            entity.setRtTempIn(rtTempIn);
-            entity.setRtSpecOut(rtSpecOut);
-            entity.setNotes(notes);
-            return getResponseBody(basicService.addNewDrumBrake(entity));
+            BasicDrumBrakeEntity basicDrumBrakeEntity = new BasicDrumBrakeEntity();
+            Map<String, Object> caliperLining = params.get("caliperLining");
+            basicDrumBrakeEntity.setDescription(caliperLining.get("description").toString());
+            basicDrumBrakeEntity.setcDia(Double.valueOf(caliperLining.get("cDia").toString()));
+            basicDrumBrakeEntity.setPstNum(Integer.valueOf(caliperLining.get("pstNum").toString()));
+            basicDrumBrakeEntity.setPstArea(Double.valueOf(caliperLining.get("pstArea").toString()));
+            basicDrumBrakeEntity.setcHp(Double.valueOf(caliperLining.get("cHp").toString()));
+            basicDrumBrakeEntity.setpVcurve(caliperLining.get("pVcurve").toString());
+            basicDrumBrakeEntity.setPvK(Double.valueOf(caliperLining.get("pvK").toString()));
+            basicDrumBrakeEntity.setPvB(Double.valueOf(caliperLining.get("pvB").toString()));
+            basicDrumBrakeEntity.setPvC(Double.valueOf(caliperLining.get("pvC").toString()));
+            basicDrumBrakeEntity.setLinMat(caliperLining.get("linMat").toString());
+            basicDrumBrakeEntity.setLinMu(Double.valueOf(caliperLining.get("linMu").toString()));
+            basicDrumBrakeEntity.setLinMuK(Double.valueOf(caliperLining.get("linMuK").toString()));
+            basicDrumBrakeEntity.setLinMuE(Double.valueOf(caliperLining.get("linMuE").toString()));
+            basicDrumBrakeEntity.setLinMuNp(Double.valueOf(caliperLining.get("linMuNp").toString()));
+            basicDrumBrakeEntity.setLinArea(Double.valueOf(caliperLining.get("linArea").toString()));
+            basicDrumBrakeEntity.setLinWearLim(Double.valueOf(caliperLining.get("linWearLim").toString()));
+            basicDrumBrakeEntity.setFrtRtTempIn(caliperLining.get("frtRtTempIn").toString());
+            basicDrumBrakeEntity.setFrtLinWearOut(caliperLining.get("frtLinWearOut").toString());
+            basicDrumBrakeEntity.setFrtLinFrictOut(caliperLining.get("frtLinFrictOut").toString());
+            basicDrumBrakeEntity.setInPerCorner(Double.valueOf(caliperLining.get("inPerCorner").toString()));
+            basicDrumBrakeEntity.setRtType(caliperLining.get("rtType").toString());
+            basicDrumBrakeEntity.setNotes(caliperLining.get("notes").toString());
+            Map<String, Object> rotor = params.get("rotor");
+            Object realRotor = getRealRotor(rotor, basicDrumBrakeEntity.getRtType());
+            return getResponseBody(basicService.addNewDrumBrake(basicDrumBrakeEntity, realRotor));
         } catch (Exception e) {
             System.out.println(e);
             return getResponseBody(false);
@@ -481,10 +411,10 @@ public class BasicController {
     }
 
     // basic tire wheel
-    @RequestMapping(value = "basic/tireWheel/desc", method = RequestMethod.GET)
+    @RequestMapping(value = "basic/tire/desc", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<Map<String, Object>> getBasicTireWheelDesc() {
-        List<BasicTireWheelEntity> list = basicService.getBasicTireWheelDesc();
+        List<BasicTireEntity> list = basicService.getBasicTireWheelDesc();
         List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
         for (int i = 0; i < list.size(); i ++) {
             Map<String, Object> single = new HashedMap();
@@ -495,7 +425,7 @@ public class BasicController {
         return getResponseBody(result);
     }
 
-    @RequestMapping(value = "basic/tireWheel", method = RequestMethod.POST)
+    @RequestMapping(value = "basic/tire", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<Map<String, Object>> getBasicTireWheel(
             @RequestParam("description") String description
@@ -503,12 +433,12 @@ public class BasicController {
         return getResponseBody(basicService.getBasicTireWheel(description));
     }
 
-    @RequestMapping(value = "basic/tireWheel/check", method = RequestMethod.POST)
+    @RequestMapping(value = "basic/tire/check", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<Map<String, Object>> checkBasicTireWheel(
             @RequestParam("description") String description
     ) {
-        List<BasicTireWheelEntity> list = basicService.getBasicTireWheelDesc();
+        List<BasicTireEntity> list = basicService.getBasicTireWheelDesc();
         List<String> descs = new ArrayList<String>();
         for (int i = 0; i < list.size(); i ++) {
             descs.add(list.get(i).getDescription());
@@ -516,34 +446,24 @@ public class BasicController {
         return getResponseBody(descs.contains(description));
     }
 
-    @RequestMapping(value = "basic/tireWheel/add", method = RequestMethod.POST)
+    @RequestMapping(value = "basic/tire/add", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<Map<String, Object>> addNewBasicTireWheel(
-            @RequestParam("description") String description,
-            @RequestParam("lvwTrFrt") String lvwTrFrt,
-            @RequestParam("lvwTrRr") String lvwTrRr,
-            @RequestParam("gvwTrFrt") String gvwTrFrt,
-            @RequestParam("gvwTrRr") String gvwTrRr,
-            @RequestParam("peakAdhesLong") String peakAdhesLong,
-            @RequestParam("peakAdhesLat") String peakAdhesLat,
-            @RequestParam("tracCoeff") String tracCoeff,
-            @RequestParam("s") String s,
-            @RequestParam("fR") String fR,
-            @RequestParam("notes") String notes
+            @RequestBody Map<String, Object> params
     ) {
-        BasicTireWheelEntity entity = new BasicTireWheelEntity();
         try {
-            entity.setDescription(description);
-            entity.setLvwTrFrt(Double.valueOf(lvwTrFrt));
-            entity.setLvwTrRr(Double.valueOf(lvwTrRr));
-            entity.setGvwTrFrt(Double.valueOf(gvwTrFrt));
-            entity.setGvwTrRr(Double.valueOf(gvwTrRr));
-            entity.setPeakAdhesLong(Double.valueOf(peakAdhesLong));
-            entity.setPeakAdhesLat(Double.valueOf(peakAdhesLat));
-            entity.setTracCoeff(Double.valueOf(tracCoeff));
-            entity.setS(Double.valueOf(s));
-            entity.setfR(Double.valueOf(fR));
-            entity.setNotes(notes);
+            BasicTireEntity entity = new BasicTireEntity();
+            entity.setDescription(params.get("description").toString());
+            entity.setLvwTrFrt(Double.valueOf(params.get("lvwTrFrt").toString()));
+            entity.setLvwTrRr(Double.valueOf(params.get("lvwTrRr").toString()));
+            entity.setGvwTrFrt(Double.valueOf(params.get("gvwTrFrt").toString()));
+            entity.setGvwTrRr(Double.valueOf(params.get("gvwTrRr").toString()));
+            entity.setPeakAdhesLong(Double.valueOf(params.get("peakAdhesLong").toString()));
+            entity.setPeakAdhesLat(Double.valueOf(params.get("peakAdhesLat").toString()));
+            entity.setTracCoeff(Double.valueOf(params.get("tracCoeff").toString()));
+            entity.setS(Double.valueOf(params.get("s").toString()));
+            entity.setfR(Double.valueOf(params.get("fR").toString()));
+            entity.setNotes(params.get("notes").toString());
             return getResponseBody(basicService.addNewTireWheel(entity));
         } catch (Exception e) {
             System.out.println(e);
@@ -591,44 +511,93 @@ public class BasicController {
     @RequestMapping(value = "basic/vehicle/add", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<Map<String, Object>> addNewBasicVehicle(
-            @RequestParam("description") String description,
-            @RequestParam("carModel") String carModel,
-            @RequestParam("carYear") String carYear,
-            @RequestParam("carDa") String carDa,
-            @RequestParam("carAddInfo") String carAddInfo,
-            @RequestParam("lvwM") String lvwM,
-            @RequestParam("lvwFrtR") String lvwFrtR,
-            @RequestParam("lvwCgh") String lvwCgh,
-            @RequestParam("gvwM") String gvwM,
-            @RequestParam("gvwFrtR") String gvwFrtR,
-            @RequestParam("gvwCgh") String gvwCgh,
-            @RequestParam("l") String l,
-            @RequestParam("vmax") String vmax,
-            @RequestParam("coastDecel") String coastDecel,
-            @RequestParam("cd") String cd,
-            @RequestParam("a") String a,
-            @RequestParam("notes") String notes
+            @RequestBody Map<String, Object> params
     ) {
-        BasicVehicleEntity entity = new BasicVehicleEntity();
         try {
-            entity.setDescription(description);
-            entity.setCarModel(carModel);
-            entity.setCarYear(Double.valueOf(carYear));
-            entity.setCarDa(carDa);
-            entity.setCarAddInfo(carAddInfo);
-            entity.setLvwM(Double.valueOf(lvwM));
-            entity.setLvwFrtR(Double.valueOf(lvwFrtR));
-            entity.setLvwCgh(Double.valueOf(lvwCgh));
-            entity.setGvwM(Double.valueOf(gvwM));
-            entity.setGvwFrtR(Double.valueOf(gvwFrtR));
-            entity.setGvwCgh(Double.valueOf(gvwCgh));
-            entity.setL(Double.valueOf(l));
-            entity.setVmax(Double.valueOf(vmax));
-            entity.setCoastDecel(Double.valueOf(coastDecel));
-            entity.setCd(Double.valueOf(cd));
-            entity.setA(Double.valueOf(a));
-            entity.setNotes(notes);
+            BasicVehicleEntity entity = new BasicVehicleEntity();
+            entity.setDescription(params.get("description").toString());
+            entity.setCarModel(params.get("carModel").toString());
+            entity.setCarYear(Double.valueOf(params.get("carYear").toString()));
+            entity.setCarDa(params.get("carDa").toString());
+            entity.setCarAddInfo(params.get("carAddInfo").toString());
+            entity.setLvwM(Double.valueOf(params.get("lvwM").toString()));
+            entity.setLvwFrtR(Double.valueOf(params.get("lvwFrtR").toString()));
+            entity.setLvwCgh(Double.valueOf(params.get("lvwCgh").toString()));
+            entity.setGvwM(Double.valueOf(params.get("gvwM").toString()));
+            entity.setGvwFrtR(Double.valueOf(params.get("gvwFrtR").toString()));
+            entity.setGvwCgh(Double.valueOf(params.get("gvwCgh").toString()));
+            entity.setL(Double.valueOf(params.get("l").toString()));
+            entity.setVmax(Double.valueOf(params.get("vmax").toString()));
+            entity.setCoastDecel(Double.valueOf(params.get("coastDecel").toString()));
+            entity.setCd(Double.valueOf(params.get("cd").toString()));
+            entity.setA(Double.valueOf(params.get("a").toString()));
+            entity.setNotes(params.get("notes").toString());
             return getResponseBody(basicService.addNewVehicle(entity));
+        } catch (Exception e) {
+            System.out.println(e);
+            return getResponseBody(false);
+        }
+    }
+
+    // requirement
+    @RequestMapping(value = "basic/require/desc", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> getBasicRequirementDesc() {
+        List<BasicRequirementEntity> list = basicService.getBasicRequirementDesc();
+        List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
+        for (int i = 0; i < list.size(); i ++) {
+            Map<String, Object> single = new HashedMap();
+            single.put("id", list.get(i).getId());
+            single.put("desc", list.get(i).getDescription());
+            result.add(single);
+        }
+        return getResponseBody(result);
+    }
+
+    @RequestMapping(value = "basic/require", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> getBasicRequirement(
+            @RequestParam("description") String description
+    ) {
+        return getResponseBody(basicService.getBasicRequirement(description));
+    }
+
+    @RequestMapping(value = "basic/require/check", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> checkBasicRequirement(
+            @RequestParam("description") String description
+    ) {
+        List<BasicRequirementEntity> list = basicService.getBasicRequirementDesc();
+        List<String> descs = new ArrayList<String>();
+        for (int i = 0; i < list.size(); i ++) {
+            descs.add(list.get(i).getDescription());
+        }
+        return getResponseBody(descs.contains(description));
+    }
+
+    @RequestMapping(value = "basic/require/add", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> addNewBasicRequirement(
+            @RequestBody Map<String, String> params
+    ) {
+        try {
+            BasicRequirementEntity entity = new BasicRequirementEntity();
+            entity.setDescription(params.get("description"));
+            entity.setTf0(Double.valueOf(params.get("tf0")));
+            entity.setVi(Double.valueOf(params.get("vi")));
+            entity.setV0(Double.valueOf(params.get("v0")));
+            entity.setAb(Double.valueOf(params.get("ab")));
+            entity.setAa(Double.valueOf(params.get("aa")));
+            entity.setT(Double.valueOf(params.get("t")));
+            entity.setJ(Integer.valueOf(params.get("j")));
+            entity.setvR(Double.valueOf(params.get("vR")));
+            entity.setV2R(Double.valueOf(params.get("v2R")));
+            entity.setT0(Double.valueOf(params.get("t0")));
+            entity.setRhoa(Double.valueOf(params.get("rhoa")));
+            entity.setUa(Double.valueOf(params.get("ua")));
+            entity.setKa(Double.valueOf(params.get("ka")));
+            entity.setNotes(params.get("notes"));
+            return getResponseBody(basicService.addNewRequirement(entity));
         } catch (Exception e) {
             System.out.println(e);
             return getResponseBody(false);
@@ -732,4 +701,15 @@ public class BasicController {
         }
         return getResponseBody(images);
     }
+
+    // calculate
+    @RequestMapping(value = "basic/calculate", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> manualCalculate(
+            @RequestBody Map<String, Map<String, Object>> params
+    ) {
+        MatlabManualCalculate.realCalculate(params);
+        return getResponseBody(params);
+    }
+
 }

@@ -52,8 +52,21 @@ public class BasicService {
         return basicDao.getBasicDiscBrake(description);
     }
 
-    public boolean addNewDiscBrake(BasicDiscBrakeEntity entity) {
-        return basicDao.addNewDiscBrake(entity);
+    public boolean addNewDiscBrake(BasicDiscBrakeEntity entity, Object rotor) {
+        int rotorId;
+        if (entity.getRtType().equals("Vented") || entity.getRtType().equals("vented")) {
+            rotorId = basicDao.addNewVentedRotor((BasicVentedRotorEntity) rotor);
+        } else if (entity.getRtType().equals("Solid") || entity.getRtType().equals("solid")) {
+            rotorId = basicDao.addNewSolidRotor((BasicSolidRotorEntity) rotor);
+        } else {
+            rotorId = basicDao.addNewDrumRotor((BasicDrumRotorEntity) rotor);
+        }
+        if (rotorId == -1) {
+            return false;
+        } else {
+            entity.setRtId(rotorId);
+            return basicDao.addNewDiscBrake(entity);
+        }
     }
 
     // basic drum brake
@@ -65,20 +78,44 @@ public class BasicService {
         return basicDao.getBasicDrumBrake(description);
     }
 
-    public boolean addNewDrumBrake(BasicDrumBrakeEntity entity) {
-        return basicDao.addNewDrumBrake(entity);
+    public boolean addNewDrumBrake(BasicDrumBrakeEntity entity, Object rotor) {
+        int rotorId;
+        if (entity.getRtType().equals("Vented") || entity.getRtType().equals("vented")) {
+            rotorId = basicDao.addNewVentedRotor((BasicVentedRotorEntity) rotor);
+        } else if (entity.getRtType().equals("Solid") || entity.getRtType().equals("solid")) {
+            rotorId = basicDao.addNewSolidRotor((BasicSolidRotorEntity) rotor);
+        } else {
+            rotorId = basicDao.addNewDrumRotor((BasicDrumRotorEntity) rotor);
+        }
+        if (rotorId == -1) {
+            return false;
+        } else {
+            entity.setRtId(rotorId);
+            return basicDao.addNewDrumBrake(entity);
+        }
+    }
+
+    // get basic rotor
+    public BasicVentedRotorEntity getBasicVentedRotor(int id) {
+        return basicDao.getBasicVentedRotor(id);
+    }
+    public BasicSolidRotorEntity getBasicSolidRotor(int id) {
+        return basicDao.getBasicSolidRotor(id);
+    }
+    public BasicDrumRotorEntity getBasicDrumRotor(int id) {
+        return basicDao.getBasicDrumRotor(id);
     }
 
     // basic tire wheel
-    public List<BasicTireWheelEntity> getBasicTireWheelDesc() {
+    public List<BasicTireEntity> getBasicTireWheelDesc() {
         return basicDao.getBasicTireWheelDesc();
     }
 
-    public BasicTireWheelEntity getBasicTireWheel(String description) {
+    public BasicTireEntity getBasicTireWheel(String description) {
         return basicDao.getBasicTireWheel(description);
     }
 
-    public boolean addNewTireWheel(BasicTireWheelEntity entity) {
+    public boolean addNewTireWheel(BasicTireEntity entity) {
         return basicDao.addNewTireWheel(entity);
     }
 
@@ -93,6 +130,19 @@ public class BasicService {
 
     public boolean addNewVehicle(BasicVehicleEntity entity) {
         return basicDao.addNewVehicle(entity);
+    }
+
+    // requirement
+    public List<BasicRequirementEntity> getBasicRequirementDesc() {
+        return basicDao.getBasicRequirementDesc();
+    }
+
+    public BasicRequirementEntity getBasicRequirement(String description) {
+        return basicDao.getBasicRequirement(description);
+    }
+
+    public boolean addNewRequirement(BasicRequirementEntity entity) {
+        return basicDao.addNewRequirement(entity);
     }
 
     // Configuration !!!!!!!!!!!!!!!

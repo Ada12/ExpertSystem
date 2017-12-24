@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -46,6 +47,7 @@ public class BasicDao {
     public boolean addNewApply(BasicApplyEntity entity) {
         try {
             entityManager.persist(entity);
+            entityManager.flush();
             return true;
         } catch (Exception e) {
             System.out.println(e);
@@ -78,6 +80,7 @@ public class BasicDao {
     public boolean addNewControl(BasicControlEntity entity) {
         try {
             entityManager.persist(entity);
+            entityManager.flush();
             return true;
         } catch (Exception e) {
             System.out.println(e);
@@ -110,6 +113,7 @@ public class BasicDao {
     public boolean addNewDiscBrake(BasicDiscBrakeEntity entity) {
         try {
             entityManager.persist(entity);
+            entityManager.flush();
             return true;
         } catch (Exception e) {
             System.out.println(e);
@@ -142,6 +146,7 @@ public class BasicDao {
     public boolean addNewDrumBrake(BasicDrumBrakeEntity entity) {
         try {
             entityManager.persist(entity);
+            entityManager.flush();
             return true;
         } catch (Exception e) {
             System.out.println(e);
@@ -149,19 +154,12 @@ public class BasicDao {
         }
     }
 
-    // basic tire wheel
-    public List<BasicTireWheelEntity> getBasicTireWheelDesc() {
-        TypedQuery<BasicTireWheelEntity> query;
-        query = entityManager.createQuery("select b from BasicTireWheelEntity b", BasicTireWheelEntity.class);
-        List<BasicTireWheelEntity> entities = query.getResultList();
-        return entities;
-    }
-
-    public BasicTireWheelEntity getBasicTireWheel(String description) {
-        TypedQuery<BasicTireWheelEntity> query;
-        query = entityManager.createQuery("select b from BasicTireWheelEntity b where b.description = :description", BasicTireWheelEntity.class);
-        query.setParameter("description", description);
-        BasicTireWheelEntity entities = new BasicTireWheelEntity();
+    // get vented rotor
+    public BasicVentedRotorEntity getBasicVentedRotor(int id) {
+        TypedQuery<BasicVentedRotorEntity> query;
+        query = entityManager.createQuery("select b from BasicVentedRotorEntity b where b.id = :id", BasicVentedRotorEntity.class);
+        query.setParameter("id", id);
+        BasicVentedRotorEntity entities = new BasicVentedRotorEntity();
         try {
             entities = query.getSingleResult();
         } catch (NoResultException e) {
@@ -171,9 +169,96 @@ public class BasicDao {
         return entities;
     }
 
-    public boolean addNewTireWheel(BasicTireWheelEntity entity) {
+    public int addNewVentedRotor(BasicVentedRotorEntity entity) {
         try {
             entityManager.persist(entity);
+            entityManager.flush();
+            return entity.getId();
+        } catch (Exception e) {
+            System.out.println(e);
+            return -1;
+        }
+    }
+
+    // get solid rotor
+    public BasicSolidRotorEntity getBasicSolidRotor(int id) {
+        TypedQuery<BasicSolidRotorEntity> query;
+        query = entityManager.createQuery("select b from BasicSolidRotorEntity b where b.id = :id", BasicSolidRotorEntity.class);
+        query.setParameter("id", id);
+        BasicSolidRotorEntity entities = new BasicSolidRotorEntity();
+        try {
+            entities = query.getSingleResult();
+        } catch (NoResultException e) {
+            System.out.println(e);
+            entities = null;
+        }
+        return entities;
+    }
+
+    public int addNewSolidRotor(BasicSolidRotorEntity entity) {
+        try {
+            entityManager.persist(entity);
+            entityManager.flush();
+            return entity.getId();
+        } catch (Exception e) {
+            System.out.println(e);
+            return -1;
+        }
+    }
+
+    // get drum rotor
+    public BasicDrumRotorEntity getBasicDrumRotor(int id) {
+        TypedQuery<BasicDrumRotorEntity> query;
+        query = entityManager.createQuery("select b from BasicDrumRotorEntity b where b.id = :id", BasicDrumRotorEntity.class);
+        query.setParameter("id", id);
+        BasicDrumRotorEntity entities = new BasicDrumRotorEntity();
+        try {
+            entities = query.getSingleResult();
+        } catch (NoResultException e) {
+            System.out.println(e);
+            entities = null;
+        }
+        return entities;
+    }
+
+    public int addNewDrumRotor(BasicDrumRotorEntity entity) {
+        try {
+            entityManager.persist(entity);
+            entityManager.flush();
+            return entity.getId();
+        } catch (Exception e) {
+            System.out.println(e);
+            return -1;
+        }
+    }
+
+
+    // basic tire wheel
+    public List<BasicTireEntity> getBasicTireWheelDesc() {
+        TypedQuery<BasicTireEntity> query;
+        query = entityManager.createQuery("select b from BasicTireEntity b", BasicTireEntity.class);
+        List<BasicTireEntity> entities = query.getResultList();
+        return entities;
+    }
+
+    public BasicTireEntity getBasicTireWheel(String description) {
+        TypedQuery<BasicTireEntity> query;
+        query = entityManager.createQuery("select b from BasicTireEntity b where b.description = :description", BasicTireEntity.class);
+        query.setParameter("description", description);
+        BasicTireEntity entities = new BasicTireEntity();
+        try {
+            entities = query.getSingleResult();
+        } catch (NoResultException e) {
+            System.out.println(e);
+            entities = null;
+        }
+        return entities;
+    }
+
+    public boolean addNewTireWheel(BasicTireEntity entity) {
+        try {
+            entityManager.persist(entity);
+            entityManager.flush();
             return true;
         } catch (Exception e) {
             System.out.println(e);
@@ -206,6 +291,40 @@ public class BasicDao {
     public boolean addNewVehicle(BasicVehicleEntity entity) {
         try {
             entityManager.persist(entity);
+            entityManager.flush();
+            return true;
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
+    }
+
+    // basic requirement
+    public List<BasicRequirementEntity> getBasicRequirementDesc() {
+        TypedQuery<BasicRequirementEntity> query;
+        query = entityManager.createQuery("select b from BasicRequirementEntity b", BasicRequirementEntity.class);
+        List<BasicRequirementEntity> entities = query.getResultList();
+        return entities;
+    }
+
+    public BasicRequirementEntity getBasicRequirement(String description) {
+        TypedQuery<BasicRequirementEntity> query;
+        query = entityManager.createQuery("select b from BasicRequirementEntity b where b.description = :description", BasicRequirementEntity.class);
+        query.setParameter("description", description);
+        BasicRequirementEntity entities = new BasicRequirementEntity();
+        try {
+            entities = query.getSingleResult();
+        } catch (NoResultException e) {
+            System.out.println(e);
+            entities = null;
+        }
+        return entities;
+    }
+
+    public boolean addNewRequirement(BasicRequirementEntity entity) {
+        try {
+            entityManager.persist(entity);
+            entityManager.flush();
             return true;
         } catch (Exception e) {
             System.out.println(e);
@@ -238,6 +357,7 @@ public class BasicDao {
     public boolean addNewConfiguration(ConfigurationEntity entity) {
         try {
             entityManager.persist(entity);
+            entityManager.flush();
             return true;
         } catch (Exception e) {
             System.out.println(e);
