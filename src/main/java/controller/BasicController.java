@@ -10,9 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import service.BasicService;
 import service.MatlabManualCalculate;
 
-import javax.naming.ldap.BasicControl;
 import javax.servlet.http.HttpServletRequest;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

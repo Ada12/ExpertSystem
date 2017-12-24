@@ -1,6 +1,7 @@
 package service;
 
 import com.mathworks.toolbox.javabuilder.*;
+//import com.mathworks.toolbox.javabuilder.MWException;
 import ExternalMatlab.*;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
@@ -298,7 +299,7 @@ public class MatlabManualCalculate {
         }
     }
 
-    public static void main1(String[] args) {
+    public void main1(String[] args) {
         try {
             String relativePath = System.getProperty("user.dir");
             System.out.println(relativePath);
@@ -389,7 +390,7 @@ public class MatlabManualCalculate {
         }
     }
 
-    public static void main(String[] args) {
+    public void main(String[] args) {
 //        Object a = {};
 //        MWNumericArray frtRtT = new MWNumericArray(new double[]{1,2,3,4}, MWClassID.DOUBLE);
 //        System.out.println(frtRtT);

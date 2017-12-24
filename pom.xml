@@ -150,21 +150,21 @@
             <artifactId>self</artifactId>
             <version>8</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/main.jar</systemPath>
+            <systemPath>${project.basedir}/web/WEB-INF/lib/main.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>manual-external</groupId>
             <artifactId>self1</artifactId>
             <version>1</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/ExternalMatlab.jar</systemPath>
+            <systemPath>${project.basedir}/web/WEB-INF/lib/ExternalMatlab.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.mathworks.toolbox</groupId>
             <artifactId>javabuilder</artifactId>
             <version>3.0</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/javabuilder.jar</systemPath>
+            <systemPath>${project.basedir}/web/WEB-INF/lib/javabuilder.jar</systemPath>
         </dependency>
     </dependencies>
 
