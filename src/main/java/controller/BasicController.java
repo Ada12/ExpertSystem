@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import service.BasicService;
 import service.MatlabManualCalculate;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,6 +26,9 @@ public class BasicController {
 
     @Autowired
     private BasicService basicService;
+
+    @Autowired
+    ServletContext servletContext;
 
     public ResponseEntity<Map<String, Object>> getResponseBody(Object object) {
         Map<String, Object> returnInfo = new HashMap<String, Object>();
@@ -706,8 +710,9 @@ public class BasicController {
     public ResponseEntity<Map<String, Object>> manualCalculate(
             @RequestBody Map<String, Map<String, Object>> params
     ) {
-        MatlabManualCalculate.realCalculate(params);
-        return getResponseBody(params);
+        String path = servletContext.getRealPath("img");
+        Map<String, Object> result = MatlabManualCalculate.realCalculate(params, path);
+        return getResponseBody(result);
     }
 
 }
