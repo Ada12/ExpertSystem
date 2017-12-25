@@ -221,9 +221,10 @@ public class BasicController {
     @RequestMapping(value = "basic/discBrake/add", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<Map<String, Object>> addNewBasicDiscBrake(
-            @RequestBody Map<String, Map<String, Object>> params
+            @RequestBody Map<String, Object> caliperLining
     ) {
-        Map<String, Object> caliperLining = params.get("caliperLining");
+//        Map<String, Object> caliperLining = params.get("caliperLining");
+        // caliperLining represent parms
         BasicDiscBrakeEntity basicDiscBrakeEntity = new BasicDiscBrakeEntity();
         basicDiscBrakeEntity.setDescription(caliperLining.get("description").toString());
         basicDiscBrakeEntity.setPstD(Double.valueOf(caliperLining.get("pstD").toString()));
@@ -247,8 +248,8 @@ public class BasicController {
         basicDiscBrakeEntity.setInPerCorner(Double.valueOf(caliperLining.get("inPerCorner").toString()));
         basicDiscBrakeEntity.setRtType(caliperLining.get("rtType").toString());
         basicDiscBrakeEntity.setNotes(caliperLining.get("notes").toString());
-        Map<String, Object> rotor = params.get("rotor");
-        Object realRotor = getRealRotor(rotor, basicDiscBrakeEntity.getRtType());
+//        Map<String, Object> rotor = params.get("rotor");
+        Object realRotor = getRealRotor(caliperLining, basicDiscBrakeEntity.getRtType());
         return getResponseBody(basicService.addNewDiscBrake(basicDiscBrakeEntity, realRotor));
 //        try {
 //
@@ -376,11 +377,12 @@ public class BasicController {
     @RequestMapping(value = "basic/drumBrake/add", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<Map<String, Object>> addNewBasicDrumBrake(
-            @RequestBody Map<String, Map<String, Object>> params
+            @RequestBody Map<String, Object> caliperLining
     ) {
         try {
             BasicDrumBrakeEntity basicDrumBrakeEntity = new BasicDrumBrakeEntity();
-            Map<String, Object> caliperLining = params.get("caliperLining");
+//            Map<String, Object> caliperLining = params.get("caliperLining");
+            // caliperLining replace params
             basicDrumBrakeEntity.setDescription(caliperLining.get("description").toString());
             basicDrumBrakeEntity.setcDia(Double.valueOf(caliperLining.get("cDia").toString()));
             basicDrumBrakeEntity.setPstNum(Integer.valueOf(caliperLining.get("pstNum").toString()));
@@ -403,8 +405,8 @@ public class BasicController {
             basicDrumBrakeEntity.setInPerCorner(Double.valueOf(caliperLining.get("inPerCorner").toString()));
             basicDrumBrakeEntity.setRtType(caliperLining.get("rtType").toString());
             basicDrumBrakeEntity.setNotes(caliperLining.get("notes").toString());
-            Map<String, Object> rotor = params.get("rotor");
-            Object realRotor = getRealRotor(rotor, basicDrumBrakeEntity.getRtType());
+//            Map<String, Object> rotor = params.get("rotor");
+            Object realRotor = getRealRotor(caliperLining, basicDrumBrakeEntity.getRtType());
             return getResponseBody(basicService.addNewDrumBrake(basicDrumBrakeEntity, realRotor));
         } catch (Exception e) {
             System.out.println(e);
@@ -580,25 +582,31 @@ public class BasicController {
     @RequestMapping(value = "basic/require/add", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<Map<String, Object>> addNewBasicRequirement(
-            @RequestBody Map<String, String> params
+            @RequestBody Map<String, Object> params
     ) {
         try {
             BasicRequirementEntity entity = new BasicRequirementEntity();
-            entity.setDescription(params.get("description"));
-            entity.setTf0(Double.valueOf(params.get("tf0")));
-            entity.setVi(Double.valueOf(params.get("vi")));
-            entity.setV0(Double.valueOf(params.get("v0")));
-            entity.setAb(Double.valueOf(params.get("ab")));
-            entity.setAa(Double.valueOf(params.get("aa")));
-            entity.setT(Double.valueOf(params.get("t")));
-            entity.setJ(Integer.valueOf(params.get("j")));
-            entity.setvR(Double.valueOf(params.get("vR")));
-            entity.setV2R(Double.valueOf(params.get("v2R")));
-            entity.setT0(Double.valueOf(params.get("t0")));
-            entity.setRhoa(Double.valueOf(params.get("rhoa")));
-            entity.setUa(Double.valueOf(params.get("ua")));
-            entity.setKa(Double.valueOf(params.get("ka")));
-            entity.setNotes(params.get("notes"));
+            entity.setDescription(params.get("description").toString());
+            entity.setTf0(Double.valueOf(params.get("tf0").toString()));
+            entity.setVi(Double.valueOf(params.get("vi").toString()));
+            entity.setV0(Double.valueOf(params.get("v0").toString()));
+            entity.setAb(Double.valueOf(params.get("ab").toString()));
+            entity.setAa(Double.valueOf(params.get("aa").toString()));
+            entity.setT(Double.valueOf(params.get("t").toString()));
+            entity.setJ(Integer.valueOf(params.get("j").toString()));
+            entity.setvR(Double.valueOf(params.get("vR").toString()));
+            entity.setV2R(Double.valueOf(params.get("v2R").toString()));
+            entity.setT0(Double.valueOf(params.get("t0").toString()));
+            entity.setRhoa(Double.valueOf(params.get("rhoa").toString()));
+            entity.setUa(Double.valueOf(params.get("ua").toString()));
+            entity.setKa(Double.valueOf(params.get("ka").toString()));
+            entity.setHotV1(Double.valueOf(params.get("hotV1").toString()));
+            entity.setHotV0(Double.valueOf(params.get("hotV0").toString()));
+            entity.setHotAb(Double.valueOf(params.get("hotAb").toString()));
+            entity.setDistanceV1(Double.valueOf(params.get("distanceV1").toString()));
+            entity.setDistanceStop(Double.valueOf(params.get("distanceStop").toString()));
+            entity.setDistanceTime(Double.valueOf(params.get("distanceTime").toString()));
+            entity.setNotes(params.get("notes").toString());
             return getResponseBody(basicService.addNewRequirement(entity));
         } catch (Exception e) {
             System.out.println(e);
@@ -645,31 +653,19 @@ public class BasicController {
     @RequestMapping(value = "basic/config/add", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<Map<String, Object>> addNewBasicConfiguration(
-            @RequestParam("description") String description,
-            @RequestParam("vehicleDesc") String vehicleDesc,
-            @RequestParam("frontCornerDesc") String frontCornerDesc,
-            @RequestParam("rearCornerDesc") String rearCornerDesc,
-            @RequestParam("pedalDesc") String pedalDesc,
-            @RequestParam("absContralVaveDesc") String absContralVaveDesc,
-            @RequestParam("masterCylinderDesc") String masterCylinderDesc,
-            @RequestParam("boosterDesc") String boosterDesc,
-            @RequestParam("rearCornerNum") String rearCornerNum,
-            @RequestParam("frontCornerNum") String frontCornerNum,
-            @RequestParam("note") String notes
+            @RequestBody Map<String, Object> params
     ) {
         ConfigurationEntity entity = new ConfigurationEntity();
         try {
-            entity.setDescription(description);
-            entity.setVehicleDesc(vehicleDesc);
-            entity.setFrontCornerDesc(frontCornerDesc);
-            entity.setRearCornerDesc(rearCornerDesc);
-            entity.setPedalDesc(pedalDesc);
-            entity.setAbsContralVaveDesc(absContralVaveDesc);
-            entity.setMasterCylinderDesc(masterCylinderDesc);
-            entity.setBoosterDesc(boosterDesc);
-            entity.setFrontCornerNum(Integer.valueOf(frontCornerNum));
-            entity.setRearCornerNum(Integer.valueOf(rearCornerNum));
-            entity.setNote(notes);
+            entity.setDescription(params.get("description").toString());
+            entity.setVehicleId(Integer.valueOf(params.get("vehicleId").toString()));
+            entity.setTireId(Integer.valueOf(params.get("tireId").toString()));
+            entity.setApplyId(Integer.valueOf(params.get("applyId").toString()));
+            entity.setControlId(Integer.valueOf(params.get("controlId").toString()));
+            entity.setDiscBrakeId(Integer.valueOf(params.get("discBrakeId").toString()));
+            entity.setDrumBrakeId(Integer.valueOf(params.get("drumBrakeId").toString()));
+            entity.setRequireId(Integer.valueOf(params.get("requireId").toString()));
+            entity.setNotes(params.get("notes").toString());
             return getResponseBody(basicService.addNewConfiguration(entity));
         } catch (Exception e) {
             System.out.println(e);
@@ -711,7 +707,12 @@ public class BasicController {
             @RequestBody Map<String, Map<String, Object>> params
     ) {
         String path = servletContext.getRealPath("img");
-        Map<String, Object> result = MatlabManualCalculate.realCalculate(params, path);
+        Map<String, Object> result = new HashedMap();
+        try {
+            result = MatlabManualCalculate.realCalculate(params, path);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return getResponseBody(result);
     }
 

@@ -23,10 +23,12 @@ public class MatlabManualCalculate {
     public static Map<String, Object> realCalculate(Map<String, Map<String, Object>> params, String path) {
         Map<String, Object> applyMap = params.get("apply");
         Map<String, Object> controlMap = params.get("control");
-        Map<String, Object> discCaliperMap = params.get("discCaliper");
-        Map<String, Object> discRotorMap = params.get("discRotor");
-        Map<String, Object> drumCaliperMap = params.get("drumCaliper");
-        Map<String, Object> drumRotorMap = params.get("drumRotor");
+//        Map<String, Object> discCaliperMap = params.get("discCaliper");
+//        Map<String, Object> discRotorMap = params.get("discRotor");
+        Map<String, Object> discBrakeMap = params.get("discBrake");
+//        Map<String, Object> drumCaliperMap = params.get("drumCaliper");
+//        Map<String, Object> drumRotorMap = params.get("drumRotor");
+        Map<String, Object> drumBrakeMap = params.get("drumBrake");
         Map<String, Object> tireMap = params.get("tire");
         Map<String, Object> vehicleMap = params.get("vehicle");
         Map<String, Object> result = new HashedMap();
@@ -110,7 +112,7 @@ public class MatlabManualCalculate {
             absControl.set(new int[]{1,4}, Double.parseDouble(controlMap.get("effDrive").toString()));
             // frt/disc caliper
             // MWNumericArray frtPstArea = new MWNumericArray();
-            List<Object> frtPVCurveList = (List<Object>) discCaliperMap.get("pVcurve");
+            List<Object> frtPVCurveList = (List<Object>) discBrakeMap.get("pVcurve");
             double[] frtPVCurveArray = new double[frtPVCurveList.size()];
             for(int i = 0; i < frtPVCurveList.size(); i ++) {
                 frtPVCurveArray[i] = Double.parseDouble(frtPVCurveList.get(i).toString());
@@ -120,7 +122,7 @@ public class MatlabManualCalculate {
             // MWNumericArray frtPVB = new MWNumericArray();
             // MWNumericArray frtPVC = new MWNumericArray();
             // MWNumericArray frtLinMu = new MWNumericArray((List<Double>) discCaliperMap.get("linMu"), MWClassID.DOUBLE);
-            List<Object> frtLinMuList = (List<Object>) drumCaliperMap.get("linMu");
+            List<Object> frtLinMuList = (List<Object>) discBrakeMap.get("linMu");
             double[] frtLinMuArray = new double[frtLinMuList.size()];
             for(int i = 0; i < frtLinMuList.size(); i ++) {
                 frtLinMuArray[i] = Double.parseDouble(frtLinMuList.get(i).toString());
@@ -129,19 +131,19 @@ public class MatlabManualCalculate {
             MWNumericArray frtBrkFactor = new MWNumericArray();
             // MWNumericArray frtLinMuK = new MWNumericArray();
             // MWNumericArray frtLinMuE = new MWNumericArray();
-            List<Object> frtLinTList = (List<Object>) discCaliperMap.get("frtRtTempIn");
+            List<Object> frtLinTList = (List<Object>) discBrakeMap.get("frtRtTempIn");
             double[] frtLinTArray = new double[frtLinTList.size()];
             for(int i = 0; i < frtLinTList.size(); i ++) {
                 frtLinTArray[i] = Double.parseDouble(frtLinTList.get(i).toString());
             }
             MWNumericArray frtLinT = new MWNumericArray(frtLinTArray, MWClassID.DOUBLE);
-            List<Object> frtLinCPList = (List<Object>) discCaliperMap.get("frtLinWearOut");
+            List<Object> frtLinCPList = (List<Object>) discBrakeMap.get("frtLinWearOut");
             double[] frtLinCPArray = new double[frtLinCPList.size()];
             for(int i = 0; i < frtLinCPList.size(); i ++) {
                 frtLinCPArray[i] = Double.parseDouble(frtLinCPList.get(i).toString());
             }
             MWNumericArray frtLinCP = new MWNumericArray(frtLinCPArray, MWClassID.DOUBLE);
-            List<Object> frtLinCP1List = (List<Object>) discCaliperMap.get("frtLinFrictOut");
+            List<Object> frtLinCP1List = (List<Object>) discBrakeMap.get("frtLinFrictOut");
             double[] frtLinCP1Array = new double[frtLinCP1List.size()];
             for(int i = 0; i < frtLinCP1List.size(); i ++) {
                 frtLinCP1Array[i] = Double.parseDouble(frtLinCP1List.get(i).toString());
@@ -152,39 +154,39 @@ public class MatlabManualCalculate {
             // frtLinMuE,0.4,0.8,3430,11,frtLinT,frtLinCP,frtLinCP1};
             MWCellArray discCaliper = new MWCellArray(new int[]{1,23});
             discCaliper.set(new int[]{1,1}, "Conti"); //
-            discCaliper.set(new int[]{1,2}, Double.parseDouble(discCaliperMap.get("pstD").toString()));
-            discCaliper.set(new int[]{1,3}, Double.parseDouble(discCaliperMap.get("pstNum").toString()));
-            discCaliper.set(new int[]{1,4}, Double.parseDouble(discCaliperMap.get("pstArea").toString()));
-            discCaliper.set(new int[]{1,5}, Double.parseDouble(discCaliperMap.get("hfP").toString()));
+            discCaliper.set(new int[]{1,2}, Double.parseDouble(discBrakeMap.get("pstD").toString()));
+            discCaliper.set(new int[]{1,3}, Double.parseDouble(discBrakeMap.get("pstNum").toString()));
+            discCaliper.set(new int[]{1,4}, Double.parseDouble(discBrakeMap.get("pstArea").toString()));
+            discCaliper.set(new int[]{1,5}, Double.parseDouble(discBrakeMap.get("hfP").toString()));
             discCaliper.set(new int[]{1,6}, frtPVCurve);
-            discCaliper.set(new int[]{1,7}, Double.parseDouble(discCaliperMap.get("pvK").toString()));
-            discCaliper.set(new int[]{1,8}, Double.parseDouble(discCaliperMap.get("pvB").toString()));
-            discCaliper.set(new int[]{1,9}, Double.parseDouble(discCaliperMap.get("pvC").toString()));
+            discCaliper.set(new int[]{1,7}, Double.parseDouble(discBrakeMap.get("pvK").toString()));
+            discCaliper.set(new int[]{1,8}, Double.parseDouble(discBrakeMap.get("pvB").toString()));
+            discCaliper.set(new int[]{1,9}, Double.parseDouble(discBrakeMap.get("pvC").toString()));
             discCaliper.set(new int[]{1,10}, "FM"); //
-            discCaliper.set(new int[]{1,11}, discCaliperMap.get("linMat").toString());
+            discCaliper.set(new int[]{1,11}, discBrakeMap.get("linMat").toString());
             discCaliper.set(new int[]{1,12}, "TBD"); //
             // Double.parseDouble(discCaliperMap.get("linMu").toString())
             discCaliper.set(new int[]{1,13}, frtLinMu);
             discCaliper.set(new int[]{1,14}, frtBrkFactor); //
-            discCaliper.set(new int[]{1,15}, Double.parseDouble(discCaliperMap.get("linMuK").toString()));
-            discCaliper.set(new int[]{1,16}, Double.parseDouble(discCaliperMap.get("linMuE").toString()));
-            discCaliper.set(new int[]{1,17}, Double.parseDouble(discCaliperMap.get("linMuNp").toString()));
+            discCaliper.set(new int[]{1,15}, Double.parseDouble(discBrakeMap.get("linMuK").toString()));
+            discCaliper.set(new int[]{1,16}, Double.parseDouble(discBrakeMap.get("linMuE").toString()));
+            discCaliper.set(new int[]{1,17}, Double.parseDouble(discBrakeMap.get("linMuNp").toString()));
             discCaliper.set(new int[]{1,18}, 0.8); //
-            discCaliper.set(new int[]{1,19}, Double.parseDouble(discCaliperMap.get("linArea").toString()));
-            discCaliper.set(new int[]{1,20}, Double.parseDouble(discCaliperMap.get("linWearLim").toString()));
+            discCaliper.set(new int[]{1,19}, Double.parseDouble(discBrakeMap.get("linArea").toString()));
+            discCaliper.set(new int[]{1,20}, Double.parseDouble(discBrakeMap.get("linWearLim").toString()));
             discCaliper.set(new int[]{1,21}, frtLinT);
             discCaliper.set(new int[]{1,22}, frtLinCP);
             discCaliper.set(new int[]{1,23}, frtLinCP1);
             // frt/disc rotor
             MWNumericArray frtCC50 = new MWNumericArray();
             MWNumericArray frtCC80 = new MWNumericArray();
-            List<Object> frtRtTList = (List<Object>)discRotorMap.get("rtTempIn");
+            List<Object> frtRtTList = (List<Object>)discBrakeMap.get("rtTempIn");
             double[] frtRtTArray = new double[frtRtTList.size()];
             for(int i = 0; i < frtRtTList.size(); i ++) {
                 frtRtTArray[i] = Double.parseDouble(frtRtTList.get(i).toString());
             }
             MWNumericArray frtRtT = new MWNumericArray(frtRtTArray, MWClassID.DOUBLE);
-            List<Object> frtRtCPList = (List<Object>)discRotorMap.get("rtTempIn");
+            List<Object> frtRtCPList = (List<Object>)discBrakeMap.get("rtTempIn");
             double[] frtRtCPArray = new double[frtRtCPList.size()];
             for(int i = 0; i < frtRtCPList.size(); i ++) {
                 frtRtCPArray[i] = Double.parseDouble(frtRtCPList.get(i).toString());
@@ -194,33 +196,33 @@ public class MatlabManualCalculate {
             // frtWorkMass,frtWorkArea,7100,frtCC50,frtCC80,0.026,0.026,frtRtT,frtRtCP};
             // rtCkIn and rtCkOut => double
             MWCellArray discRotor = new MWCellArray(new int[]{1,22});
-            discRotor.set(new int[]{1,1}, discCaliperMap.get("rtType").toString());
+            discRotor.set(new int[]{1,1}, discBrakeMap.get("rtType").toString());
             discRotor.set(new int[]{1,2}, "SHAC"); //
 //            discRotor.set(new int[]{1,3}, discCaliperMap.get("rtType").toString().equals("Drum") ? null :
 //                    Double.parseDouble(discRotorMap.get("rtSwpArea").toString())); ////
             discRotor.set(new int[]{1,3},1);
-            discRotor.set(new int[]{1,4}, Double.parseDouble(discRotorMap.get("rtEfcR").toString()));
-            discRotor.set(new int[]{1,5}, Double.parseDouble(discRotorMap.get("rtDiaOut").toString()));
-            discRotor.set(new int[]{1,6}, Double.parseDouble(discRotorMap.get("rtDiaIn").toString()));
-            discRotor.set(new int[]{1,7}, Double.parseDouble(discRotorMap.get("rtT").toString()));
-            discRotor.set(new int[]{1,8}, Double.parseDouble(discRotorMap.get("rtCkIn").toString()));
-            discRotor.set(new int[]{1,9}, Double.parseDouble(discRotorMap.get("rtCkOut").toString()));
-            discRotor.set(new int[]{1,10}, Double.parseDouble(discRotorMap.get("rtVanNum").toString()));
-            discRotor.set(new int[]{1,11}, Double.parseDouble(discRotorMap.get("rtVanLen").toString()));
-            discRotor.set(new int[]{1,12}, Double.parseDouble(discRotorMap.get("rtVaneHigh").toString()));
-            discRotor.set(new int[]{1,13}, Double.parseDouble(discRotorMap.get("rtVanT").toString()));
-            discRotor.set(new int[]{1,14}, Double.parseDouble(discRotorMap.get("rtWm").toString()));
-            discRotor.set(new int[]{1,15}, Double.parseDouble(discRotorMap.get("rtWa").toString()));
-            discRotor.set(new int[]{1,16}, Double.parseDouble(discRotorMap.get("rho").toString()));
-            discRotor.set(new int[]{1,17}, Double.parseDouble(discRotorMap.get("cc50").toString()));
-            discRotor.set(new int[]{1,18}, Double.parseDouble(discRotorMap.get("cc80").toString()));
-            discRotor.set(new int[]{1,19}, Double.parseDouble(discRotorMap.get("cvr50").toString()));
-            discRotor.set(new int[]{1,20}, Double.parseDouble(discRotorMap.get("cvr80").toString()));
+            discRotor.set(new int[]{1,4}, Double.parseDouble(discBrakeMap.get("rtEfcR").toString()));
+            discRotor.set(new int[]{1,5}, Double.parseDouble(discBrakeMap.get("rtDiaOut").toString()));
+            discRotor.set(new int[]{1,6}, Double.parseDouble(discBrakeMap.get("rtDiaIn").toString()));
+            discRotor.set(new int[]{1,7}, Double.parseDouble(discBrakeMap.get("rtT").toString()));
+            discRotor.set(new int[]{1,8}, Double.parseDouble(discBrakeMap.get("rtCkIn").toString()));
+            discRotor.set(new int[]{1,9}, Double.parseDouble(discBrakeMap.get("rtCkOut").toString()));
+            discRotor.set(new int[]{1,10}, Double.parseDouble(discBrakeMap.get("rtVanNum").toString()));
+            discRotor.set(new int[]{1,11}, Double.parseDouble(discBrakeMap.get("rtVanLen").toString()));
+            discRotor.set(new int[]{1,12}, Double.parseDouble(discBrakeMap.get("rtVaneHigh").toString()));
+            discRotor.set(new int[]{1,13}, Double.parseDouble(discBrakeMap.get("rtVanT").toString()));
+            discRotor.set(new int[]{1,14}, Double.parseDouble(discBrakeMap.get("rtWm").toString()));
+            discRotor.set(new int[]{1,15}, Double.parseDouble(discBrakeMap.get("rtWa").toString()));
+            discRotor.set(new int[]{1,16}, Double.parseDouble(discBrakeMap.get("rho").toString()));
+            discRotor.set(new int[]{1,17}, Double.parseDouble(discBrakeMap.get("cc50").toString()));
+            discRotor.set(new int[]{1,18}, Double.parseDouble(discBrakeMap.get("cc80").toString()));
+            discRotor.set(new int[]{1,19}, Double.parseDouble(discBrakeMap.get("cvr50").toString()));
+            discRotor.set(new int[]{1,20}, Double.parseDouble(discBrakeMap.get("cvr80").toString()));
             discRotor.set(new int[]{1,21}, frtRtT);
             discRotor.set(new int[]{1,22}, frtRtCP);
             // rr/drum caliper
             MWNumericArray rrPstArea = new MWNumericArray();
-            List<Object> rrPVCurveList = (List<Object>)drumCaliperMap.get("pVcurve");
+            List<Object> rrPVCurveList = (List<Object>)drumBrakeMap.get("pVcurve");
             double[] rrPVCurveArray = new double[rrPVCurveList.size()];
             for(int i = 0; i < rrPVCurveList.size(); i ++) {
                 rrPVCurveArray[i] = Double.parseDouble(rrPVCurveList.get(i).toString());
@@ -230,7 +232,7 @@ public class MatlabManualCalculate {
             MWNumericArray rrPVB = new MWNumericArray();
             MWNumericArray rrPVC = new MWNumericArray();
             // MWNumericArray rrLinMu = new MWNumericArray(new double[]{500, 0.82, 5000, 0.86, 12000, 0.9});
-            List<Object> rrLinMuList = (List<Object>) drumCaliperMap.get("linMu");
+            List<Object> rrLinMuList = (List<Object>) drumBrakeMap.get("linMu");
             double[] rrLinMuArray = new double[rrLinMuList.size()];
             for(int i = 0; i < rrLinMuList.size(); i ++) {
                 rrLinMuArray[i] = Double.parseDouble(rrLinMuList.get(i).toString());
@@ -239,19 +241,19 @@ public class MatlabManualCalculate {
             MWNumericArray rrBrkFactor = new MWNumericArray();
             MWNumericArray rrLinMuK = new MWNumericArray();
             MWNumericArray rrLinMuE = new MWNumericArray();
-            List<Object> rrLinTList = (List<Object>) drumCaliperMap.get("frtRtTempIn");
+            List<Object> rrLinTList = (List<Object>) drumBrakeMap.get("frtRtTempIn");
             double[] rrLinTArray = new double[rrLinTList.size()];
             for(int i = 0; i < rrLinTList.size(); i ++) {
                 rrLinTArray[i] = Double.parseDouble(rrLinTList.get(i).toString());
             }
             MWNumericArray rrLinT = new MWNumericArray(rrLinTArray, MWClassID.DOUBLE);
-            List<Object> rrLinCPList = (List<Object>) drumCaliperMap.get("frtLinWearOut");
+            List<Object> rrLinCPList = (List<Object>) drumBrakeMap.get("frtLinWearOut");
             double[] rrLinCPArray = new double[rrLinCPList.size()];
             for(int i = 0; i < rrLinCPList.size(); i ++) {
                 rrLinCPArray[i] = Double.parseDouble(rrLinCPList.get(i).toString());
             }
             MWNumericArray rrLinCP = new MWNumericArray(rrLinCPArray, MWClassID.DOUBLE);
-            List<Object> rrLinCP1List = (List<Object>) drumCaliperMap.get("frtLinFrictOut");
+            List<Object> rrLinCP1List = (List<Object>) drumBrakeMap.get("frtLinFrictOut");
             double[] rrLinCP1Array = new double[rrLinCP1List.size()];
             for(int i = 0; i < rrLinCP1List.size(); i ++) {
                 rrLinCP1Array[i] = Double.parseDouble(rrLinCP1List.get(i).toString());
@@ -264,26 +266,26 @@ public class MatlabManualCalculate {
             // rrLinMuE,0.825,1.65,5779,5,rrLinT,rrLinCP,rrLinCP1};
             MWCellArray drumCaliper = new MWCellArray(new int[]{1,23});
             drumCaliper.set(new int[]{1,1}, "BWI"); //
-            drumCaliper.set(new int[]{1,2}, Double.parseDouble(drumCaliperMap.get("cDia").toString()));
-            drumCaliper.set(new int[]{1,3}, Double.parseDouble(drumCaliperMap.get("pstNum").toString()));
-            drumCaliper.set(new int[]{1,4}, Double.parseDouble(drumCaliperMap.get("pstArea").toString()));
-            drumCaliper.set(new int[]{1,5}, Double.parseDouble(drumCaliperMap.get("cHp").toString()));
+            drumCaliper.set(new int[]{1,2}, Double.parseDouble(drumBrakeMap.get("cDia").toString()));
+            drumCaliper.set(new int[]{1,3}, Double.parseDouble(drumBrakeMap.get("pstNum").toString()));
+            drumCaliper.set(new int[]{1,4}, Double.parseDouble(drumBrakeMap.get("pstArea").toString()));
+            drumCaliper.set(new int[]{1,5}, Double.parseDouble(drumBrakeMap.get("cHp").toString()));
             drumCaliper.set(new int[]{1,6}, rrPVCurve);
-            drumCaliper.set(new int[]{1,7}, Double.parseDouble(drumCaliperMap.get("pvK").toString()));
-            drumCaliper.set(new int[]{1,8}, Double.parseDouble(drumCaliperMap.get("pvB").toString()));
-            drumCaliper.set(new int[]{1,9}, Double.parseDouble(drumCaliperMap.get("pvC").toString()));
+            drumCaliper.set(new int[]{1,7}, Double.parseDouble(drumBrakeMap.get("pvK").toString()));
+            drumCaliper.set(new int[]{1,8}, Double.parseDouble(drumBrakeMap.get("pvB").toString()));
+            drumCaliper.set(new int[]{1,9}, Double.parseDouble(drumBrakeMap.get("pvC").toString()));
             drumCaliper.set(new int[]{1,10}, "SB"); //
-            drumCaliper.set(new int[]{1,11}, drumCaliperMap.get("linMat").toString());
+            drumCaliper.set(new int[]{1,11}, drumBrakeMap.get("linMat").toString());
             drumCaliper.set(new int[]{1,12}, "TBD"); //
             // Double.parseDouble(drumCaliperMap.get("linMu").toString())
             drumCaliper.set(new int[]{1,13}, rrLinMu);
             drumCaliper.set(new int[]{1,14}, rrBrkFactor); //
-            drumCaliper.set(new int[]{1,15}, Double.parseDouble(drumCaliperMap.get("linMuK").toString()));
-            drumCaliper.set(new int[]{1,16}, Double.parseDouble(drumCaliperMap.get("linMuE").toString()));
-            drumCaliper.set(new int[]{1,17}, Double.parseDouble(drumCaliperMap.get("linMuNp").toString()));
+            drumCaliper.set(new int[]{1,15}, Double.parseDouble(drumBrakeMap.get("linMuK").toString()));
+            drumCaliper.set(new int[]{1,16}, Double.parseDouble(drumBrakeMap.get("linMuE").toString()));
+            drumCaliper.set(new int[]{1,17}, Double.parseDouble(drumBrakeMap.get("linMuNp").toString()));
             drumCaliper.set(new int[]{1,18}, 1.65); //
-            drumCaliper.set(new int[]{1,19}, Double.parseDouble(drumCaliperMap.get("linArea").toString()));
-            drumCaliper.set(new int[]{1,20}, Double.parseDouble(drumCaliperMap.get("linWearLim").toString()));
+            drumCaliper.set(new int[]{1,19}, Double.parseDouble(drumBrakeMap.get("linArea").toString()));
+            drumCaliper.set(new int[]{1,20}, Double.parseDouble(drumBrakeMap.get("linWearLim").toString()));
             drumCaliper.set(new int[]{1,21}, rrLinT);
             drumCaliper.set(new int[]{1,22}, rrLinCP);
             drumCaliper.set(new int[]{1,23}, rrLinCP1);
@@ -294,13 +296,13 @@ public class MatlabManualCalculate {
             MWNumericArray rrCC80 = new MWNumericArray();
             MWNumericArray rrCVR50 = new MWNumericArray();
             MWNumericArray rrCVR80 = new MWNumericArray();
-            List<Object> rrRtTList = (List<Object>)drumRotorMap.get("dmTempIn");
+            List<Object> rrRtTList = (List<Object>)drumBrakeMap.get("dmTempIn");
             double[] rrRtTArray = new double[rrRtTList.size()];
             for(int i = 0; i < rrRtTList.size(); i ++) {
                 rrRtTArray[i] = Double.parseDouble(rrRtTList.get(i).toString());
             }
             MWNumericArray rrRtT = new MWNumericArray(rrRtTArray);
-            List<Object> rrRtCPList = (List<Object>)drumRotorMap.get("dmTempOut");
+            List<Object> rrRtCPList = (List<Object>)drumBrakeMap.get("dmTempOut");
             double[] rrRtCPArray = new double[rrRtCPList.size()];
             for(int i = 0; i < rrRtCPList.size(); i ++) {
                 rrRtCPArray[i] = Double.parseDouble(rrRtCPList.get(i).toString());
@@ -309,25 +311,25 @@ public class MatlabManualCalculate {
             // Object[] drumRotor = new Object[]{"Drum","SHAC",21980,102.5,216,100,8,42,
             // 14,14,rrWorkMass,rrWorkArea,7100,rrCC50,rrCC80,rrCVR50,rrCVR80,rrRtT,rrRtCP};
             MWCellArray drumRotor = new MWCellArray(new int[]{1, 19});
-            drumRotor.set(new int[]{1,1}, drumCaliperMap.get("rtType").toString());
+            drumRotor.set(new int[]{1,1}, drumBrakeMap.get("rtType").toString());
             drumRotor.set(new int[]{1,2}, "SHAC"); //
 //            drumRotor.set(new int[]{1,3}, drumRotorMap.get("rtType").toString().equals("Drum") ? null :
 //                    Double.parseDouble(drumRotorMap.get("sweptArea").toString()));
             drumRotor.set(new int[]{1,3}, 1d);
-            drumRotor.set(new int[]{1,4}, Double.parseDouble(drumRotorMap.get("rtEfcR").toString()));
-            drumRotor.set(new int[]{1,5}, Double.parseDouble(drumRotorMap.get("odDm").toString()));
-            drumRotor.set(new int[]{1,6}, Double.parseDouble(drumRotorMap.get("idDm").toString()));
-            drumRotor.set(new int[]{1,7}, Double.parseDouble(drumRotorMap.get("thDm").toString()));
-            drumRotor.set(new int[]{1,8}, Double.parseDouble(drumRotorMap.get("rtVaneHigh").toString()));
-            drumRotor.set(new int[]{1,9}, Double.parseDouble(drumRotorMap.get("wdDm").toString()));
-            drumRotor.set(new int[]{1,10}, Double.parseDouble(drumRotorMap.get("jthDm").toString()));
-            drumRotor.set(new int[]{1,11}, Double.parseDouble(drumRotorMap.get("rtWm").toString()));
-            drumRotor.set(new int[]{1,12}, Double.parseDouble(drumRotorMap.get("rtWa").toString()));
-            drumRotor.set(new int[]{1,13}, Double.parseDouble(drumRotorMap.get("rho").toString()));
-            drumRotor.set(new int[]{1,14}, Double.parseDouble(drumRotorMap.get("cc50").toString()));
-            drumRotor.set(new int[]{1,15}, Double.parseDouble(drumRotorMap.get("cc80").toString()));
-            drumRotor.set(new int[]{1,16}, Double.parseDouble(drumRotorMap.get("cvr50").toString()));//rrCVR50
-            drumRotor.set(new int[]{1,17}, Double.parseDouble(drumRotorMap.get("cvr80").toString()));//rrCVR80
+            drumRotor.set(new int[]{1,4}, Double.parseDouble(drumBrakeMap.get("rtEfcR").toString()));
+            drumRotor.set(new int[]{1,5}, Double.parseDouble(drumBrakeMap.get("odDm").toString()));
+            drumRotor.set(new int[]{1,6}, Double.parseDouble(drumBrakeMap.get("idDm").toString()));
+            drumRotor.set(new int[]{1,7}, Double.parseDouble(drumBrakeMap.get("thDm").toString()));
+            drumRotor.set(new int[]{1,8}, Double.parseDouble(drumBrakeMap.get("rtVaneHigh").toString()));
+            drumRotor.set(new int[]{1,9}, Double.parseDouble(drumBrakeMap.get("wdDm").toString()));
+            drumRotor.set(new int[]{1,10}, Double.parseDouble(drumBrakeMap.get("jthDm").toString()));
+            drumRotor.set(new int[]{1,11}, Double.parseDouble(drumBrakeMap.get("rtWm").toString()));
+            drumRotor.set(new int[]{1,12}, Double.parseDouble(drumBrakeMap.get("rtWa").toString()));
+            drumRotor.set(new int[]{1,13}, Double.parseDouble(drumBrakeMap.get("rho").toString()));
+            drumRotor.set(new int[]{1,14}, Double.parseDouble(drumBrakeMap.get("cc50").toString()));
+            drumRotor.set(new int[]{1,15}, Double.parseDouble(drumBrakeMap.get("cc80").toString()));
+            drumRotor.set(new int[]{1,16}, Double.parseDouble(drumBrakeMap.get("cvr50").toString()));//rrCVR50
+            drumRotor.set(new int[]{1,17}, Double.parseDouble(drumBrakeMap.get("cvr80").toString()));//rrCVR80
             drumRotor.set(new int[]{1,18}, rrRtT);
             drumRotor.set(new int[]{1,19}, rrRtCP);
             Object[] status;
@@ -382,7 +384,7 @@ public class MatlabManualCalculate {
             // create img pathi
             List<String> abUrl = new ArrayList<String>();
             for (int i = 1; i < 14; i ++) {
-                abUrl.add("/img/figure"+ i + ".png");
+                abUrl.add("/expert/img/figure"+ i + ".png");
             }
             result.put("img", abUrl);
             result.put("numerical", getResult(resultAfterPath));

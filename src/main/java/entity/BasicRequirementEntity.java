@@ -3,7 +3,7 @@ package entity;
 import javax.persistence.*;
 
 /**
- * Created by yangchen on 17/12/23.
+ * Created by yangchen on 17/12/25.
  */
 @Entity
 @Table(name = "basic_requirement", schema = "expert_system", catalog = "")
@@ -23,6 +23,12 @@ public class BasicRequirementEntity {
     private Double rhoa;
     private Double ua;
     private Double ka;
+    private Double distanceTime;
+    private Double hotV1;
+    private Double distanceStop;
+    private Double distanceV1;
+    private Double hotAb;
+    private Double hotV0;
     private String notes;
 
     @Id
@@ -177,6 +183,66 @@ public class BasicRequirementEntity {
     }
 
     @Basic
+    @Column(name = "distance_time")
+    public Double getDistanceTime() {
+        return distanceTime;
+    }
+
+    public void setDistanceTime(Double distanceTime) {
+        this.distanceTime = distanceTime;
+    }
+
+    @Basic
+    @Column(name = "hot_v1")
+    public Double getHotV1() {
+        return hotV1;
+    }
+
+    public void setHotV1(Double hotV1) {
+        this.hotV1 = hotV1;
+    }
+
+    @Basic
+    @Column(name = "distance_stop")
+    public Double getDistanceStop() {
+        return distanceStop;
+    }
+
+    public void setDistanceStop(Double distanceStop) {
+        this.distanceStop = distanceStop;
+    }
+
+    @Basic
+    @Column(name = "distance_v1")
+    public Double getDistanceV1() {
+        return distanceV1;
+    }
+
+    public void setDistanceV1(Double distanceV1) {
+        this.distanceV1 = distanceV1;
+    }
+
+    @Basic
+    @Column(name = "hot_ab")
+    public Double getHotAb() {
+        return hotAb;
+    }
+
+    public void setHotAb(Double hotAb) {
+        this.hotAb = hotAb;
+    }
+
+    @Basic
+    @Column(name = "hot_v0")
+    public Double getHotV0() {
+        return hotV0;
+    }
+
+    public void setHotV0(Double hotV0) {
+        this.hotV0 = hotV0;
+    }
+
+    @Basic
     @Column(name = "notes")
     public String getNotes() {
         return notes;
@@ -208,6 +274,12 @@ public class BasicRequirementEntity {
         if (rhoa != null ? !rhoa.equals(that.rhoa) : that.rhoa != null) return false;
         if (ua != null ? !ua.equals(that.ua) : that.ua != null) return false;
         if (ka != null ? !ka.equals(that.ka) : that.ka != null) return false;
+        if (distanceTime != null ? !distanceTime.equals(that.distanceTime) : that.distanceTime != null) return false;
+        if (hotV1 != null ? !hotV1.equals(that.hotV1) : that.hotV1 != null) return false;
+        if (distanceStop != null ? !distanceStop.equals(that.distanceStop) : that.distanceStop != null) return false;
+        if (distanceV1 != null ? !distanceV1.equals(that.distanceV1) : that.distanceV1 != null) return false;
+        if (hotAb != null ? !hotAb.equals(that.hotAb) : that.hotAb != null) return false;
+        if (hotV0 != null ? !hotV0.equals(that.hotV0) : that.hotV0 != null) return false;
         if (notes != null ? !notes.equals(that.notes) : that.notes != null) return false;
 
         return true;
@@ -230,6 +302,12 @@ public class BasicRequirementEntity {
         result = 31 * result + (rhoa != null ? rhoa.hashCode() : 0);
         result = 31 * result + (ua != null ? ua.hashCode() : 0);
         result = 31 * result + (ka != null ? ka.hashCode() : 0);
+        result = 31 * result + (distanceTime != null ? distanceTime.hashCode() : 0);
+        result = 31 * result + (hotV1 != null ? hotV1.hashCode() : 0);
+        result = 31 * result + (distanceStop != null ? distanceStop.hashCode() : 0);
+        result = 31 * result + (distanceV1 != null ? distanceV1.hashCode() : 0);
+        result = 31 * result + (hotAb != null ? hotAb.hashCode() : 0);
+        result = 31 * result + (hotV0 != null ? hotV0.hashCode() : 0);
         result = 31 * result + (notes != null ? notes.hashCode() : 0);
         return result;
     }
