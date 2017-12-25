@@ -235,7 +235,7 @@ public class BasicController {
         basicDiscBrakeEntity.setPvB(Double.valueOf(caliperLining.get("pvB").toString()));
         basicDiscBrakeEntity.setPvC(Double.valueOf(caliperLining.get("pvC").toString()));
         basicDiscBrakeEntity.setLinMat(caliperLining.get("linMat").toString());
-        basicDiscBrakeEntity.setLinMu(Double.valueOf(caliperLining.get("linMu").toString()));
+        basicDiscBrakeEntity.setLinMu(caliperLining.get("linMu").toString());
         basicDiscBrakeEntity.setLinMuK(Double.valueOf(caliperLining.get("linMuK").toString()));
         basicDiscBrakeEntity.setLinMuE(Double.valueOf(caliperLining.get("linMuE").toString()));
         basicDiscBrakeEntity.setLinMuNp(Double.valueOf(caliperLining.get("linMuNp").toString()));
@@ -391,7 +391,7 @@ public class BasicController {
             basicDrumBrakeEntity.setPvB(Double.valueOf(caliperLining.get("pvB").toString()));
             basicDrumBrakeEntity.setPvC(Double.valueOf(caliperLining.get("pvC").toString()));
             basicDrumBrakeEntity.setLinMat(caliperLining.get("linMat").toString());
-            basicDrumBrakeEntity.setLinMu(Double.valueOf(caliperLining.get("linMu").toString()));
+            basicDrumBrakeEntity.setLinMu(caliperLining.get("linMu").toString());
             basicDrumBrakeEntity.setLinMuK(Double.valueOf(caliperLining.get("linMuK").toString()));
             basicDrumBrakeEntity.setLinMuE(Double.valueOf(caliperLining.get("linMuE").toString()));
             basicDrumBrakeEntity.setLinMuNp(Double.valueOf(caliperLining.get("linMuNp").toString()));

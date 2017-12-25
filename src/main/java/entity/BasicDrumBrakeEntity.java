@@ -3,7 +3,7 @@ package entity;
 import javax.persistence.*;
 
 /**
- * Created by yangchen on 17/12/23.
+ * Created by yangchen on 2017/12/25.
  */
 @Entity
 @Table(name = "basic_drum_brake", schema = "expert_system", catalog = "")
@@ -19,7 +19,7 @@ public class BasicDrumBrakeEntity {
     private Double pvB;
     private Double pvC;
     private String linMat;
-    private Double linMu;
+    private String linMu;
     private Double linMuK;
     private Double linMuE;
     private Double linMuNp;
@@ -146,11 +146,11 @@ public class BasicDrumBrakeEntity {
 
     @Basic
     @Column(name = "lin_mu")
-    public Double getLinMu() {
+    public String getLinMu() {
         return linMu;
     }
 
-    public void setLinMu(Double linMu) {
+    public void setLinMu(String linMu) {
         this.linMu = linMu;
     }
 
