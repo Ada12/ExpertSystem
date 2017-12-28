@@ -3,7 +3,7 @@ package entity;
 import javax.persistence.*;
 
 /**
- * Created by yangchen on 17/12/23.
+ * Created by yangchen on 17/12/28.
  */
 @Entity
 @Table(name = "basic_control", schema = "expert_system", catalog = "")
@@ -12,8 +12,7 @@ public class BasicControlEntity {
     private String description;
     private Double effAbsFrt;
     private Double effAbsRr;
-    private String peakTire;
-    private String effDrive;
+    private Integer ebd;
     private String notes;
 
     @Id
@@ -58,23 +57,13 @@ public class BasicControlEntity {
     }
 
     @Basic
-    @Column(name = "peak_tire")
-    public String getPeakTire() {
-        return peakTire;
+    @Column(name = "EBD")
+    public Integer getEbd() {
+        return ebd;
     }
 
-    public void setPeakTire(String peakTire) {
-        this.peakTire = peakTire;
-    }
-
-    @Basic
-    @Column(name = "eff_drive")
-    public String getEffDrive() {
-        return effDrive;
-    }
-
-    public void setEffDrive(String effDrive) {
-        this.effDrive = effDrive;
+    public void setEbd(Integer ebd) {
+        this.ebd = ebd;
     }
 
     @Basic
@@ -98,8 +87,7 @@ public class BasicControlEntity {
         if (description != null ? !description.equals(entity.description) : entity.description != null) return false;
         if (effAbsFrt != null ? !effAbsFrt.equals(entity.effAbsFrt) : entity.effAbsFrt != null) return false;
         if (effAbsRr != null ? !effAbsRr.equals(entity.effAbsRr) : entity.effAbsRr != null) return false;
-        if (peakTire != null ? !peakTire.equals(entity.peakTire) : entity.peakTire != null) return false;
-        if (effDrive != null ? !effDrive.equals(entity.effDrive) : entity.effDrive != null) return false;
+        if (ebd != null ? !ebd.equals(entity.ebd) : entity.ebd != null) return false;
         if (notes != null ? !notes.equals(entity.notes) : entity.notes != null) return false;
 
         return true;
@@ -111,8 +99,7 @@ public class BasicControlEntity {
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (effAbsFrt != null ? effAbsFrt.hashCode() : 0);
         result = 31 * result + (effAbsRr != null ? effAbsRr.hashCode() : 0);
-        result = 31 * result + (peakTire != null ? peakTire.hashCode() : 0);
-        result = 31 * result + (effDrive != null ? effDrive.hashCode() : 0);
+        result = 31 * result + (ebd != null ? ebd.hashCode() : 0);
         result = 31 * result + (notes != null ? notes.hashCode() : 0);
         return result;
     }
