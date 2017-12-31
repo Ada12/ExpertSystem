@@ -3,25 +3,24 @@ package entity;
 import javax.persistence.*;
 
 /**
- * Created by yangchen on 17/12/25.
+ * Created by yangchen on 17/12/31.
  */
 @Entity
 @Table(name = "configuration", schema = "expert_system", catalog = "")
 public class ConfigurationEntity {
     private int id;
     private String description;
-    private Integer vehicleId;
-    private Integer tireId;
-    private Integer applyId;
-    private Integer controlId;
-    private Integer discBrakeId;
-    private Integer drumBrakeId;
-    private Integer requireId;
+    private String vehicleDesc;
+    private String tireDesc;
+    private String applyDesc;
+    private String controlDesc;
+    private String discBrakeDesc;
+    private String drumBrakeDesc;
+    private String requireDesc;
     private String notes;
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
     public int getId() {
         return id;
     }
@@ -41,73 +40,73 @@ public class ConfigurationEntity {
     }
 
     @Basic
-    @Column(name = "vehicle_id")
-    public Integer getVehicleId() {
-        return vehicleId;
+    @Column(name = "vehicle_desc")
+    public String getVehicleDesc() {
+        return vehicleDesc;
     }
 
-    public void setVehicleId(Integer vehicleId) {
-        this.vehicleId = vehicleId;
-    }
-
-    @Basic
-    @Column(name = "tire_id")
-    public Integer getTireId() {
-        return tireId;
-    }
-
-    public void setTireId(Integer tireId) {
-        this.tireId = tireId;
+    public void setVehicleDesc(String vehicleDesc) {
+        this.vehicleDesc = vehicleDesc;
     }
 
     @Basic
-    @Column(name = "apply_id")
-    public Integer getApplyId() {
-        return applyId;
+    @Column(name = "tire_desc")
+    public String getTireDesc() {
+        return tireDesc;
     }
 
-    public void setApplyId(Integer applyId) {
-        this.applyId = applyId;
-    }
-
-    @Basic
-    @Column(name = "control_id")
-    public Integer getControlId() {
-        return controlId;
-    }
-
-    public void setControlId(Integer controlId) {
-        this.controlId = controlId;
+    public void setTireDesc(String tireDesc) {
+        this.tireDesc = tireDesc;
     }
 
     @Basic
-    @Column(name = "disc_brake_id")
-    public Integer getDiscBrakeId() {
-        return discBrakeId;
+    @Column(name = "apply_desc")
+    public String getApplyDesc() {
+        return applyDesc;
     }
 
-    public void setDiscBrakeId(Integer discBrakeId) {
-        this.discBrakeId = discBrakeId;
-    }
-
-    @Basic
-    @Column(name = "drum_brake_id")
-    public Integer getDrumBrakeId() {
-        return drumBrakeId;
-    }
-
-    public void setDrumBrakeId(Integer drumBrakeId) {
-        this.drumBrakeId = drumBrakeId;
+    public void setApplyDesc(String applyDesc) {
+        this.applyDesc = applyDesc;
     }
 
     @Basic
-    @Column(name = "require_id")
-    public Integer getRequireId() {
-        return requireId;
+    @Column(name = "control_desc")
+    public String getControlDesc() {
+        return controlDesc;
     }
 
-    public void setRequireId(Integer requireId) {
-        this.requireId = requireId;
+    public void setControlDesc(String controlDesc) {
+        this.controlDesc = controlDesc;
+    }
+
+    @Basic
+    @Column(name = "disc_brake_desc")
+    public String getDiscBrakeDesc() {
+        return discBrakeDesc;
+    }
+
+    public void setDiscBrakeDesc(String discBrakeDesc) {
+        this.discBrakeDesc = discBrakeDesc;
+    }
+
+    @Basic
+    @Column(name = "drum_brake_desc")
+    public String getDrumBrakeDesc() {
+        return drumBrakeDesc;
+    }
+
+    public void setDrumBrakeDesc(String drumBrakeDesc) {
+        this.drumBrakeDesc = drumBrakeDesc;
+    }
+
+    @Basic
+    @Column(name = "require_desc")
+    public String getRequireDesc() {
+        return requireDesc;
+    }
+
+    public void setRequireDesc(String requireDesc) {
+        this.requireDesc = requireDesc;
     }
 
     @Basic
@@ -129,13 +128,15 @@ public class ConfigurationEntity {
 
         if (id != entity.id) return false;
         if (description != null ? !description.equals(entity.description) : entity.description != null) return false;
-        if (vehicleId != null ? !vehicleId.equals(entity.vehicleId) : entity.vehicleId != null) return false;
-        if (tireId != null ? !tireId.equals(entity.tireId) : entity.tireId != null) return false;
-        if (applyId != null ? !applyId.equals(entity.applyId) : entity.applyId != null) return false;
-        if (controlId != null ? !controlId.equals(entity.controlId) : entity.controlId != null) return false;
-        if (discBrakeId != null ? !discBrakeId.equals(entity.discBrakeId) : entity.discBrakeId != null) return false;
-        if (drumBrakeId != null ? !drumBrakeId.equals(entity.drumBrakeId) : entity.drumBrakeId != null) return false;
-        if (requireId != null ? !requireId.equals(entity.requireId) : entity.requireId != null) return false;
+        if (vehicleDesc != null ? !vehicleDesc.equals(entity.vehicleDesc) : entity.vehicleDesc != null) return false;
+        if (tireDesc != null ? !tireDesc.equals(entity.tireDesc) : entity.tireDesc != null) return false;
+        if (applyDesc != null ? !applyDesc.equals(entity.applyDesc) : entity.applyDesc != null) return false;
+        if (controlDesc != null ? !controlDesc.equals(entity.controlDesc) : entity.controlDesc != null) return false;
+        if (discBrakeDesc != null ? !discBrakeDesc.equals(entity.discBrakeDesc) : entity.discBrakeDesc != null)
+            return false;
+        if (drumBrakeDesc != null ? !drumBrakeDesc.equals(entity.drumBrakeDesc) : entity.drumBrakeDesc != null)
+            return false;
+        if (requireDesc != null ? !requireDesc.equals(entity.requireDesc) : entity.requireDesc != null) return false;
         if (notes != null ? !notes.equals(entity.notes) : entity.notes != null) return false;
 
         return true;
@@ -145,13 +146,13 @@ public class ConfigurationEntity {
     public int hashCode() {
         int result = id;
         result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (vehicleId != null ? vehicleId.hashCode() : 0);
-        result = 31 * result + (tireId != null ? tireId.hashCode() : 0);
-        result = 31 * result + (applyId != null ? applyId.hashCode() : 0);
-        result = 31 * result + (controlId != null ? controlId.hashCode() : 0);
-        result = 31 * result + (discBrakeId != null ? discBrakeId.hashCode() : 0);
-        result = 31 * result + (drumBrakeId != null ? drumBrakeId.hashCode() : 0);
-        result = 31 * result + (requireId != null ? requireId.hashCode() : 0);
+        result = 31 * result + (vehicleDesc != null ? vehicleDesc.hashCode() : 0);
+        result = 31 * result + (tireDesc != null ? tireDesc.hashCode() : 0);
+        result = 31 * result + (applyDesc != null ? applyDesc.hashCode() : 0);
+        result = 31 * result + (controlDesc != null ? controlDesc.hashCode() : 0);
+        result = 31 * result + (discBrakeDesc != null ? discBrakeDesc.hashCode() : 0);
+        result = 31 * result + (drumBrakeDesc != null ? drumBrakeDesc.hashCode() : 0);
+        result = 31 * result + (requireDesc != null ? requireDesc.hashCode() : 0);
         result = 31 * result + (notes != null ? notes.hashCode() : 0);
         return result;
     }
