@@ -116,6 +116,14 @@ public class BasicController {
         }
     }
 
+    @RequestMapping(value = "basic/apply/delete", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> deleteBasicApply(
+            @RequestParam("description") String description
+    ) {
+        return getResponseBody(basicService.deleteApply(description));
+    }
+
     // basic control
     @RequestMapping(value = "basic/control/desc", method = RequestMethod.GET)
     @ResponseBody
@@ -169,6 +177,14 @@ public class BasicController {
             System.out.println(e);
             return getResponseBody(false);
         }
+    }
+
+    @RequestMapping(value = "basic/control/delete", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> deleteBasicControl(
+            @RequestParam("description") String description
+    ) {
+        return getResponseBody(basicService.deleteControl(description));
     }
 
     // basic disc brake
@@ -256,6 +272,14 @@ public class BasicController {
 //            System.out.println(e);
 //            return getResponseBody(false);
 //        }
+    }
+
+    @RequestMapping(value = "basic/discBrake/delete", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> deleteBasicDiscBrake(
+            @RequestParam("description") String description
+    ) {
+        return getResponseBody(basicService.deleteDiscBrake(description));
     }
 
     public Double getDoubleValue(String value) {
@@ -427,6 +451,14 @@ public class BasicController {
         }
     }
 
+    @RequestMapping(value = "basic/drumBrake/delete", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> deleteBasicDrumBrake(
+            @RequestParam("description") String description
+    ) {
+        return getResponseBody(basicService.deleteDrumBrake(description));
+    }
+
     // basic tire wheel
     @RequestMapping(value = "basic/tire/desc", method = RequestMethod.GET)
     @ResponseBody
@@ -486,6 +518,14 @@ public class BasicController {
             System.out.println(e);
             return getResponseBody(false);
         }
+    }
+
+    @RequestMapping(value = "basic/tire/delete", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> deleteBasicTire(
+            @RequestParam("description") String description
+    ) {
+        return getResponseBody(basicService.deleteTireWheel(description));
     }
 
 
@@ -554,6 +594,14 @@ public class BasicController {
             System.out.println(e);
             return getResponseBody(false);
         }
+    }
+
+    @RequestMapping(value = "basic/vehicle/delete", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> deleteBasicVehicle(
+            @RequestParam("description") String description
+    ) {
+        return getResponseBody(basicService.deleteVehicle(description));
     }
 
     // requirement
@@ -627,6 +675,14 @@ public class BasicController {
         }
     }
 
+    @RequestMapping(value = "basic/require/delete", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> deleteBasicRequire(
+            @RequestParam("description") String description
+    ) {
+        return getResponseBody(basicService.deleteRequirement(description));
+    }
+
     // Configuration!
     @RequestMapping(value = "basic/config/desc", method = RequestMethod.GET)
     @ResponseBody
@@ -671,19 +727,27 @@ public class BasicController {
         ConfigurationEntity entity = new ConfigurationEntity();
         try {
             entity.setDescription(params.get("description").toString());
-            entity.setVehicleId(getIntegerValue(params.get("vehicleId").toString()));
-            entity.setTireId(getIntegerValue(params.get("tireId").toString()));
-            entity.setApplyId(getIntegerValue(params.get("applyId").toString()));
-            entity.setControlId(getIntegerValue(params.get("controlId").toString()));
-            entity.setDiscBrakeId(getIntegerValue(params.get("discBrakeId").toString()));
-            entity.setDrumBrakeId(getIntegerValue(params.get("drumBrakeId").toString()));
-            entity.setRequireId(getIntegerValue(params.get("requireId").toString()));
+            entity.setVehicleDesc(params.get("vehicleDesc").toString());
+            entity.setTireDesc(params.get("tireDesc").toString());
+            entity.setApplyDesc(params.get("applyDesc").toString());
+            entity.setControlDesc(params.get("controlDesc").toString());
+            entity.setDiscBrakeDesc(params.get("discBrakeDesc").toString());
+            entity.setDrumBrakeDesc(params.get("drumBrakeDesc").toString());
+            entity.setRequireDesc(params.get("requireDesc").toString());
             entity.setNotes(params.get("notes").toString());
             return getResponseBody(basicService.addNewConfiguration(entity));
         } catch (Exception e) {
             System.out.println(e);
             return getResponseBody(false);
         }
+    }
+
+    @RequestMapping(value = "basic/config/delete", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> deleteBasicConfig(
+            @RequestParam("description") String description
+    ) {
+        return getResponseBody(basicService.deleteConfiguration(description));
     }
 
     // units!

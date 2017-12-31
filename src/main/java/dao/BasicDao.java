@@ -55,6 +55,22 @@ public class BasicDao {
         }
     }
 
+    public boolean deleteApply(String description) {
+        int query;
+        try {
+            query = entityManager.createQuery("delete from BasicApplyEntity b where b.description = '" + description + "'",
+                    BasicApplyEntity.class).executeUpdate();
+            if (query > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
     // basic control
     public List<BasicControlEntity> getBasicControlDesc() {
         TypedQuery<BasicControlEntity> query;
@@ -88,6 +104,22 @@ public class BasicDao {
         }
     }
 
+    public boolean deleteControl(String description) {
+        int query;
+        try {
+            query = entityManager.createQuery("delete from BasicControlEntity b where b.description = '" + description + "'",
+                    BasicControlEntity.class).executeUpdate();
+            if (query > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
     // basic disc brake
     public List<BasicDiscBrakeEntity> getBasicDiscBrakeDesc() {
         TypedQuery<BasicDiscBrakeEntity> query;
@@ -108,6 +140,22 @@ public class BasicDao {
             entities = null;
         }
         return entities;
+    }
+
+    public boolean deleteDiscBrake(String description) {
+        int query;
+        try {
+            query = entityManager.createQuery("delete from BasicDiscBrakeEntity b where b.description = '" + description + "'",
+                    BasicDiscBrakeEntity.class).executeUpdate();
+            if (query > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
     }
 
     public boolean addNewDiscBrake(BasicDiscBrakeEntity entity) {
@@ -154,6 +202,22 @@ public class BasicDao {
         }
     }
 
+    public boolean deleteDrumBrake(String description) {
+        int query;
+        try {
+            query = entityManager.createQuery("delete from BasicDrumBrakeEntity b where b.description = '" + description + "'",
+                    BasicDrumBrakeEntity.class).executeUpdate();
+            if (query > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
     // get vented rotor
     public BasicVentedRotorEntity getBasicVentedRotor(int id) {
         TypedQuery<BasicVentedRotorEntity> query;
@@ -177,6 +241,22 @@ public class BasicDao {
         } catch (Exception e) {
             System.out.println(e);
             return -1;
+        }
+    }
+
+    public boolean deleteVentedRotor(int id) {
+        int query;
+        try {
+            query = entityManager.createQuery("delete from BasicVentedRotorEntity b where b.id = " + id + "",
+                    BasicVentedRotorEntity.class).executeUpdate();
+            if (query > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
         }
     }
 
@@ -206,6 +286,22 @@ public class BasicDao {
         }
     }
 
+    public boolean deleteSolidRotor(int id) {
+        int query;
+        try {
+            query = entityManager.createQuery("delete from BasicSolidRotorEntity b where b.id = " + id + "",
+                    BasicSolidRotorEntity.class).executeUpdate();
+            if (query > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
     // get drum rotor
     public BasicDrumRotorEntity getBasicDrumRotor(int id) {
         TypedQuery<BasicDrumRotorEntity> query;
@@ -229,6 +325,22 @@ public class BasicDao {
         } catch (Exception e) {
             System.out.println(e);
             return -1;
+        }
+    }
+
+    public boolean deleteDrumRotor(int id) {
+        int query;
+        try {
+            query = entityManager.createQuery("delete from BasicDrumRotorEntity b where b.id = " + id + "",
+                    BasicDrumRotorEntity.class).executeUpdate();
+            if (query > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
         }
     }
 
@@ -266,6 +378,22 @@ public class BasicDao {
         }
     }
 
+    public boolean deleteTireWheel(String description) {
+        int query;
+        try {
+            query = entityManager.createQuery("delete from BasicTireEntity b where b.description = '" + description + "'",
+                    BasicTireEntity.class).executeUpdate();
+            if (query > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
     // basic vehicle
     public List<BasicVehicleEntity> getBasicVehicleDesc() {
         TypedQuery<BasicVehicleEntity> query;
@@ -295,6 +423,22 @@ public class BasicDao {
             return true;
         } catch (Exception e) {
             System.out.println(e);
+            return false;
+        }
+    }
+
+    public boolean deleteVehicle(String description) {
+        int query;
+        try {
+            query = entityManager.createQuery("delete from BasicVehicleEntity b where b.description = '" + description + "'",
+                    BasicVehicleEntity.class).executeUpdate();
+            if (query > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
             return false;
         }
     }
@@ -332,6 +476,22 @@ public class BasicDao {
         }
     }
 
+    public boolean deleteRequirement(String description) {
+        int query;
+        try {
+            query = entityManager.createQuery("delete from BasicRequirementEntity b where b.description = '" + description + "'",
+                    BasicRequirementEntity.class).executeUpdate();
+            if (query > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
     // Configuration !!!!!!!!!!!!!!!
     public List<ConfigurationEntity> getBasicConfigurationDesc() {
         TypedQuery<ConfigurationEntity> query;
@@ -361,6 +521,22 @@ public class BasicDao {
             return true;
         } catch (Exception e) {
             System.out.println(e);
+            return false;
+        }
+    }
+
+    public boolean deleteConfiguration(String description) {
+        int query;
+        try {
+            query = entityManager.createQuery("delete from ConfigurationEntity b where b.description = '" + description + "'",
+                    ConfigurationEntity.class).executeUpdate();
+            if (query > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
             return false;
         }
     }

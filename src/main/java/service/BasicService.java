@@ -31,6 +31,10 @@ public class BasicService {
         return basicDao.addNewApply(entity);
     }
 
+    public boolean deleteApply(String description) {
+        return basicDao.deleteApply(description);
+    }
+
     // basic control
     public List<BasicControlEntity> getBasicControlDesc() {
         return basicDao.getBasicControlDesc();
@@ -42,6 +46,10 @@ public class BasicService {
 
     public boolean addNewControl(BasicControlEntity entity) {
         return basicDao.addNewControl(entity);
+    }
+
+    public boolean deleteControl(String description) {
+        return basicDao.deleteControl(description);
     }
 
     // basic disc brake
@@ -67,6 +75,32 @@ public class BasicService {
         } else {
             entity.setRtId(rotorId);
             return basicDao.addNewDiscBrake(entity);
+        }
+    }
+
+    public boolean deleteDiscBrake(String description) {
+        BasicDiscBrakeEntity entity = basicDao.getBasicDiscBrake(description);
+        if (entity.getRtType().equals("Vented") || entity.getRtType().equals("vented")) {
+            boolean flag = basicDao.deleteVentedRotor(entity.getRtId());
+            if (flag) {
+                return basicDao.deleteDiscBrake(description);
+            } else {
+                return false;
+            }
+        } else if (entity.getRtType().equals("Solid") || entity.getRtType().equals("solid")) {
+            boolean flag = basicDao.deleteSolidRotor(entity.getRtId());
+            if (flag) {
+                return basicDao.deleteDiscBrake(description);
+            } else {
+                return false;
+            }
+        } else {
+            boolean flag = basicDao.deleteDrumRotor(entity.getRtId());
+            if (flag) {
+                return basicDao.deleteDiscBrake(description);
+            } else {
+                return false;
+            }
         }
     }
 
@@ -96,6 +130,32 @@ public class BasicService {
         }
     }
 
+    public boolean deleteDrumBrake(String description) {
+        BasicDrumBrakeEntity entity = basicDao.getBasicDrumBrake(description);
+        if (entity.getRtType().equals("Vented") || entity.getRtType().equals("vented")) {
+            boolean flag = basicDao.deleteVentedRotor(entity.getRtId());
+            if (flag) {
+                return basicDao.deleteDrumBrake(description);
+            } else {
+                return false;
+            }
+        } else if (entity.getRtType().equals("Solid") || entity.getRtType().equals("solid")) {
+            boolean flag = basicDao.deleteSolidRotor(entity.getRtId());
+            if (flag) {
+                return basicDao.deleteDrumBrake(description);
+            } else {
+                return false;
+            }
+        } else {
+            boolean flag = basicDao.deleteDrumRotor(entity.getRtId());
+            if (flag) {
+                return basicDao.deleteDrumBrake(description);
+            } else {
+                return false;
+            }
+        }
+    }
+
     // get basic rotor
     public BasicVentedRotorEntity getBasicVentedRotor(int id) {
         return basicDao.getBasicVentedRotor(id);
@@ -120,6 +180,10 @@ public class BasicService {
         return basicDao.addNewTireWheel(entity);
     }
 
+    public boolean deleteTireWheel(String description) {
+        return basicDao.deleteTireWheel(description);
+    }
+
     // basic vehicle
     public List<BasicVehicleEntity> getBasicVehicleDesc() {
         return basicDao.getBasicVehicleDesc();
@@ -131,6 +195,10 @@ public class BasicService {
 
     public boolean addNewVehicle(BasicVehicleEntity entity) {
         return basicDao.addNewVehicle(entity);
+    }
+
+    public boolean deleteVehicle(String description) {
+        return basicDao.deleteVehicle(description);
     }
 
     // requirement
@@ -146,6 +214,10 @@ public class BasicService {
         return basicDao.addNewRequirement(entity);
     }
 
+    public boolean deleteRequirement(String description) {
+        return basicDao.deleteRequirement(description);
+    }
+
     // Configuration !!!!!!!!!!!!!!!
     public List<ConfigurationEntity> getBasicConfigurationDesc() {
         return basicDao.getBasicConfigurationDesc();
@@ -157,6 +229,10 @@ public class BasicService {
 
     public boolean addNewConfiguration(ConfigurationEntity entity) {
         return basicDao.addNewConfiguration(entity);
+    }
+
+    public boolean deleteConfiguration(String description) {
+        return basicDao.deleteConfiguration(description);
     }
 
     public List<UnitsEntity> getUnits() {
