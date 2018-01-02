@@ -108,8 +108,8 @@ public class MatlabManualCalculate {
             MWCellArray absControl = new MWCellArray(new int[]{1,4});
             absControl.set(new int[]{1,1}, ":BWI");
             absControl.set(new int[]{1,2}, ":DBC7.8");
-            absControl.set(new int[]{1,3}, Double.parseDouble(controlMap.get("peakTire").toString()));
-            absControl.set(new int[]{1,4}, Double.parseDouble(controlMap.get("effDrive").toString()));
+            absControl.set(new int[]{1,3}, Double.parseDouble(controlMap.get("effAbsFrt").toString()));
+            absControl.set(new int[]{1,4}, Double.parseDouble(controlMap.get("effAbsRr").toString()));
             // frt/disc caliper
             // MWNumericArray frtPstArea = new MWNumericArray();
             List<Object> frtPVCurveList = (List<Object>) discBrakeMap.get("pVcurve");
