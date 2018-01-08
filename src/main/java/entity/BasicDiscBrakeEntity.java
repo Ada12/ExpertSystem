@@ -3,13 +3,15 @@ package entity;
 import javax.persistence.*;
 
 /**
- * Created by yangchen on 2017/12/25.
+ * Created by yangchen on 18/1/8.
  */
 @Entity
 @Table(name = "basic_disc_brake", schema = "expert_system", catalog = "")
 public class BasicDiscBrakeEntity {
     private int id;
     private String description;
+    private String frtType;
+    private String frtManu;
     private Double pstD;
     private Integer pstNum;
     private Double pstArea;
@@ -18,6 +20,7 @@ public class BasicDiscBrakeEntity {
     private Double pvK;
     private Double pvB;
     private Double pvC;
+    private String linSpl;
     private String linMat;
     private String linMu;
     private Double linMuK;
@@ -28,14 +31,13 @@ public class BasicDiscBrakeEntity {
     private String frtRtTempIn;
     private String frtLinWearOut;
     private String frtLinFrictOut;
-    private Integer rtId;
-    private String notes;
-    private String rtType;
     private Double inPerCorner;
+    private Integer rtId;
+    private String rtType;
+    private String notes;
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
     public int getId() {
         return id;
     }
@@ -52,6 +54,26 @@ public class BasicDiscBrakeEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Basic
+    @Column(name = "frt_type")
+    public String getFrtType() {
+        return frtType;
+    }
+
+    public void setFrtType(String frtType) {
+        this.frtType = frtType;
+    }
+
+    @Basic
+    @Column(name = "frt_manu")
+    public String getFrtManu() {
+        return frtManu;
+    }
+
+    public void setFrtManu(String frtManu) {
+        this.frtManu = frtManu;
     }
 
     @Basic
@@ -132,6 +154,16 @@ public class BasicDiscBrakeEntity {
 
     public void setPvC(Double pvC) {
         this.pvC = pvC;
+    }
+
+    @Basic
+    @Column(name = "lin_spl")
+    public String getLinSpl() {
+        return linSpl;
+    }
+
+    public void setLinSpl(String linSpl) {
+        this.linSpl = linSpl;
     }
 
     @Basic
@@ -235,6 +267,16 @@ public class BasicDiscBrakeEntity {
     }
 
     @Basic
+    @Column(name = "in_per_corner")
+    public Double getInPerCorner() {
+        return inPerCorner;
+    }
+
+    public void setInPerCorner(Double inPerCorner) {
+        this.inPerCorner = inPerCorner;
+    }
+
+    @Basic
     @Column(name = "rt_id")
     public Integer getRtId() {
         return rtId;
@@ -242,16 +284,6 @@ public class BasicDiscBrakeEntity {
 
     public void setRtId(Integer rtId) {
         this.rtId = rtId;
-    }
-
-    @Basic
-    @Column(name = "notes")
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
     }
 
     @Basic
@@ -265,13 +297,13 @@ public class BasicDiscBrakeEntity {
     }
 
     @Basic
-    @Column(name = "in_per_corner")
-    public Double getInPerCorner() {
-        return inPerCorner;
+    @Column(name = "notes")
+    public String getNotes() {
+        return notes;
     }
 
-    public void setInPerCorner(Double inPerCorner) {
-        this.inPerCorner = inPerCorner;
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 
     @Override
@@ -283,6 +315,8 @@ public class BasicDiscBrakeEntity {
 
         if (id != that.id) return false;
         if (description != null ? !description.equals(that.description) : that.description != null) return false;
+        if (frtType != null ? !frtType.equals(that.frtType) : that.frtType != null) return false;
+        if (frtManu != null ? !frtManu.equals(that.frtManu) : that.frtManu != null) return false;
         if (pstD != null ? !pstD.equals(that.pstD) : that.pstD != null) return false;
         if (pstNum != null ? !pstNum.equals(that.pstNum) : that.pstNum != null) return false;
         if (pstArea != null ? !pstArea.equals(that.pstArea) : that.pstArea != null) return false;
@@ -291,6 +325,7 @@ public class BasicDiscBrakeEntity {
         if (pvK != null ? !pvK.equals(that.pvK) : that.pvK != null) return false;
         if (pvB != null ? !pvB.equals(that.pvB) : that.pvB != null) return false;
         if (pvC != null ? !pvC.equals(that.pvC) : that.pvC != null) return false;
+        if (linSpl != null ? !linSpl.equals(that.linSpl) : that.linSpl != null) return false;
         if (linMat != null ? !linMat.equals(that.linMat) : that.linMat != null) return false;
         if (linMu != null ? !linMu.equals(that.linMu) : that.linMu != null) return false;
         if (linMuK != null ? !linMuK.equals(that.linMuK) : that.linMuK != null) return false;
@@ -303,10 +338,10 @@ public class BasicDiscBrakeEntity {
             return false;
         if (frtLinFrictOut != null ? !frtLinFrictOut.equals(that.frtLinFrictOut) : that.frtLinFrictOut != null)
             return false;
-        if (rtId != null ? !rtId.equals(that.rtId) : that.rtId != null) return false;
-        if (notes != null ? !notes.equals(that.notes) : that.notes != null) return false;
-        if (rtType != null ? !rtType.equals(that.rtType) : that.rtType != null) return false;
         if (inPerCorner != null ? !inPerCorner.equals(that.inPerCorner) : that.inPerCorner != null) return false;
+        if (rtId != null ? !rtId.equals(that.rtId) : that.rtId != null) return false;
+        if (rtType != null ? !rtType.equals(that.rtType) : that.rtType != null) return false;
+        if (notes != null ? !notes.equals(that.notes) : that.notes != null) return false;
 
         return true;
     }
@@ -315,6 +350,8 @@ public class BasicDiscBrakeEntity {
     public int hashCode() {
         int result = id;
         result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (frtType != null ? frtType.hashCode() : 0);
+        result = 31 * result + (frtManu != null ? frtManu.hashCode() : 0);
         result = 31 * result + (pstD != null ? pstD.hashCode() : 0);
         result = 31 * result + (pstNum != null ? pstNum.hashCode() : 0);
         result = 31 * result + (pstArea != null ? pstArea.hashCode() : 0);
@@ -323,6 +360,7 @@ public class BasicDiscBrakeEntity {
         result = 31 * result + (pvK != null ? pvK.hashCode() : 0);
         result = 31 * result + (pvB != null ? pvB.hashCode() : 0);
         result = 31 * result + (pvC != null ? pvC.hashCode() : 0);
+        result = 31 * result + (linSpl != null ? linSpl.hashCode() : 0);
         result = 31 * result + (linMat != null ? linMat.hashCode() : 0);
         result = 31 * result + (linMu != null ? linMu.hashCode() : 0);
         result = 31 * result + (linMuK != null ? linMuK.hashCode() : 0);
@@ -333,10 +371,10 @@ public class BasicDiscBrakeEntity {
         result = 31 * result + (frtRtTempIn != null ? frtRtTempIn.hashCode() : 0);
         result = 31 * result + (frtLinWearOut != null ? frtLinWearOut.hashCode() : 0);
         result = 31 * result + (frtLinFrictOut != null ? frtLinFrictOut.hashCode() : 0);
-        result = 31 * result + (rtId != null ? rtId.hashCode() : 0);
-        result = 31 * result + (notes != null ? notes.hashCode() : 0);
-        result = 31 * result + (rtType != null ? rtType.hashCode() : 0);
         result = 31 * result + (inPerCorner != null ? inPerCorner.hashCode() : 0);
+        result = 31 * result + (rtId != null ? rtId.hashCode() : 0);
+        result = 31 * result + (rtType != null ? rtType.hashCode() : 0);
+        result = 31 * result + (notes != null ? notes.hashCode() : 0);
         return result;
     }
 }

@@ -3,7 +3,7 @@ package entity;
 import javax.persistence.*;
 
 /**
- * Created by yangchen on 17/12/23.
+ * Created by yangchen on 18/1/8.
  */
 @Entity
 @Table(name = "basic_vehicle", schema = "expert_system", catalog = "")
@@ -22,6 +22,7 @@ public class BasicVehicleEntity {
     private Double gvwCgh;
     private Double l;
     private Double vmax;
+    private Double wot;
     private Double coastDecel;
     private Double cd;
     private Double a;
@@ -29,7 +30,6 @@ public class BasicVehicleEntity {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
     public int getId() {
         return id;
     }
@@ -169,6 +169,16 @@ public class BasicVehicleEntity {
     }
 
     @Basic
+    @Column(name = "wot")
+    public Double getWot() {
+        return wot;
+    }
+
+    public void setWot(Double wot) {
+        this.wot = wot;
+    }
+
+    @Basic
     @Column(name = "coast_decel")
     public Double getCoastDecel() {
         return coastDecel;
@@ -229,6 +239,7 @@ public class BasicVehicleEntity {
         if (gvwCgh != null ? !gvwCgh.equals(entity.gvwCgh) : entity.gvwCgh != null) return false;
         if (l != null ? !l.equals(entity.l) : entity.l != null) return false;
         if (vmax != null ? !vmax.equals(entity.vmax) : entity.vmax != null) return false;
+        if (wot != null ? !wot.equals(entity.wot) : entity.wot != null) return false;
         if (coastDecel != null ? !coastDecel.equals(entity.coastDecel) : entity.coastDecel != null) return false;
         if (cd != null ? !cd.equals(entity.cd) : entity.cd != null) return false;
         if (a != null ? !a.equals(entity.a) : entity.a != null) return false;
@@ -253,6 +264,7 @@ public class BasicVehicleEntity {
         result = 31 * result + (gvwCgh != null ? gvwCgh.hashCode() : 0);
         result = 31 * result + (l != null ? l.hashCode() : 0);
         result = 31 * result + (vmax != null ? vmax.hashCode() : 0);
+        result = 31 * result + (wot != null ? wot.hashCode() : 0);
         result = 31 * result + (coastDecel != null ? coastDecel.hashCode() : 0);
         result = 31 * result + (cd != null ? cd.hashCode() : 0);
         result = 31 * result + (a != null ? a.hashCode() : 0);

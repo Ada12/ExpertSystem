@@ -3,17 +3,19 @@ package entity;
 import javax.persistence.*;
 
 /**
- * Created by yangchen on 17/12/23.
+ * Created by yangchen on 18/1/8.
  */
 @Entity
 @Table(name = "basic_apply", schema = "expert_system", catalog = "")
 public class BasicApplyEntity {
     private int id;
     private String description;
+    private String pedSpl;
     private String pedRatio;
     private Double pedFEff;
     private Double pedTEff;
     private Integer pedType;
+    private String bstSpl;
     private Double bstSize;
     private Double bstGain;
     private Double bstFTotal;
@@ -25,6 +27,7 @@ public class BasicApplyEntity {
     private Double bstTLs;
     private Double bstVcm;
     private Double altBstVcm;
+    private String mcdSpl;
     private Double mcdD;
     private Double mcdFEff;
     private Double mcdTEff;
@@ -34,7 +37,6 @@ public class BasicApplyEntity {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
     public int getId() {
         return id;
     }
@@ -51,6 +53,16 @@ public class BasicApplyEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Basic
+    @Column(name = "ped_spl")
+    public String getPedSpl() {
+        return pedSpl;
+    }
+
+    public void setPedSpl(String pedSpl) {
+        this.pedSpl = pedSpl;
     }
 
     @Basic
@@ -91,6 +103,16 @@ public class BasicApplyEntity {
 
     public void setPedType(Integer pedType) {
         this.pedType = pedType;
+    }
+
+    @Basic
+    @Column(name = "bst_spl")
+    public String getBstSpl() {
+        return bstSpl;
+    }
+
+    public void setBstSpl(String bstSpl) {
+        this.bstSpl = bstSpl;
     }
 
     @Basic
@@ -204,6 +226,16 @@ public class BasicApplyEntity {
     }
 
     @Basic
+    @Column(name = "mcd_spl")
+    public String getMcdSpl() {
+        return mcdSpl;
+    }
+
+    public void setMcdSpl(String mcdSpl) {
+        this.mcdSpl = mcdSpl;
+    }
+
+    @Basic
     @Column(name = "mcd_d")
     public Double getMcdD() {
         return mcdD;
@@ -272,10 +304,12 @@ public class BasicApplyEntity {
 
         if (id != entity.id) return false;
         if (description != null ? !description.equals(entity.description) : entity.description != null) return false;
+        if (pedSpl != null ? !pedSpl.equals(entity.pedSpl) : entity.pedSpl != null) return false;
         if (pedRatio != null ? !pedRatio.equals(entity.pedRatio) : entity.pedRatio != null) return false;
         if (pedFEff != null ? !pedFEff.equals(entity.pedFEff) : entity.pedFEff != null) return false;
         if (pedTEff != null ? !pedTEff.equals(entity.pedTEff) : entity.pedTEff != null) return false;
         if (pedType != null ? !pedType.equals(entity.pedType) : entity.pedType != null) return false;
+        if (bstSpl != null ? !bstSpl.equals(entity.bstSpl) : entity.bstSpl != null) return false;
         if (bstSize != null ? !bstSize.equals(entity.bstSize) : entity.bstSize != null) return false;
         if (bstGain != null ? !bstGain.equals(entity.bstGain) : entity.bstGain != null) return false;
         if (bstFTotal != null ? !bstFTotal.equals(entity.bstFTotal) : entity.bstFTotal != null) return false;
@@ -287,6 +321,7 @@ public class BasicApplyEntity {
         if (bstTLs != null ? !bstTLs.equals(entity.bstTLs) : entity.bstTLs != null) return false;
         if (bstVcm != null ? !bstVcm.equals(entity.bstVcm) : entity.bstVcm != null) return false;
         if (altBstVcm != null ? !altBstVcm.equals(entity.altBstVcm) : entity.altBstVcm != null) return false;
+        if (mcdSpl != null ? !mcdSpl.equals(entity.mcdSpl) : entity.mcdSpl != null) return false;
         if (mcdD != null ? !mcdD.equals(entity.mcdD) : entity.mcdD != null) return false;
         if (mcdFEff != null ? !mcdFEff.equals(entity.mcdFEff) : entity.mcdFEff != null) return false;
         if (mcdTEff != null ? !mcdTEff.equals(entity.mcdTEff) : entity.mcdTEff != null) return false;
@@ -301,10 +336,12 @@ public class BasicApplyEntity {
     public int hashCode() {
         int result = id;
         result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (pedSpl != null ? pedSpl.hashCode() : 0);
         result = 31 * result + (pedRatio != null ? pedRatio.hashCode() : 0);
         result = 31 * result + (pedFEff != null ? pedFEff.hashCode() : 0);
         result = 31 * result + (pedTEff != null ? pedTEff.hashCode() : 0);
         result = 31 * result + (pedType != null ? pedType.hashCode() : 0);
+        result = 31 * result + (bstSpl != null ? bstSpl.hashCode() : 0);
         result = 31 * result + (bstSize != null ? bstSize.hashCode() : 0);
         result = 31 * result + (bstGain != null ? bstGain.hashCode() : 0);
         result = 31 * result + (bstFTotal != null ? bstFTotal.hashCode() : 0);
@@ -316,6 +353,7 @@ public class BasicApplyEntity {
         result = 31 * result + (bstTLs != null ? bstTLs.hashCode() : 0);
         result = 31 * result + (bstVcm != null ? bstVcm.hashCode() : 0);
         result = 31 * result + (altBstVcm != null ? altBstVcm.hashCode() : 0);
+        result = 31 * result + (mcdSpl != null ? mcdSpl.hashCode() : 0);
         result = 31 * result + (mcdD != null ? mcdD.hashCode() : 0);
         result = 31 * result + (mcdFEff != null ? mcdFEff.hashCode() : 0);
         result = 31 * result + (mcdTEff != null ? mcdTEff.hashCode() : 0);

@@ -3,7 +3,7 @@ package entity;
 import javax.persistence.*;
 
 /**
- * Created by yangchen on 17/12/23.
+ * Created by yangchen on 18/1/8.
  */
 @Entity
 @Table(name = "basic_tire", schema = "expert_system", catalog = "")
@@ -23,7 +23,6 @@ public class BasicTireEntity {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
     public int getId() {
         return id;
     }

@@ -3,19 +3,20 @@ package entity;
 import javax.persistence.*;
 
 /**
- * Created by yangchen on 17/12/23.
+ * Created by yangchen on 18/1/8.
  */
 @Entity
 @Table(name = "basic_solid_rotor", schema = "expert_system", catalog = "")
 public class BasicSolidRotorEntity {
     private int id;
-    private Double rtSwpArea;
-    private Double rtEfcR;
-    private Double rtDiaOut;
-    private Double rtDiaIn;
+    private String rrManu;
+    private String rrMat;
+    private Double efcR;
+    private Double outD;
+    private Double inD;
     private Double rtT;
-    private Double rtWm;
-    private Double rtWa;
+    private Double wm;
+    private Double wa;
     private Double rho;
     private Double cc50;
     private Double cc80;
@@ -28,7 +29,6 @@ public class BasicSolidRotorEntity {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
     public int getId() {
         return id;
     }
@@ -38,43 +38,53 @@ public class BasicSolidRotorEntity {
     }
 
     @Basic
-    @Column(name = "rt_swp_area")
-    public Double getRtSwpArea() {
-        return rtSwpArea;
+    @Column(name = "rr_manu")
+    public String getRrManu() {
+        return rrManu;
     }
 
-    public void setRtSwpArea(Double rtSwpArea) {
-        this.rtSwpArea = rtSwpArea;
-    }
-
-    @Basic
-    @Column(name = "rt_efc_r")
-    public Double getRtEfcR() {
-        return rtEfcR;
-    }
-
-    public void setRtEfcR(Double rtEfcR) {
-        this.rtEfcR = rtEfcR;
+    public void setRrManu(String rrManu) {
+        this.rrManu = rrManu;
     }
 
     @Basic
-    @Column(name = "rt_dia_out")
-    public Double getRtDiaOut() {
-        return rtDiaOut;
+    @Column(name = "rr_mat")
+    public String getRrMat() {
+        return rrMat;
     }
 
-    public void setRtDiaOut(Double rtDiaOut) {
-        this.rtDiaOut = rtDiaOut;
+    public void setRrMat(String rrMat) {
+        this.rrMat = rrMat;
     }
 
     @Basic
-    @Column(name = "rt_dia_in")
-    public Double getRtDiaIn() {
-        return rtDiaIn;
+    @Column(name = "efc_r")
+    public Double getEfcR() {
+        return efcR;
     }
 
-    public void setRtDiaIn(Double rtDiaIn) {
-        this.rtDiaIn = rtDiaIn;
+    public void setEfcR(Double efcR) {
+        this.efcR = efcR;
+    }
+
+    @Basic
+    @Column(name = "out_d")
+    public Double getOutD() {
+        return outD;
+    }
+
+    public void setOutD(Double outD) {
+        this.outD = outD;
+    }
+
+    @Basic
+    @Column(name = "in_d")
+    public Double getInD() {
+        return inD;
+    }
+
+    public void setInD(Double inD) {
+        this.inD = inD;
     }
 
     @Basic
@@ -88,23 +98,23 @@ public class BasicSolidRotorEntity {
     }
 
     @Basic
-    @Column(name = "rt_wm")
-    public Double getRtWm() {
-        return rtWm;
+    @Column(name = "wm")
+    public Double getWm() {
+        return wm;
     }
 
-    public void setRtWm(Double rtWm) {
-        this.rtWm = rtWm;
+    public void setWm(Double wm) {
+        this.wm = wm;
     }
 
     @Basic
-    @Column(name = "rt_wa")
-    public Double getRtWa() {
-        return rtWa;
+    @Column(name = "wa")
+    public Double getWa() {
+        return wa;
     }
 
-    public void setRtWa(Double rtWa) {
-        this.rtWa = rtWa;
+    public void setWa(Double wa) {
+        this.wa = wa;
     }
 
     @Basic
@@ -205,13 +215,14 @@ public class BasicSolidRotorEntity {
         BasicSolidRotorEntity that = (BasicSolidRotorEntity) o;
 
         if (id != that.id) return false;
-        if (rtSwpArea != null ? !rtSwpArea.equals(that.rtSwpArea) : that.rtSwpArea != null) return false;
-        if (rtEfcR != null ? !rtEfcR.equals(that.rtEfcR) : that.rtEfcR != null) return false;
-        if (rtDiaOut != null ? !rtDiaOut.equals(that.rtDiaOut) : that.rtDiaOut != null) return false;
-        if (rtDiaIn != null ? !rtDiaIn.equals(that.rtDiaIn) : that.rtDiaIn != null) return false;
+        if (rrManu != null ? !rrManu.equals(that.rrManu) : that.rrManu != null) return false;
+        if (rrMat != null ? !rrMat.equals(that.rrMat) : that.rrMat != null) return false;
+        if (efcR != null ? !efcR.equals(that.efcR) : that.efcR != null) return false;
+        if (outD != null ? !outD.equals(that.outD) : that.outD != null) return false;
+        if (inD != null ? !inD.equals(that.inD) : that.inD != null) return false;
         if (rtT != null ? !rtT.equals(that.rtT) : that.rtT != null) return false;
-        if (rtWm != null ? !rtWm.equals(that.rtWm) : that.rtWm != null) return false;
-        if (rtWa != null ? !rtWa.equals(that.rtWa) : that.rtWa != null) return false;
+        if (wm != null ? !wm.equals(that.wm) : that.wm != null) return false;
+        if (wa != null ? !wa.equals(that.wa) : that.wa != null) return false;
         if (rho != null ? !rho.equals(that.rho) : that.rho != null) return false;
         if (cc50 != null ? !cc50.equals(that.cc50) : that.cc50 != null) return false;
         if (cc80 != null ? !cc80.equals(that.cc80) : that.cc80 != null) return false;
@@ -228,13 +239,14 @@ public class BasicSolidRotorEntity {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + (rtSwpArea != null ? rtSwpArea.hashCode() : 0);
-        result = 31 * result + (rtEfcR != null ? rtEfcR.hashCode() : 0);
-        result = 31 * result + (rtDiaOut != null ? rtDiaOut.hashCode() : 0);
-        result = 31 * result + (rtDiaIn != null ? rtDiaIn.hashCode() : 0);
+        result = 31 * result + (rrManu != null ? rrManu.hashCode() : 0);
+        result = 31 * result + (rrMat != null ? rrMat.hashCode() : 0);
+        result = 31 * result + (efcR != null ? efcR.hashCode() : 0);
+        result = 31 * result + (outD != null ? outD.hashCode() : 0);
+        result = 31 * result + (inD != null ? inD.hashCode() : 0);
         result = 31 * result + (rtT != null ? rtT.hashCode() : 0);
-        result = 31 * result + (rtWm != null ? rtWm.hashCode() : 0);
-        result = 31 * result + (rtWa != null ? rtWa.hashCode() : 0);
+        result = 31 * result + (wm != null ? wm.hashCode() : 0);
+        result = 31 * result + (wa != null ? wa.hashCode() : 0);
         result = 31 * result + (rho != null ? rho.hashCode() : 0);
         result = 31 * result + (cc50 != null ? cc50.hashCode() : 0);
         result = 31 * result + (cc80 != null ? cc80.hashCode() : 0);

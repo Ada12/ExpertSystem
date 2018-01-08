@@ -3,13 +3,15 @@ package entity;
 import javax.persistence.*;
 
 /**
- * Created by yangchen on 17/12/28.
+ * Created by yangchen on 18/1/8.
  */
 @Entity
 @Table(name = "basic_control", schema = "expert_system", catalog = "")
 public class BasicControlEntity {
     private int id;
     private String description;
+    private String absSpl;
+    private String absType;
     private Double effAbsFrt;
     private Double effAbsRr;
     private Integer ebd;
@@ -17,7 +19,6 @@ public class BasicControlEntity {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
     public int getId() {
         return id;
     }
@@ -34,6 +35,26 @@ public class BasicControlEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Basic
+    @Column(name = "abs_spl")
+    public String getAbsSpl() {
+        return absSpl;
+    }
+
+    public void setAbsSpl(String absSpl) {
+        this.absSpl = absSpl;
+    }
+
+    @Basic
+    @Column(name = "abs_type")
+    public String getAbsType() {
+        return absType;
+    }
+
+    public void setAbsType(String absType) {
+        this.absType = absType;
     }
 
     @Basic
@@ -85,6 +106,8 @@ public class BasicControlEntity {
 
         if (id != entity.id) return false;
         if (description != null ? !description.equals(entity.description) : entity.description != null) return false;
+        if (absSpl != null ? !absSpl.equals(entity.absSpl) : entity.absSpl != null) return false;
+        if (absType != null ? !absType.equals(entity.absType) : entity.absType != null) return false;
         if (effAbsFrt != null ? !effAbsFrt.equals(entity.effAbsFrt) : entity.effAbsFrt != null) return false;
         if (effAbsRr != null ? !effAbsRr.equals(entity.effAbsRr) : entity.effAbsRr != null) return false;
         if (ebd != null ? !ebd.equals(entity.ebd) : entity.ebd != null) return false;
@@ -97,6 +120,8 @@ public class BasicControlEntity {
     public int hashCode() {
         int result = id;
         result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (absSpl != null ? absSpl.hashCode() : 0);
+        result = 31 * result + (absType != null ? absType.hashCode() : 0);
         result = 31 * result + (effAbsFrt != null ? effAbsFrt.hashCode() : 0);
         result = 31 * result + (effAbsRr != null ? effAbsRr.hashCode() : 0);
         result = 31 * result + (ebd != null ? ebd.hashCode() : 0);

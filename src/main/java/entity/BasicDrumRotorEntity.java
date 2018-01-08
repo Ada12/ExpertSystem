@@ -3,21 +3,24 @@ package entity;
 import javax.persistence.*;
 
 /**
- * Created by yangchen on 17/12/23.
+ * Created by yangchen on 18/1/8.
  */
 @Entity
 @Table(name = "basic_drum_rotor", schema = "expert_system", catalog = "")
 public class BasicDrumRotorEntity {
     private int id;
-    private Double rtEfcR;
-    private Double odDm;
-    private Double idDm;
-    private Double thDm;
-    private Double wdDm;
-    private Double jthDm;
-    private Double rtVaneHigh;
-    private Double rtWm;
-    private Double rtWa;
+    private String rrManu;
+    private String rrMat;
+    private Double swpArea;
+    private Double efcR;
+    private Double outD;
+    private Double inD;
+    private Double rtThick;
+    private Double ribThick;
+    private Double ribWidth;
+    private Double rtWidth;
+    private Double wm;
+    private Double wa;
     private Double rho;
     private Double cc50;
     private Double cc80;
@@ -30,7 +33,6 @@ public class BasicDrumRotorEntity {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
     public int getId() {
         return id;
     }
@@ -40,93 +42,123 @@ public class BasicDrumRotorEntity {
     }
 
     @Basic
-    @Column(name = "rt_efc_r")
-    public Double getRtEfcR() {
-        return rtEfcR;
+    @Column(name = "rr_manu")
+    public String getRrManu() {
+        return rrManu;
     }
 
-    public void setRtEfcR(Double rtEfcR) {
-        this.rtEfcR = rtEfcR;
-    }
-
-    @Basic
-    @Column(name = "Od_dm")
-    public Double getOdDm() {
-        return odDm;
-    }
-
-    public void setOdDm(Double odDm) {
-        this.odDm = odDm;
+    public void setRrManu(String rrManu) {
+        this.rrManu = rrManu;
     }
 
     @Basic
-    @Column(name = "Id_dm")
-    public Double getIdDm() {
-        return idDm;
+    @Column(name = "rr_mat")
+    public String getRrMat() {
+        return rrMat;
     }
 
-    public void setIdDm(Double idDm) {
-        this.idDm = idDm;
-    }
-
-    @Basic
-    @Column(name = "Th_dm")
-    public Double getThDm() {
-        return thDm;
-    }
-
-    public void setThDm(Double thDm) {
-        this.thDm = thDm;
+    public void setRrMat(String rrMat) {
+        this.rrMat = rrMat;
     }
 
     @Basic
-    @Column(name = "Wd_dm")
-    public Double getWdDm() {
-        return wdDm;
+    @Column(name = "swp_area")
+    public Double getSwpArea() {
+        return swpArea;
     }
 
-    public void setWdDm(Double wdDm) {
-        this.wdDm = wdDm;
-    }
-
-    @Basic
-    @Column(name = "Jth_dm")
-    public Double getJthDm() {
-        return jthDm;
-    }
-
-    public void setJthDm(Double jthDm) {
-        this.jthDm = jthDm;
+    public void setSwpArea(Double swpArea) {
+        this.swpArea = swpArea;
     }
 
     @Basic
-    @Column(name = "rt_vane_high")
-    public Double getRtVaneHigh() {
-        return rtVaneHigh;
+    @Column(name = "efc_r")
+    public Double getEfcR() {
+        return efcR;
     }
 
-    public void setRtVaneHigh(Double rtVaneHigh) {
-        this.rtVaneHigh = rtVaneHigh;
-    }
-
-    @Basic
-    @Column(name = "rt_wm")
-    public Double getRtWm() {
-        return rtWm;
-    }
-
-    public void setRtWm(Double rtWm) {
-        this.rtWm = rtWm;
+    public void setEfcR(Double efcR) {
+        this.efcR = efcR;
     }
 
     @Basic
-    @Column(name = "rt_wa")
-    public Double getRtWa() {
-        return rtWa;
+    @Column(name = "out_d")
+    public Double getOutD() {
+        return outD;
     }
 
-    public void setRtWa(Double rtWa) {
-        this.rtWa = rtWa;
+    public void setOutD(Double outD) {
+        this.outD = outD;
+    }
+
+    @Basic
+    @Column(name = "in_d")
+    public Double getInD() {
+        return inD;
+    }
+
+    public void setInD(Double inD) {
+        this.inD = inD;
+    }
+
+    @Basic
+    @Column(name = "rt_thick")
+    public Double getRtThick() {
+        return rtThick;
+    }
+
+    public void setRtThick(Double rtThick) {
+        this.rtThick = rtThick;
+    }
+
+    @Basic
+    @Column(name = "rib_thick")
+    public Double getRibThick() {
+        return ribThick;
+    }
+
+    public void setRibThick(Double ribThick) {
+        this.ribThick = ribThick;
+    }
+
+    @Basic
+    @Column(name = "rib_width")
+    public Double getRibWidth() {
+        return ribWidth;
+    }
+
+    public void setRibWidth(Double ribWidth) {
+        this.ribWidth = ribWidth;
+    }
+
+    @Basic
+    @Column(name = "rt_width")
+    public Double getRtWidth() {
+        return rtWidth;
+    }
+
+    public void setRtWidth(Double rtWidth) {
+        this.rtWidth = rtWidth;
+    }
+
+    @Basic
+    @Column(name = "wm")
+    public Double getWm() {
+        return wm;
+    }
+
+    public void setWm(Double wm) {
+        this.wm = wm;
+    }
+
+    @Basic
+    @Column(name = "wa")
+    public Double getWa() {
+        return wa;
+    }
+
+    public void setWa(Double wa) {
+        this.wa = wa;
     }
 
     @Basic
@@ -227,15 +259,18 @@ public class BasicDrumRotorEntity {
         BasicDrumRotorEntity that = (BasicDrumRotorEntity) o;
 
         if (id != that.id) return false;
-        if (rtEfcR != null ? !rtEfcR.equals(that.rtEfcR) : that.rtEfcR != null) return false;
-        if (odDm != null ? !odDm.equals(that.odDm) : that.odDm != null) return false;
-        if (idDm != null ? !idDm.equals(that.idDm) : that.idDm != null) return false;
-        if (thDm != null ? !thDm.equals(that.thDm) : that.thDm != null) return false;
-        if (wdDm != null ? !wdDm.equals(that.wdDm) : that.wdDm != null) return false;
-        if (jthDm != null ? !jthDm.equals(that.jthDm) : that.jthDm != null) return false;
-        if (rtVaneHigh != null ? !rtVaneHigh.equals(that.rtVaneHigh) : that.rtVaneHigh != null) return false;
-        if (rtWm != null ? !rtWm.equals(that.rtWm) : that.rtWm != null) return false;
-        if (rtWa != null ? !rtWa.equals(that.rtWa) : that.rtWa != null) return false;
+        if (rrManu != null ? !rrManu.equals(that.rrManu) : that.rrManu != null) return false;
+        if (rrMat != null ? !rrMat.equals(that.rrMat) : that.rrMat != null) return false;
+        if (swpArea != null ? !swpArea.equals(that.swpArea) : that.swpArea != null) return false;
+        if (efcR != null ? !efcR.equals(that.efcR) : that.efcR != null) return false;
+        if (outD != null ? !outD.equals(that.outD) : that.outD != null) return false;
+        if (inD != null ? !inD.equals(that.inD) : that.inD != null) return false;
+        if (rtThick != null ? !rtThick.equals(that.rtThick) : that.rtThick != null) return false;
+        if (ribThick != null ? !ribThick.equals(that.ribThick) : that.ribThick != null) return false;
+        if (ribWidth != null ? !ribWidth.equals(that.ribWidth) : that.ribWidth != null) return false;
+        if (rtWidth != null ? !rtWidth.equals(that.rtWidth) : that.rtWidth != null) return false;
+        if (wm != null ? !wm.equals(that.wm) : that.wm != null) return false;
+        if (wa != null ? !wa.equals(that.wa) : that.wa != null) return false;
         if (rho != null ? !rho.equals(that.rho) : that.rho != null) return false;
         if (cc50 != null ? !cc50.equals(that.cc50) : that.cc50 != null) return false;
         if (cc80 != null ? !cc80.equals(that.cc80) : that.cc80 != null) return false;
@@ -252,15 +287,18 @@ public class BasicDrumRotorEntity {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + (rtEfcR != null ? rtEfcR.hashCode() : 0);
-        result = 31 * result + (odDm != null ? odDm.hashCode() : 0);
-        result = 31 * result + (idDm != null ? idDm.hashCode() : 0);
-        result = 31 * result + (thDm != null ? thDm.hashCode() : 0);
-        result = 31 * result + (wdDm != null ? wdDm.hashCode() : 0);
-        result = 31 * result + (jthDm != null ? jthDm.hashCode() : 0);
-        result = 31 * result + (rtVaneHigh != null ? rtVaneHigh.hashCode() : 0);
-        result = 31 * result + (rtWm != null ? rtWm.hashCode() : 0);
-        result = 31 * result + (rtWa != null ? rtWa.hashCode() : 0);
+        result = 31 * result + (rrManu != null ? rrManu.hashCode() : 0);
+        result = 31 * result + (rrMat != null ? rrMat.hashCode() : 0);
+        result = 31 * result + (swpArea != null ? swpArea.hashCode() : 0);
+        result = 31 * result + (efcR != null ? efcR.hashCode() : 0);
+        result = 31 * result + (outD != null ? outD.hashCode() : 0);
+        result = 31 * result + (inD != null ? inD.hashCode() : 0);
+        result = 31 * result + (rtThick != null ? rtThick.hashCode() : 0);
+        result = 31 * result + (ribThick != null ? ribThick.hashCode() : 0);
+        result = 31 * result + (ribWidth != null ? ribWidth.hashCode() : 0);
+        result = 31 * result + (rtWidth != null ? rtWidth.hashCode() : 0);
+        result = 31 * result + (wm != null ? wm.hashCode() : 0);
+        result = 31 * result + (wa != null ? wa.hashCode() : 0);
         result = 31 * result + (rho != null ? rho.hashCode() : 0);
         result = 31 * result + (cc50 != null ? cc50.hashCode() : 0);
         result = 31 * result + (cc80 != null ? cc80.hashCode() : 0);

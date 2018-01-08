@@ -3,22 +3,26 @@ package entity;
 import javax.persistence.*;
 
 /**
- * Created by yangchen on 2017/12/25.
+ * Created by yangchen on 18/1/8.
  */
 @Entity
 @Table(name = "basic_drum_brake", schema = "expert_system", catalog = "")
 public class BasicDrumBrakeEntity {
     private int id;
     private String description;
-    private Double cDia;
+    private String frtType;
+    private String frtManu;
+    private Double pstD;
     private Integer pstNum;
     private Double pstArea;
-    private Double cHp;
+    private Double hfP;
     private String pVcurve;
     private Double pvK;
     private Double pvB;
     private Double pvC;
+    private String linSpl;
     private String linMat;
+    private String insulator;
     private String linMu;
     private Double linMuK;
     private Double linMuE;
@@ -35,7 +39,6 @@ public class BasicDrumBrakeEntity {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
     public int getId() {
         return id;
     }
@@ -55,17 +58,37 @@ public class BasicDrumBrakeEntity {
     }
 
     @Basic
-    @Column(name = "C_dia")
-    public Double getcDia() {
-        return cDia;
+    @Column(name = "frt_type")
+    public String getFrtType() {
+        return frtType;
     }
 
-    public void setcDia(Double cDia) {
-        this.cDia = cDia;
+    public void setFrtType(String frtType) {
+        this.frtType = frtType;
     }
 
     @Basic
-    @Column(name = "Pst_num")
+    @Column(name = "frt_manu")
+    public String getFrtManu() {
+        return frtManu;
+    }
+
+    public void setFrtManu(String frtManu) {
+        this.frtManu = frtManu;
+    }
+
+    @Basic
+    @Column(name = "pst_d")
+    public Double getPstD() {
+        return pstD;
+    }
+
+    public void setPstD(Double pstD) {
+        this.pstD = pstD;
+    }
+
+    @Basic
+    @Column(name = "pst_num")
     public Integer getPstNum() {
         return pstNum;
     }
@@ -75,7 +98,7 @@ public class BasicDrumBrakeEntity {
     }
 
     @Basic
-    @Column(name = "Pst_area")
+    @Column(name = "pst_area")
     public Double getPstArea() {
         return pstArea;
     }
@@ -85,13 +108,13 @@ public class BasicDrumBrakeEntity {
     }
 
     @Basic
-    @Column(name = "C_hp")
-    public Double getcHp() {
-        return cHp;
+    @Column(name = "hf_P")
+    public Double getHfP() {
+        return hfP;
     }
 
-    public void setcHp(Double cHp) {
-        this.cHp = cHp;
+    public void setHfP(Double hfP) {
+        this.hfP = hfP;
     }
 
     @Basic
@@ -135,6 +158,16 @@ public class BasicDrumBrakeEntity {
     }
 
     @Basic
+    @Column(name = "lin_spl")
+    public String getLinSpl() {
+        return linSpl;
+    }
+
+    public void setLinSpl(String linSpl) {
+        this.linSpl = linSpl;
+    }
+
+    @Basic
     @Column(name = "lin_mat")
     public String getLinMat() {
         return linMat;
@@ -142,6 +175,16 @@ public class BasicDrumBrakeEntity {
 
     public void setLinMat(String linMat) {
         this.linMat = linMat;
+    }
+
+    @Basic
+    @Column(name = "insulator")
+    public String getInsulator() {
+        return insulator;
+    }
+
+    public void setInsulator(String insulator) {
+        this.insulator = insulator;
     }
 
     @Basic
@@ -283,15 +326,19 @@ public class BasicDrumBrakeEntity {
 
         if (id != that.id) return false;
         if (description != null ? !description.equals(that.description) : that.description != null) return false;
-        if (cDia != null ? !cDia.equals(that.cDia) : that.cDia != null) return false;
+        if (frtType != null ? !frtType.equals(that.frtType) : that.frtType != null) return false;
+        if (frtManu != null ? !frtManu.equals(that.frtManu) : that.frtManu != null) return false;
+        if (pstD != null ? !pstD.equals(that.pstD) : that.pstD != null) return false;
         if (pstNum != null ? !pstNum.equals(that.pstNum) : that.pstNum != null) return false;
         if (pstArea != null ? !pstArea.equals(that.pstArea) : that.pstArea != null) return false;
-        if (cHp != null ? !cHp.equals(that.cHp) : that.cHp != null) return false;
+        if (hfP != null ? !hfP.equals(that.hfP) : that.hfP != null) return false;
         if (pVcurve != null ? !pVcurve.equals(that.pVcurve) : that.pVcurve != null) return false;
         if (pvK != null ? !pvK.equals(that.pvK) : that.pvK != null) return false;
         if (pvB != null ? !pvB.equals(that.pvB) : that.pvB != null) return false;
         if (pvC != null ? !pvC.equals(that.pvC) : that.pvC != null) return false;
+        if (linSpl != null ? !linSpl.equals(that.linSpl) : that.linSpl != null) return false;
         if (linMat != null ? !linMat.equals(that.linMat) : that.linMat != null) return false;
+        if (insulator != null ? !insulator.equals(that.insulator) : that.insulator != null) return false;
         if (linMu != null ? !linMu.equals(that.linMu) : that.linMu != null) return false;
         if (linMuK != null ? !linMuK.equals(that.linMuK) : that.linMuK != null) return false;
         if (linMuE != null ? !linMuE.equals(that.linMuE) : that.linMuE != null) return false;
@@ -315,15 +362,19 @@ public class BasicDrumBrakeEntity {
     public int hashCode() {
         int result = id;
         result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (cDia != null ? cDia.hashCode() : 0);
+        result = 31 * result + (frtType != null ? frtType.hashCode() : 0);
+        result = 31 * result + (frtManu != null ? frtManu.hashCode() : 0);
+        result = 31 * result + (pstD != null ? pstD.hashCode() : 0);
         result = 31 * result + (pstNum != null ? pstNum.hashCode() : 0);
         result = 31 * result + (pstArea != null ? pstArea.hashCode() : 0);
-        result = 31 * result + (cHp != null ? cHp.hashCode() : 0);
+        result = 31 * result + (hfP != null ? hfP.hashCode() : 0);
         result = 31 * result + (pVcurve != null ? pVcurve.hashCode() : 0);
         result = 31 * result + (pvK != null ? pvK.hashCode() : 0);
         result = 31 * result + (pvB != null ? pvB.hashCode() : 0);
         result = 31 * result + (pvC != null ? pvC.hashCode() : 0);
+        result = 31 * result + (linSpl != null ? linSpl.hashCode() : 0);
         result = 31 * result + (linMat != null ? linMat.hashCode() : 0);
+        result = 31 * result + (insulator != null ? insulator.hashCode() : 0);
         result = 31 * result + (linMu != null ? linMu.hashCode() : 0);
         result = 31 * result + (linMuK != null ? linMuK.hashCode() : 0);
         result = 31 * result + (linMuE != null ? linMuE.hashCode() : 0);
