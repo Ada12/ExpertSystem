@@ -4,3 +4,4 @@ ExpertSystem.iml
 *.ear
 .DS_Store
 .idea/*
+target/*
