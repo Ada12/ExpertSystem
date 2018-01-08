@@ -88,10 +88,12 @@ public class BasicController {
         try {
             BasicApplyEntity entity = new BasicApplyEntity();
             entity.setDescription(String.valueOf(params.get("description")));
+            entity.setPedSpl(String.valueOf(params.get("pedSpl")));
             entity.setPedRatio(String.valueOf(params.get("pedRatio")));
             entity.setPedFEff(getDoubleValue(params.get("pedFEff").toString()));
             entity.setPedTEff((getDoubleValue(params.get("pedTEff").toString())));
             entity.setPedType(getIntegerValue(params.get("pedType").toString()));
+            entity.setBstSpl(String.valueOf(params.get("bstSpl")));
             entity.setBstSize(getDoubleValue(params.get("bstSize").toString()));
             entity.setBstGain(getDoubleValue(params.get("bstGain").toString()));
             entity.setBstFTotal(getDoubleValue(params.get("bstFTotal").toString()));
@@ -103,12 +105,13 @@ public class BasicController {
             entity.setBstTLs(getDoubleValue(params.get("bstTLs").toString()));
             entity.setBstVcm(getDoubleValue(params.get("bstVcm").toString()));
             entity.setAltBstVcm(getDoubleValue(params.get("altBstVcm").toString()));
+            entity.setMcdSpl(String.valueOf(params.get("mcdSpl")));
             entity.setMcdD((getDoubleValue(params.get("mcdD").toString())));
             entity.setMcdFEff(getDoubleValue(params.get("mcdFEff").toString()));
             entity.setMcdTEff(getDoubleValue(params.get("mcdTEff").toString()));
             entity.setApyFEff(getDoubleValue(params.get("apyFEff").toString()));
             entity.setApyTEff(getDoubleValue(params.get("apyTEff").toString()));
-            entity.setNotes((String) params.get("notes"));
+            entity.setNotes(String.valueOf(params.get("notes")));
             return getResponseBody(basicService.addNewApply(entity));
         } catch (Exception e) {
             System.out.println(e);
@@ -168,6 +171,8 @@ public class BasicController {
         try {
             BasicControlEntity entity = new BasicControlEntity();
             entity.setDescription(params.get("description").toString());
+            entity.setAbsSpl(String.valueOf(params.get("absSpl")));
+            entity.setAbsType(String.valueOf(params.get("absType")));
             entity.setEffAbsFrt(getDoubleValue(params.get("effAbsFrt").toString()));
             entity.setEffAbsRr(getDoubleValue(params.get("effAbsRr").toString()));
             entity.setEbd(getIntegerValue(params.get("ebd").toString()));
@@ -208,16 +213,20 @@ public class BasicController {
             @RequestParam("description") String description
     ) {
         Map<String, Object> map = new HashMap<String, Object>();
-        BasicDiscBrakeEntity basicDiscBrakeEntity = basicService.getBasicDiscBrake(description);
-        map.put("caliperLining", basicDiscBrakeEntity);
-        if (basicDiscBrakeEntity.getRtType().equals("Vented") || basicDiscBrakeEntity.getRtType().equals("vented")) {
-            map.put("rotor", basicService.getBasicVentedRotor(basicDiscBrakeEntity.getRtId()));
-        } else if (basicDiscBrakeEntity.getRtType().equals("Solid") || basicDiscBrakeEntity.getRtType().equals("solid")) {
-            map.put("rotor", basicService.getBasicSolidRotor(basicDiscBrakeEntity.getRtId()));
-        } else {
-            map.put("rotor", basicService.getBasicDrumRotor(basicDiscBrakeEntity.getRtId()));
+        try {
+            BasicDiscBrakeEntity basicDiscBrakeEntity = basicService.getBasicDiscBrake(description);
+            map.put("caliperLining", basicDiscBrakeEntity);
+            if (basicDiscBrakeEntity.getRtType().equals("Vented") || basicDiscBrakeEntity.getRtType().equals("vented")) {
+                map.put("rotor", basicService.getBasicVentedRotor(basicDiscBrakeEntity.getRtId()));
+            } else if (basicDiscBrakeEntity.getRtType().equals("Solid") || basicDiscBrakeEntity.getRtType().equals("solid")) {
+                map.put("rotor", basicService.getBasicSolidRotor(basicDiscBrakeEntity.getRtId()));
+            } else {
+                map.put("rotor", basicService.getBasicDrumRotor(basicDiscBrakeEntity.getRtId()));
+            }
+            return getResponseBody(map);
+        } catch (Exception e) {
+            return getResponseBody(null);
         }
-        return getResponseBody(map);
     }
 
     @RequestMapping(value = "basic/discBrake/check", method = RequestMethod.POST)
@@ -238,10 +247,11 @@ public class BasicController {
     public ResponseEntity<Map<String, Object>> addNewBasicDiscBrake(
             @RequestBody Map<String, Object> caliperLining
     ) {
-//        Map<String, Object> caliperLining = params.get("caliperLining");
         // caliperLining represent parms
         BasicDiscBrakeEntity basicDiscBrakeEntity = new BasicDiscBrakeEntity();
         basicDiscBrakeEntity.setDescription(caliperLining.get("description").toString());
+        basicDiscBrakeEntity.setFrtType(caliperLining.get("frtType").toString());
+        basicDiscBrakeEntity.setFrtManu(caliperLining.get("frtManu").toString());
         basicDiscBrakeEntity.setPstD(getDoubleValue(caliperLining.get("pstD").toString()));
         basicDiscBrakeEntity.setPstNum(getIntegerValue(caliperLining.get("pstNum").toString()));
         basicDiscBrakeEntity.setPstArea(getDoubleValue(caliperLining.get("pstArea").toString()));
@@ -250,6 +260,7 @@ public class BasicController {
         basicDiscBrakeEntity.setPvK(getDoubleValue(caliperLining.get("pvK").toString()));
         basicDiscBrakeEntity.setPvB(getDoubleValue(caliperLining.get("pvB").toString()));
         basicDiscBrakeEntity.setPvC(getDoubleValue(caliperLining.get("pvC").toString()));
+        basicDiscBrakeEntity.setLinSpl(caliperLining.get("linSpl").toString());
         basicDiscBrakeEntity.setLinMat(caliperLining.get("linMat").toString());
         basicDiscBrakeEntity.setLinMu(caliperLining.get("linMu").toString());
         basicDiscBrakeEntity.setLinMuK(getDoubleValue(caliperLining.get("linMuK").toString()));
@@ -263,15 +274,8 @@ public class BasicController {
         basicDiscBrakeEntity.setInPerCorner(getDoubleValue(caliperLining.get("inPerCorner").toString()));
         basicDiscBrakeEntity.setRtType(caliperLining.get("rtType").toString());
         basicDiscBrakeEntity.setNotes(caliperLining.get("notes").toString());
-//        Map<String, Object> rotor = params.get("rotor");
         Object realRotor = getRealRotor(caliperLining, basicDiscBrakeEntity.getRtType());
         return getResponseBody(basicService.addNewDiscBrake(basicDiscBrakeEntity, realRotor));
-//        try {
-//
-//        } catch (Exception e) {
-//            System.out.println(e);
-//            return getResponseBody(false);
-//        }
     }
 
     @RequestMapping(value = "basic/discBrake/delete", method = RequestMethod.POST)
@@ -299,19 +303,20 @@ public class BasicController {
     public Object getRealRotor(Map<String, Object> rotor, String type) {
         if (type.equals("Vented") || type.equals("vented")) {
             BasicVentedRotorEntity basicVentedRotorEntity = new BasicVentedRotorEntity();
-            basicVentedRotorEntity.setRtSwpArea(getDoubleValue(rotor.get("rtSwpArea").toString()));
-            basicVentedRotorEntity.setRtEfcR(getDoubleValue(rotor.get("rtEfcR").toString()));
-            basicVentedRotorEntity.setRtDiaOut(getDoubleValue(rotor.get("rtDiaOut").toString()));
-            basicVentedRotorEntity.setRtDiaIn(getDoubleValue(rotor.get("rtDiaIn").toString()));
-            basicVentedRotorEntity.setRtCkIn(rotor.get("rtCkIn").toString());
-            basicVentedRotorEntity.setRtCkOut(rotor.get("rtCkOut").toString());
+            basicVentedRotorEntity.setRrManu(rotor.get("rrManu").toString());
+            basicVentedRotorEntity.setRrMat(rotor.get("rrMat").toString());
+            basicVentedRotorEntity.setEfcR(getDoubleValue(rotor.get("efcR").toString()));
+            basicVentedRotorEntity.setOutD(getDoubleValue(rotor.get("outD").toString()));
+            basicVentedRotorEntity.setInD(getDoubleValue(rotor.get("inD").toString()));
+            basicVentedRotorEntity.setCkTIn(rotor.get("ckTIn").toString());
+            basicVentedRotorEntity.setCkTOut(rotor.get("ckTOut").toString());
             basicVentedRotorEntity.setRtT(getDoubleValue(rotor.get("rtT").toString()));
-            basicVentedRotorEntity.setRtVanNum(getIntegerValue(rotor.get("rtVanNum").toString()));
-            basicVentedRotorEntity.setRtVanLen(getDoubleValue(rotor.get("rtVanLen").toString()));
-            basicVentedRotorEntity.setRtVaneHigh(getDoubleValue(rotor.get("rtVaneHigh").toString()));
-            basicVentedRotorEntity.setRtVanT(getDoubleValue(rotor.get("rtVanT").toString()));
-            basicVentedRotorEntity.setRtWm(getDoubleValue(rotor.get("rtWm").toString()));
-            basicVentedRotorEntity.setRtWa(getDoubleValue(rotor.get("rtWa").toString()));
+            basicVentedRotorEntity.setVaneNum(getIntegerValue(rotor.get("vaneNum").toString()));
+            basicVentedRotorEntity.setVaneLen(getDoubleValue(rotor.get("vaneLen").toString()));
+            basicVentedRotorEntity.setVaneHigh(getDoubleValue(rotor.get("vaneHigh").toString()));
+            basicVentedRotorEntity.setVanT(getDoubleValue(rotor.get("vanT").toString()));
+            basicVentedRotorEntity.setWm(getDoubleValue(rotor.get("wm").toString()));
+            basicVentedRotorEntity.setWa(getDoubleValue(rotor.get("wa").toString()));
             basicVentedRotorEntity.setRho(getDoubleValue(rotor.get("rho").toString()));
             basicVentedRotorEntity.setCc50(getDoubleValue(rotor.get("cc50").toString()));
             basicVentedRotorEntity.setCc80(getDoubleValue(rotor.get("cc80").toString()));
@@ -324,13 +329,14 @@ public class BasicController {
             return basicVentedRotorEntity;
         } else if (type.equals("Solid") || type.equals("solid")) {
             BasicSolidRotorEntity basicSolidRotorEntity = new BasicSolidRotorEntity();
-            basicSolidRotorEntity.setRtSwpArea(getDoubleValue(rotor.get("rtSwpArea").toString()));
-            basicSolidRotorEntity.setRtEfcR(getDoubleValue(rotor.get("rtEfcR").toString()));
-            basicSolidRotorEntity.setRtDiaOut(getDoubleValue(rotor.get("rtDiaOut").toString()));
-            basicSolidRotorEntity.setRtDiaIn(getDoubleValue(rotor.get("rtDiaIn").toString()));
+            basicSolidRotorEntity.setRrManu(rotor.get("manu").toString());
+            basicSolidRotorEntity.setRrMat(rotor.get("rrMat").toString());
+            basicSolidRotorEntity.setEfcR(getDoubleValue(rotor.get("rtEfcR").toString()));
+            basicSolidRotorEntity.setOutD(getDoubleValue(rotor.get("outD").toString()));
+            basicSolidRotorEntity.setInD(getDoubleValue(rotor.get("inD").toString()));
             basicSolidRotorEntity.setRtT(getDoubleValue(rotor.get("rtT").toString()));
-            basicSolidRotorEntity.setRtWm(getDoubleValue(rotor.get("rtWm").toString()));
-            basicSolidRotorEntity.setRtWa(getDoubleValue(rotor.get("rtWa").toString()));
+            basicSolidRotorEntity.setWm(getDoubleValue(rotor.get("wm").toString()));
+            basicSolidRotorEntity.setWa(getDoubleValue(rotor.get("wa").toString()));
             basicSolidRotorEntity.setRho(getDoubleValue(rotor.get("rho").toString()));
             basicSolidRotorEntity.setCc50(getDoubleValue(rotor.get("cc50").toString()));
             basicSolidRotorEntity.setCc80(getDoubleValue(rotor.get("cc80").toString()));
@@ -343,15 +349,17 @@ public class BasicController {
             return basicSolidRotorEntity;
         } else {
             BasicDrumRotorEntity basicDrumRotorEntity = new BasicDrumRotorEntity();
-            basicDrumRotorEntity.setRtEfcR(getDoubleValue(rotor.get("rtEfcR").toString()));
-            basicDrumRotorEntity.setOdDm(getDoubleValue(rotor.get("odDm").toString()));
-            basicDrumRotorEntity.setIdDm(getDoubleValue(rotor.get("idDm").toString()));
-            basicDrumRotorEntity.setThDm(getDoubleValue(rotor.get("thDm").toString()));
-            basicDrumRotorEntity.setWdDm(getDoubleValue(rotor.get("wdDm").toString()));
-            basicDrumRotorEntity.setJthDm(getDoubleValue(rotor.get("jthDm").toString()));
-            basicDrumRotorEntity.setRtVaneHigh(getDoubleValue(rotor.get("rtVaneHigh").toString()));
-            basicDrumRotorEntity.setRtWm(getDoubleValue(rotor.get("rtWm").toString()));
-            basicDrumRotorEntity.setRtWa(getDoubleValue(rotor.get("rtWa").toString()));
+            basicDrumRotorEntity.setRrManu(rotor.get("rrManu").toString());
+            basicDrumRotorEntity.setRrManu(rotor.get("rrMat").toString());
+            basicDrumRotorEntity.setEfcR(getDoubleValue(rotor.get("efcR").toString()));
+            basicDrumRotorEntity.setOutD(getDoubleValue(rotor.get("outD").toString()));
+            basicDrumRotorEntity.setInD(getDoubleValue(rotor.get("inD").toString()));
+            basicDrumRotorEntity.setRtThick(rotor.get("rtThick").toString());
+            basicDrumRotorEntity.setRibThick(rotor.get("ribThick").toString());
+            basicDrumRotorEntity.setRibWidth(getDoubleValue(rotor.get("ribWidth").toString()));
+            basicDrumRotorEntity.setRtWidth(getDoubleValue(rotor.get("rtWidth").toString()));
+            basicDrumRotorEntity.setWm(getDoubleValue(rotor.get("wm").toString()));
+            basicDrumRotorEntity.setWa(getDoubleValue(rotor.get("wa").toString()));
             basicDrumRotorEntity.setRho(getDoubleValue(rotor.get("rho").toString()));
             basicDrumRotorEntity.setCc50(getDoubleValue(rotor.get("cc50").toString()));
             basicDrumRotorEntity.setCc80(getDoubleValue(rotor.get("cc80").toString()));
@@ -386,16 +394,20 @@ public class BasicController {
             @RequestParam("description") String description
     ) {
         Map<String, Object> map = new HashMap<String, Object>();
-        BasicDrumBrakeEntity basicDiscBrakeEntity = basicService.getBasicDrumBrake(description);
-        map.put("caliperLining", basicDiscBrakeEntity);
-        if (basicDiscBrakeEntity.getRtType().equals("Vented") || basicDiscBrakeEntity.getRtType().equals("vented")) {
-            map.put("rotor", basicService.getBasicVentedRotor(basicDiscBrakeEntity.getRtId()));
-        } else if (basicDiscBrakeEntity.getRtType().equals("Solid") || basicDiscBrakeEntity.getRtType().equals("solid")) {
-            map.put("rotor", basicService.getBasicSolidRotor(basicDiscBrakeEntity.getRtId()));
-        } else {
-            map.put("rotor", basicService.getBasicDrumRotor(basicDiscBrakeEntity.getRtId()));
+        try {
+            BasicDrumBrakeEntity basicDiscBrakeEntity = basicService.getBasicDrumBrake(description);
+            map.put("caliperLining", basicDiscBrakeEntity);
+            if (basicDiscBrakeEntity.getRtType().equals("Vented") || basicDiscBrakeEntity.getRtType().equals("vented")) {
+                map.put("rotor", basicService.getBasicVentedRotor(basicDiscBrakeEntity.getRtId()));
+            } else if (basicDiscBrakeEntity.getRtType().equals("Solid") || basicDiscBrakeEntity.getRtType().equals("solid")) {
+                map.put("rotor", basicService.getBasicSolidRotor(basicDiscBrakeEntity.getRtId()));
+            } else {
+                map.put("rotor", basicService.getBasicDrumRotor(basicDiscBrakeEntity.getRtId()));
+            }
+            return getResponseBody(map);
+        } catch (Exception e) {
+            return getResponseBody(null);
         }
-        return getResponseBody(map);
     }
 
     @RequestMapping(value = "basic/drumBrake/check", method = RequestMethod.POST)
@@ -418,17 +430,19 @@ public class BasicController {
     ) {
         try {
             BasicDrumBrakeEntity basicDrumBrakeEntity = new BasicDrumBrakeEntity();
-//            Map<String, Object> caliperLining = params.get("caliperLining");
             // caliperLining replace params
             basicDrumBrakeEntity.setDescription(caliperLining.get("description").toString());
-            basicDrumBrakeEntity.setcDia(getDoubleValue(caliperLining.get("cDia").toString()));
+            basicDrumBrakeEntity.setFrtType(caliperLining.get("frtType").toString());
+            basicDrumBrakeEntity.setFrtManu(caliperLining.get("frtManu").toString());
+            basicDrumBrakeEntity.setPstD(getDoubleValue(caliperLining.get("pstD").toString()));
             basicDrumBrakeEntity.setPstNum(getIntegerValue(caliperLining.get("pstNum").toString()));
             basicDrumBrakeEntity.setPstArea(getDoubleValue(caliperLining.get("pstArea").toString()));
-            basicDrumBrakeEntity.setcHp(getDoubleValue(caliperLining.get("cHp").toString()));
+            basicDrumBrakeEntity.setHfP(getDoubleValue(caliperLining.get("hfP").toString()));
             basicDrumBrakeEntity.setpVcurve(caliperLining.get("pVcurve").toString());
             basicDrumBrakeEntity.setPvK(getDoubleValue(caliperLining.get("pvK").toString()));
             basicDrumBrakeEntity.setPvB(getDoubleValue(caliperLining.get("pvB").toString()));
             basicDrumBrakeEntity.setPvC(getDoubleValue(caliperLining.get("pvC").toString()));
+            basicDrumBrakeEntity.setLinSpl(caliperLining.get("linSpl").toString());
             basicDrumBrakeEntity.setLinMat(caliperLining.get("linMat").toString());
             basicDrumBrakeEntity.setLinMu(caliperLining.get("linMu").toString());
             basicDrumBrakeEntity.setLinMuK(getDoubleValue(caliperLining.get("linMuK").toString()));
@@ -442,7 +456,6 @@ public class BasicController {
             basicDrumBrakeEntity.setInPerCorner(getDoubleValue(caliperLining.get("inPerCorner").toString()));
             basicDrumBrakeEntity.setRtType(caliperLining.get("rtType").toString());
             basicDrumBrakeEntity.setNotes(caliperLining.get("notes").toString());
-//            Map<String, Object> rotor = params.get("rotor");
             Object realRotor = getRealRotor(caliperLining, basicDrumBrakeEntity.getRtType());
             return getResponseBody(basicService.addNewDrumBrake(basicDrumBrakeEntity, realRotor));
         } catch (Exception e) {
@@ -585,6 +598,7 @@ public class BasicController {
             entity.setGvwCgh(getDoubleValue(params.get("gvwCgh").toString()));
             entity.setL(getDoubleValue(params.get("l").toString()));
             entity.setVmax(getDoubleValue(params.get("vmax").toString()));
+            entity.setWot(getDoubleValue(params.get("wot").toString()));
             entity.setCoastDecel(getDoubleValue(params.get("coastDecel").toString()));
             entity.setCd(getDoubleValue(params.get("cd").toString()));
             entity.setA(getDoubleValue(params.get("a").toString()));
