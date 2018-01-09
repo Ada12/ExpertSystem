@@ -3,32 +3,28 @@ package entity;
 import javax.persistence.*;
 
 /**
- * Created by yangchen on 18/1/8.
+ * Created by yangchen on 2018/1/9.
  */
 @Entity
 @Table(name = "basic_requirement", schema = "expert_system", catalog = "")
 public class BasicRequirementEntity {
     private int id;
     private String description;
-    private Double tf0;
-    private Double vi;
-    private Double v0;
-    private Double ab;
-    private Double aa;
-    private Double t;
-    private Integer j;
-    private Double vR;
-    private Double v2R;
-    private Double t0;
-    private Double rhoa;
-    private Double ua;
-    private Double ka;
-    private Double distanceTime;
-    private Double hotV1;
-    private Double distanceStop;
-    private Double distanceV1;
-    private Double hotAb;
-    private Double hotV0;
+    private Double sglVi;
+    private Double sglV0;
+    private Double frtSglTmp;
+    private Double rrSglTmp;
+    private Double linVi;
+    private Double linV0;
+    private Double frtLinPwr;
+    private Double rrLinPwr;
+    private Double hftVi;
+    private Double hftV0;
+    private Double frtHftPwr;
+    private Double rrHftPwr;
+    private String bet;
+    private String brakeStop;
+    private String pedalFeel;
     private String notes;
 
     @Id
@@ -53,193 +49,153 @@ public class BasicRequirementEntity {
     }
 
     @Basic
-    @Column(name = "Tf0")
-    public Double getTf0() {
-        return tf0;
+    @Column(name = "sgl_vi")
+    public Double getSglVi() {
+        return sglVi;
     }
 
-    public void setTf0(Double tf0) {
-        this.tf0 = tf0;
-    }
-
-    @Basic
-    @Column(name = "Vi")
-    public Double getVi() {
-        return vi;
-    }
-
-    public void setVi(Double vi) {
-        this.vi = vi;
+    public void setSglVi(Double sglVi) {
+        this.sglVi = sglVi;
     }
 
     @Basic
-    @Column(name = "V0")
-    public Double getV0() {
-        return v0;
+    @Column(name = "sgl_v0")
+    public Double getSglV0() {
+        return sglV0;
     }
 
-    public void setV0(Double v0) {
-        this.v0 = v0;
-    }
-
-    @Basic
-    @Column(name = "ab")
-    public Double getAb() {
-        return ab;
-    }
-
-    public void setAb(Double ab) {
-        this.ab = ab;
+    public void setSglV0(Double sglV0) {
+        this.sglV0 = sglV0;
     }
 
     @Basic
-    @Column(name = "aa")
-    public Double getAa() {
-        return aa;
+    @Column(name = "frt_sgl_tmp")
+    public Double getFrtSglTmp() {
+        return frtSglTmp;
     }
 
-    public void setAa(Double aa) {
-        this.aa = aa;
-    }
-
-    @Basic
-    @Column(name = "t")
-    public Double getT() {
-        return t;
-    }
-
-    public void setT(Double t) {
-        this.t = t;
+    public void setFrtSglTmp(Double frtSglTmp) {
+        this.frtSglTmp = frtSglTmp;
     }
 
     @Basic
-    @Column(name = "j")
-    public Integer getJ() {
-        return j;
+    @Column(name = "rr_sgl_tmp")
+    public Double getRrSglTmp() {
+        return rrSglTmp;
     }
 
-    public void setJ(Integer j) {
-        this.j = j;
-    }
-
-    @Basic
-    @Column(name = "vR")
-    public Double getvR() {
-        return vR;
-    }
-
-    public void setvR(Double vR) {
-        this.vR = vR;
+    public void setRrSglTmp(Double rrSglTmp) {
+        this.rrSglTmp = rrSglTmp;
     }
 
     @Basic
-    @Column(name = "v2R")
-    public Double getV2R() {
-        return v2R;
+    @Column(name = "lin_vi")
+    public Double getLinVi() {
+        return linVi;
     }
 
-    public void setV2R(Double v2R) {
-        this.v2R = v2R;
-    }
-
-    @Basic
-    @Column(name = "T0")
-    public Double getT0() {
-        return t0;
-    }
-
-    public void setT0(Double t0) {
-        this.t0 = t0;
+    public void setLinVi(Double linVi) {
+        this.linVi = linVi;
     }
 
     @Basic
-    @Column(name = "rhoa")
-    public Double getRhoa() {
-        return rhoa;
+    @Column(name = "lin_v0")
+    public Double getLinV0() {
+        return linV0;
     }
 
-    public void setRhoa(Double rhoa) {
-        this.rhoa = rhoa;
-    }
-
-    @Basic
-    @Column(name = "ua")
-    public Double getUa() {
-        return ua;
-    }
-
-    public void setUa(Double ua) {
-        this.ua = ua;
+    public void setLinV0(Double linV0) {
+        this.linV0 = linV0;
     }
 
     @Basic
-    @Column(name = "ka")
-    public Double getKa() {
-        return ka;
+    @Column(name = "frt_lin_pwr")
+    public Double getFrtLinPwr() {
+        return frtLinPwr;
     }
 
-    public void setKa(Double ka) {
-        this.ka = ka;
-    }
-
-    @Basic
-    @Column(name = "distance_time")
-    public Double getDistanceTime() {
-        return distanceTime;
-    }
-
-    public void setDistanceTime(Double distanceTime) {
-        this.distanceTime = distanceTime;
+    public void setFrtLinPwr(Double frtLinPwr) {
+        this.frtLinPwr = frtLinPwr;
     }
 
     @Basic
-    @Column(name = "hot_v1")
-    public Double getHotV1() {
-        return hotV1;
+    @Column(name = "rr_lin_pwr")
+    public Double getRrLinPwr() {
+        return rrLinPwr;
     }
 
-    public void setHotV1(Double hotV1) {
-        this.hotV1 = hotV1;
-    }
-
-    @Basic
-    @Column(name = "distance_stop")
-    public Double getDistanceStop() {
-        return distanceStop;
-    }
-
-    public void setDistanceStop(Double distanceStop) {
-        this.distanceStop = distanceStop;
+    public void setRrLinPwr(Double rrLinPwr) {
+        this.rrLinPwr = rrLinPwr;
     }
 
     @Basic
-    @Column(name = "distance_v1")
-    public Double getDistanceV1() {
-        return distanceV1;
+    @Column(name = "hft_vi")
+    public Double getHftVi() {
+        return hftVi;
     }
 
-    public void setDistanceV1(Double distanceV1) {
-        this.distanceV1 = distanceV1;
-    }
-
-    @Basic
-    @Column(name = "hot_ab")
-    public Double getHotAb() {
-        return hotAb;
-    }
-
-    public void setHotAb(Double hotAb) {
-        this.hotAb = hotAb;
+    public void setHftVi(Double hftVi) {
+        this.hftVi = hftVi;
     }
 
     @Basic
-    @Column(name = "hot_v0")
-    public Double getHotV0() {
-        return hotV0;
+    @Column(name = "hft_v0")
+    public Double getHftV0() {
+        return hftV0;
     }
 
-    public void setHotV0(Double hotV0) {
-        this.hotV0 = hotV0;
+    public void setHftV0(Double hftV0) {
+        this.hftV0 = hftV0;
+    }
+
+    @Basic
+    @Column(name = "frt_hft_pwr")
+    public Double getFrtHftPwr() {
+        return frtHftPwr;
+    }
+
+    public void setFrtHftPwr(Double frtHftPwr) {
+        this.frtHftPwr = frtHftPwr;
+    }
+
+    @Basic
+    @Column(name = "rr_hft_pwr")
+    public Double getRrHftPwr() {
+        return rrHftPwr;
+    }
+
+    public void setRrHftPwr(Double rrHftPwr) {
+        this.rrHftPwr = rrHftPwr;
+    }
+
+    @Basic
+    @Column(name = "bet")
+    public String getBet() {
+        return bet;
+    }
+
+    public void setBet(String bet) {
+        this.bet = bet;
+    }
+
+    @Basic
+    @Column(name = "brake_stop")
+    public String getBrakeStop() {
+        return brakeStop;
+    }
+
+    public void setBrakeStop(String brakeStop) {
+        this.brakeStop = brakeStop;
+    }
+
+    @Basic
+    @Column(name = "pedal_feel")
+    public String getPedalFeel() {
+        return pedalFeel;
+    }
+
+    public void setPedalFeel(String pedalFeel) {
+        this.pedalFeel = pedalFeel;
     }
 
     @Basic
@@ -261,25 +217,21 @@ public class BasicRequirementEntity {
 
         if (id != that.id) return false;
         if (description != null ? !description.equals(that.description) : that.description != null) return false;
-        if (tf0 != null ? !tf0.equals(that.tf0) : that.tf0 != null) return false;
-        if (vi != null ? !vi.equals(that.vi) : that.vi != null) return false;
-        if (v0 != null ? !v0.equals(that.v0) : that.v0 != null) return false;
-        if (ab != null ? !ab.equals(that.ab) : that.ab != null) return false;
-        if (aa != null ? !aa.equals(that.aa) : that.aa != null) return false;
-        if (t != null ? !t.equals(that.t) : that.t != null) return false;
-        if (j != null ? !j.equals(that.j) : that.j != null) return false;
-        if (vR != null ? !vR.equals(that.vR) : that.vR != null) return false;
-        if (v2R != null ? !v2R.equals(that.v2R) : that.v2R != null) return false;
-        if (t0 != null ? !t0.equals(that.t0) : that.t0 != null) return false;
-        if (rhoa != null ? !rhoa.equals(that.rhoa) : that.rhoa != null) return false;
-        if (ua != null ? !ua.equals(that.ua) : that.ua != null) return false;
-        if (ka != null ? !ka.equals(that.ka) : that.ka != null) return false;
-        if (distanceTime != null ? !distanceTime.equals(that.distanceTime) : that.distanceTime != null) return false;
-        if (hotV1 != null ? !hotV1.equals(that.hotV1) : that.hotV1 != null) return false;
-        if (distanceStop != null ? !distanceStop.equals(that.distanceStop) : that.distanceStop != null) return false;
-        if (distanceV1 != null ? !distanceV1.equals(that.distanceV1) : that.distanceV1 != null) return false;
-        if (hotAb != null ? !hotAb.equals(that.hotAb) : that.hotAb != null) return false;
-        if (hotV0 != null ? !hotV0.equals(that.hotV0) : that.hotV0 != null) return false;
+        if (sglVi != null ? !sglVi.equals(that.sglVi) : that.sglVi != null) return false;
+        if (sglV0 != null ? !sglV0.equals(that.sglV0) : that.sglV0 != null) return false;
+        if (frtSglTmp != null ? !frtSglTmp.equals(that.frtSglTmp) : that.frtSglTmp != null) return false;
+        if (rrSglTmp != null ? !rrSglTmp.equals(that.rrSglTmp) : that.rrSglTmp != null) return false;
+        if (linVi != null ? !linVi.equals(that.linVi) : that.linVi != null) return false;
+        if (linV0 != null ? !linV0.equals(that.linV0) : that.linV0 != null) return false;
+        if (frtLinPwr != null ? !frtLinPwr.equals(that.frtLinPwr) : that.frtLinPwr != null) return false;
+        if (rrLinPwr != null ? !rrLinPwr.equals(that.rrLinPwr) : that.rrLinPwr != null) return false;
+        if (hftVi != null ? !hftVi.equals(that.hftVi) : that.hftVi != null) return false;
+        if (hftV0 != null ? !hftV0.equals(that.hftV0) : that.hftV0 != null) return false;
+        if (frtHftPwr != null ? !frtHftPwr.equals(that.frtHftPwr) : that.frtHftPwr != null) return false;
+        if (rrHftPwr != null ? !rrHftPwr.equals(that.rrHftPwr) : that.rrHftPwr != null) return false;
+        if (bet != null ? !bet.equals(that.bet) : that.bet != null) return false;
+        if (brakeStop != null ? !brakeStop.equals(that.brakeStop) : that.brakeStop != null) return false;
+        if (pedalFeel != null ? !pedalFeel.equals(that.pedalFeel) : that.pedalFeel != null) return false;
         if (notes != null ? !notes.equals(that.notes) : that.notes != null) return false;
 
         return true;
@@ -289,25 +241,21 @@ public class BasicRequirementEntity {
     public int hashCode() {
         int result = id;
         result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (tf0 != null ? tf0.hashCode() : 0);
-        result = 31 * result + (vi != null ? vi.hashCode() : 0);
-        result = 31 * result + (v0 != null ? v0.hashCode() : 0);
-        result = 31 * result + (ab != null ? ab.hashCode() : 0);
-        result = 31 * result + (aa != null ? aa.hashCode() : 0);
-        result = 31 * result + (t != null ? t.hashCode() : 0);
-        result = 31 * result + (j != null ? j.hashCode() : 0);
-        result = 31 * result + (vR != null ? vR.hashCode() : 0);
-        result = 31 * result + (v2R != null ? v2R.hashCode() : 0);
-        result = 31 * result + (t0 != null ? t0.hashCode() : 0);
-        result = 31 * result + (rhoa != null ? rhoa.hashCode() : 0);
-        result = 31 * result + (ua != null ? ua.hashCode() : 0);
-        result = 31 * result + (ka != null ? ka.hashCode() : 0);
-        result = 31 * result + (distanceTime != null ? distanceTime.hashCode() : 0);
-        result = 31 * result + (hotV1 != null ? hotV1.hashCode() : 0);
-        result = 31 * result + (distanceStop != null ? distanceStop.hashCode() : 0);
-        result = 31 * result + (distanceV1 != null ? distanceV1.hashCode() : 0);
-        result = 31 * result + (hotAb != null ? hotAb.hashCode() : 0);
-        result = 31 * result + (hotV0 != null ? hotV0.hashCode() : 0);
+        result = 31 * result + (sglVi != null ? sglVi.hashCode() : 0);
+        result = 31 * result + (sglV0 != null ? sglV0.hashCode() : 0);
+        result = 31 * result + (frtSglTmp != null ? frtSglTmp.hashCode() : 0);
+        result = 31 * result + (rrSglTmp != null ? rrSglTmp.hashCode() : 0);
+        result = 31 * result + (linVi != null ? linVi.hashCode() : 0);
+        result = 31 * result + (linV0 != null ? linV0.hashCode() : 0);
+        result = 31 * result + (frtLinPwr != null ? frtLinPwr.hashCode() : 0);
+        result = 31 * result + (rrLinPwr != null ? rrLinPwr.hashCode() : 0);
+        result = 31 * result + (hftVi != null ? hftVi.hashCode() : 0);
+        result = 31 * result + (hftV0 != null ? hftV0.hashCode() : 0);
+        result = 31 * result + (frtHftPwr != null ? frtHftPwr.hashCode() : 0);
+        result = 31 * result + (rrHftPwr != null ? rrHftPwr.hashCode() : 0);
+        result = 31 * result + (bet != null ? bet.hashCode() : 0);
+        result = 31 * result + (brakeStop != null ? brakeStop.hashCode() : 0);
+        result = 31 * result + (pedalFeel != null ? pedalFeel.hashCode() : 0);
         result = 31 * result + (notes != null ? notes.hashCode() : 0);
         return result;
     }

@@ -1,0 +1,9 @@
+.navbar-header > a, .navbar-nav > li > a{
+    color: #777;
+    font-weight: 500;
+    /*font-family: "Lato", "Serif";*/
+}
+.checkbox > label{
+    margin-right: 25%;
+    margin-left: 25%;
+}
