@@ -1,21 +1,26 @@
 package controller;
 
+import ExternalMatlab.ManualCalculate;
 import entity.*;
 import org.apache.commons.collections.map.HashedMap;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import service.BasicService;
 import service.MatlabManualCalculate;
+import service.SaveToXlsx;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Created by yangchen on 17/9/5.
@@ -350,7 +355,8 @@ public class BasicController {
         } else {
             BasicDrumRotorEntity basicDrumRotorEntity = new BasicDrumRotorEntity();
             basicDrumRotorEntity.setRrManu(rotor.get("rrManu").toString());
-            basicDrumRotorEntity.setRrManu(rotor.get("rrMat").toString());
+            basicDrumRotorEntity.setRrMat(rotor.get("rrMat").toString());
+            basicDrumRotorEntity.setSwpArea(getDoubleValue(rotor.get("swpArea").toString()));
             basicDrumRotorEntity.setEfcR(getDoubleValue(rotor.get("efcR").toString()));
             basicDrumRotorEntity.setOutD(getDoubleValue(rotor.get("outD").toString()));
             basicDrumRotorEntity.setInD(getDoubleValue(rotor.get("inD").toString()));
@@ -793,14 +799,51 @@ public class BasicController {
     public ResponseEntity<Map<String, Object>> manualCalculate(
             @RequestBody Map<String, Map<String, Object>> params
     ) {
-        String path = servletContext.getRealPath("img");
+        String path = servletContext.getRealPath("/style/images/");
         Map<String, Object> result = new HashedMap();
-        try {
-            result = MatlabManualCalculate.realCalculate(params, path);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            result = MatlabManualCalculate.realCalculate(params, path);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+        SaveToXlsx myRunnable = new SaveToXlsx();
+        myRunnable.setParams(params);
+        myRunnable.setPath(path);
+        Thread thread = new Thread(myRunnable);
+        thread.run();
         return getResponseBody(result);
+    }
+
+    @RequestMapping(value = "download/figure/{figure_id}", method = RequestMethod.GET, consumes="*")
+    public ResponseEntity<byte[]> downloadHeatIsland(
+            @PathVariable("figure_id") int figureId
+    ) throws IOException {
+        HttpHeaders headers = new HttpHeaders();
+        String path = servletContext.getRealPath("/style/images/");
+//        File file=new File(MatlabManualCalculate.downloadFigureData(path, figureId));
+        File file=new File(path + "figure_"+ figureId +".xlsx");
+        headers.setContentDispositionFormData("attachment", "figure_"+ figureId +".xlsx");
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file),
+                headers, HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "basic/pf2pm", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> PFCurve2Param(
+            @RequestBody Map<String, Object> params
+    ) {
+        Map<String, Double> coeff = MatlabManualCalculate.PFCurve2Param(params);
+        return getResponseBody(coeff);
+    }
+
+    @RequestMapping(value = "basic/pv2pm", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> PVCurve2Param(
+            @RequestBody Map<String, Object> params
+    ) {
+        Map<String, Double> coeff = MatlabManualCalculate.PVCurve2Param(params);
+        return getResponseBody(coeff);
     }
 
 }
