@@ -1,6 +1,7 @@
 package dao;
 
 import entity.*;
+import org.apache.commons.collections.map.HashedMap;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -9,6 +10,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by yangchen on 17/9/5.
@@ -23,17 +25,20 @@ public class BasicDao {
     }
 
     // basic apply
-    public List<BasicApplyEntity> getBasicApplyDesc() {
+    public List<BasicApplyEntity> getBasicApplyDesc(int userId) {
         TypedQuery<BasicApplyEntity> query;
-        query = entityManager.createQuery("select b from BasicApplyEntity b", BasicApplyEntity.class);
+        query = entityManager.createQuery("select b from BasicApplyEntity b where b.userId = :userId", BasicApplyEntity.class);
+        query.setParameter("userId", userId);
         List<BasicApplyEntity> entities = query.getResultList();
         return entities;
     }
 
-    public BasicApplyEntity getBasicApply(String description) {
+    public BasicApplyEntity getBasicApply(String description, int userId) {
         TypedQuery<BasicApplyEntity> query;
-        query = entityManager.createQuery("select b from BasicApplyEntity b where b.description = :description", BasicApplyEntity.class);
+        query = entityManager.createQuery("select b from BasicApplyEntity b where b.description = :description and b.userId = :userId",
+                BasicApplyEntity.class);
         query.setParameter("description", description);
+        query.setParameter("userId", userId);
         BasicApplyEntity entities = new BasicApplyEntity();
         try {
             entities = query.getSingleResult();
@@ -55,10 +60,10 @@ public class BasicDao {
         }
     }
 
-    public boolean deleteApply(String description) {
+    public boolean deleteApply(String description, int userId) {
         int query;
         try {
-            query = entityManager.createQuery("delete from BasicApplyEntity b where b.description = '" + description + "'",
+            query = entityManager.createQuery("delete from BasicApplyEntity b where b.description = '" + description + "' and b.userId = " + userId,
                     BasicApplyEntity.class).executeUpdate();
             if (query > 0) {
                 return true;
@@ -72,17 +77,19 @@ public class BasicDao {
     }
 
     // basic control
-    public List<BasicControlEntity> getBasicControlDesc() {
+    public List<BasicControlEntity> getBasicControlDesc(int userId) {
         TypedQuery<BasicControlEntity> query;
-        query = entityManager.createQuery("select b from BasicControlEntity b", BasicControlEntity.class);
+        query = entityManager.createQuery("select b from BasicControlEntity b where b.userId = :userId", BasicControlEntity.class);
+        query.setParameter("userId", userId);
         List<BasicControlEntity> entities = query.getResultList();
         return entities;
     }
 
-    public BasicControlEntity getBasicControl(String description) {
+    public BasicControlEntity getBasicControl(String description, int userId) {
         TypedQuery<BasicControlEntity> query;
-        query = entityManager.createQuery("select b from BasicControlEntity b where b.description = :description", BasicControlEntity.class);
+        query = entityManager.createQuery("select b from BasicControlEntity b where b.description = :description and b.userId = :userId", BasicControlEntity.class);
         query.setParameter("description", description);
+        query.setParameter("userId", userId);
         BasicControlEntity entities = new BasicControlEntity();
         try {
             entities = query.getSingleResult();
@@ -104,10 +111,10 @@ public class BasicDao {
         }
     }
 
-    public boolean deleteControl(String description) {
+    public boolean deleteControl(String description, int userId) {
         int query;
         try {
-            query = entityManager.createQuery("delete from BasicControlEntity b where b.description = '" + description + "'",
+            query = entityManager.createQuery("delete from BasicControlEntity b where b.description = '" + description + "' and b.userId = " + userId,
                     BasicControlEntity.class).executeUpdate();
             if (query > 0) {
                 return true;
@@ -121,17 +128,19 @@ public class BasicDao {
     }
 
     // basic disc brake
-    public List<BasicDiscBrakeEntity> getBasicDiscBrakeDesc() {
+    public List<BasicDiscBrakeEntity> getBasicDiscBrakeDesc(int userId) {
         TypedQuery<BasicDiscBrakeEntity> query;
-        query = entityManager.createQuery("select b from BasicDiscBrakeEntity b", BasicDiscBrakeEntity.class);
+        query = entityManager.createQuery("select b from BasicDiscBrakeEntity b where b.userId = :userId", BasicDiscBrakeEntity.class);
+        query.setParameter("userId", userId);
         List<BasicDiscBrakeEntity> entities = query.getResultList();
         return entities;
     }
 
-    public BasicDiscBrakeEntity getBasicDiscBrake(String description) {
+    public BasicDiscBrakeEntity getBasicDiscBrake(String description, int userId) {
         TypedQuery<BasicDiscBrakeEntity> query;
-        query = entityManager.createQuery("select b from BasicDiscBrakeEntity b where b.description = :description", BasicDiscBrakeEntity.class);
+        query = entityManager.createQuery("select b from BasicDiscBrakeEntity b where b.description = :description and b.userId = :userId", BasicDiscBrakeEntity.class);
         query.setParameter("description", description);
+        query.setParameter("userId", userId);
         BasicDiscBrakeEntity entities = new BasicDiscBrakeEntity();
         try {
             entities = query.getSingleResult();
@@ -142,10 +151,10 @@ public class BasicDao {
         return entities;
     }
 
-    public boolean deleteDiscBrake(String description) {
+    public boolean deleteDiscBrake(String description, int userId) {
         int query;
         try {
-            query = entityManager.createQuery("delete from BasicDiscBrakeEntity b where b.description = '" + description + "'",
+            query = entityManager.createQuery("delete from BasicDiscBrakeEntity b where b.description = '" + description + "' and b.userId = " + userId,
                     BasicDiscBrakeEntity.class).executeUpdate();
             if (query > 0) {
                 return true;
@@ -170,17 +179,19 @@ public class BasicDao {
     }
 
     // basic drum brake
-    public List<BasicDrumBrakeEntity> getBasicDrumBrakeDesc() {
+    public List<BasicDrumBrakeEntity> getBasicDrumBrakeDesc(int userId) {
         TypedQuery<BasicDrumBrakeEntity> query;
-        query = entityManager.createQuery("select b from BasicDrumBrakeEntity b", BasicDrumBrakeEntity.class);
+        query = entityManager.createQuery("select b from BasicDrumBrakeEntity b where b.userId = :userId", BasicDrumBrakeEntity.class);
+        query.setParameter("userId", userId);
         List<BasicDrumBrakeEntity> entities = query.getResultList();
         return entities;
     }
 
-    public BasicDrumBrakeEntity getBasicDrumBrake(String description) {
+    public BasicDrumBrakeEntity getBasicDrumBrake(String description, int userId) {
         TypedQuery<BasicDrumBrakeEntity> query;
-        query = entityManager.createQuery("select b from BasicDrumBrakeEntity b where b.description = :description", BasicDrumBrakeEntity.class);
+        query = entityManager.createQuery("select b from BasicDrumBrakeEntity b where b.description = :description and b.userId = :userId", BasicDrumBrakeEntity.class);
         query.setParameter("description", description);
+        query.setParameter("userId", userId);
         BasicDrumBrakeEntity entities = new BasicDrumBrakeEntity();
         try {
             entities = query.getSingleResult();
@@ -202,10 +213,10 @@ public class BasicDao {
         }
     }
 
-    public boolean deleteDrumBrake(String description) {
+    public boolean deleteDrumBrake(String description, int userId) {
         int query;
         try {
-            query = entityManager.createQuery("delete from BasicDrumBrakeEntity b where b.description = '" + description + "'",
+            query = entityManager.createQuery("delete from BasicDrumBrakeEntity b where b.description = '" + description + "' and b.userId = " + userId,
                     BasicDrumBrakeEntity.class).executeUpdate();
             if (query > 0) {
                 return true;
@@ -346,17 +357,19 @@ public class BasicDao {
 
 
     // basic tire wheel
-    public List<BasicTireEntity> getBasicTireWheelDesc() {
+    public List<BasicTireEntity> getBasicTireWheelDesc(int userId) {
         TypedQuery<BasicTireEntity> query;
-        query = entityManager.createQuery("select b from BasicTireEntity b", BasicTireEntity.class);
+        query = entityManager.createQuery("select b from BasicTireEntity b where b.userId = :userId", BasicTireEntity.class);
+        query.setParameter("userId", userId);
         List<BasicTireEntity> entities = query.getResultList();
         return entities;
     }
 
-    public BasicTireEntity getBasicTireWheel(String description) {
+    public BasicTireEntity getBasicTireWheel(String description, int userId) {
         TypedQuery<BasicTireEntity> query;
-        query = entityManager.createQuery("select b from BasicTireEntity b where b.description = :description", BasicTireEntity.class);
+        query = entityManager.createQuery("select b from BasicTireEntity b where b.description = :description and b.userId = :userId", BasicTireEntity.class);
         query.setParameter("description", description);
+        query.setParameter("userId", userId);
         BasicTireEntity entities = new BasicTireEntity();
         try {
             entities = query.getSingleResult();
@@ -378,10 +391,10 @@ public class BasicDao {
         }
     }
 
-    public boolean deleteTireWheel(String description) {
+    public boolean deleteTireWheel(String description, int userId) {
         int query;
         try {
-            query = entityManager.createQuery("delete from BasicTireEntity b where b.description = '" + description + "'",
+            query = entityManager.createQuery("delete from BasicTireEntity b where b.description = '" + description + "' and b.userId = " + userId,
                     BasicTireEntity.class).executeUpdate();
             if (query > 0) {
                 return true;
@@ -395,17 +408,19 @@ public class BasicDao {
     }
 
     // basic vehicle
-    public List<BasicVehicleEntity> getBasicVehicleDesc() {
+    public List<BasicVehicleEntity> getBasicVehicleDesc(int userId) {
         TypedQuery<BasicVehicleEntity> query;
-        query = entityManager.createQuery("select b from BasicVehicleEntity b", BasicVehicleEntity.class);
+        query = entityManager.createQuery("select b from BasicVehicleEntity b where b.userId = :userId", BasicVehicleEntity.class);
+        query.setParameter("userId", userId);
         List<BasicVehicleEntity> entities = query.getResultList();
         return entities;
     }
 
-    public BasicVehicleEntity getBasicVehicle(String description) {
+    public BasicVehicleEntity getBasicVehicle(String description, int userId) {
         TypedQuery<BasicVehicleEntity> query;
-        query = entityManager.createQuery("select b from BasicVehicleEntity b where b.description = :description", BasicVehicleEntity.class);
+        query = entityManager.createQuery("select b from BasicVehicleEntity b where b.description = :description and b.userId =:userId", BasicVehicleEntity.class);
         query.setParameter("description", description);
+        query.setParameter("userId", userId);
         BasicVehicleEntity entities = new BasicVehicleEntity();
         try {
             entities = query.getSingleResult();
@@ -427,10 +442,10 @@ public class BasicDao {
         }
     }
 
-    public boolean deleteVehicle(String description) {
+    public boolean deleteVehicle(String description, int userId) {
         int query;
         try {
-            query = entityManager.createQuery("delete from BasicVehicleEntity b where b.description = '" + description + "'",
+            query = entityManager.createQuery("delete from BasicVehicleEntity b where b.description = '" + description + "' and b.userId = " + userId,
                     BasicVehicleEntity.class).executeUpdate();
             if (query > 0) {
                 return true;
@@ -444,17 +459,19 @@ public class BasicDao {
     }
 
     // basic requirement
-    public List<BasicRequirementEntity> getBasicRequirementDesc() {
+    public List<BasicRequirementEntity> getBasicRequirementDesc(int userId) {
         TypedQuery<BasicRequirementEntity> query;
-        query = entityManager.createQuery("select b from BasicRequirementEntity b", BasicRequirementEntity.class);
+        query = entityManager.createQuery("select b from BasicRequirementEntity b where b.userId = :userId", BasicRequirementEntity.class);
+        query.setParameter("userId", userId);
         List<BasicRequirementEntity> entities = query.getResultList();
         return entities;
     }
 
-    public BasicRequirementEntity getBasicRequirement(String description) {
+    public BasicRequirementEntity getBasicRequirement(String description, int userId) {
         TypedQuery<BasicRequirementEntity> query;
-        query = entityManager.createQuery("select b from BasicRequirementEntity b where b.description = :description", BasicRequirementEntity.class);
+        query = entityManager.createQuery("select b from BasicRequirementEntity b where b.description = :description and b.userId = :userId", BasicRequirementEntity.class);
         query.setParameter("description", description);
+        query.setParameter("userId", userId);
         BasicRequirementEntity entities = new BasicRequirementEntity();
         try {
             entities = query.getSingleResult();
@@ -476,10 +493,10 @@ public class BasicDao {
         }
     }
 
-    public boolean deleteRequirement(String description) {
+    public boolean deleteRequirement(String description, int userId) {
         int query;
         try {
-            query = entityManager.createQuery("delete from BasicRequirementEntity b where b.description = '" + description + "'",
+            query = entityManager.createQuery("delete from BasicRequirementEntity b where b.description = '" + description + "' and b.userId = " + userId,
                     BasicRequirementEntity.class).executeUpdate();
             if (query > 0) {
                 return true;
@@ -493,17 +510,19 @@ public class BasicDao {
     }
 
     // Configuration !!!!!!!!!!!!!!!
-    public List<ConfigurationEntity> getBasicConfigurationDesc() {
+    public List<ConfigurationEntity> getBasicConfigurationDesc(int userId) {
         TypedQuery<ConfigurationEntity> query;
-        query = entityManager.createQuery("select b from ConfigurationEntity b", ConfigurationEntity.class);
+        query = entityManager.createQuery("select b from ConfigurationEntity b where b.userId =:userId", ConfigurationEntity.class);
+        query.setParameter("userId", userId);
         List<ConfigurationEntity> entities = query.getResultList();
         return entities;
     }
 
-    public ConfigurationEntity getBasicConfiguration(String description) {
+    public ConfigurationEntity getBasicConfiguration(String description, int userId) {
         TypedQuery<ConfigurationEntity> query;
-        query = entityManager.createQuery("select b from ConfigurationEntity b where b.description = :description", ConfigurationEntity.class);
+        query = entityManager.createQuery("select b from ConfigurationEntity b where b.description = :description and b.userId =:userId", ConfigurationEntity.class);
         query.setParameter("description", description);
+        query.setParameter("userId", userId);
         ConfigurationEntity entities = new ConfigurationEntity();
         try {
             entities = query.getSingleResult();
@@ -525,10 +544,10 @@ public class BasicDao {
         }
     }
 
-    public boolean deleteConfiguration(String description) {
+    public boolean deleteConfiguration(String description, int userId) {
         int query;
         try {
-            query = entityManager.createQuery("delete from ConfigurationEntity b where b.description = '" + description + "'",
+            query = entityManager.createQuery("delete from ConfigurationEntity b where b.description = '" + description + "' and b.userId = " + userId,
                     ConfigurationEntity.class).executeUpdate();
             if (query > 0) {
                 return true;
@@ -546,5 +565,142 @@ public class BasicDao {
         query = entityManager.createQuery("select b from UnitsEntity b", UnitsEntity.class);
         List<UnitsEntity> entities = query.getResultList();
         return entities;
+    }
+
+    // update workspace
+    public void updateWorkspace(
+            String apply,
+            String control,
+            String discBrake,
+            String drumBrake,
+            String require,
+            String tire,
+            String vehicle,
+            int userId
+    ) {
+        // apply
+        TypedQuery<BasicApplyEntity> applyQuery1;
+        applyQuery1 = entityManager.createQuery("update BasicApplyEntity b set b.isWork = 1 where b.description =:description and b.userId =:userId", BasicApplyEntity.class);
+        applyQuery1.setParameter("description", apply);
+        applyQuery1.setParameter("userId", userId);
+        applyQuery1.executeUpdate();
+        TypedQuery<BasicApplyEntity> applyQuery2;
+        applyQuery2 = entityManager.createQuery("update BasicApplyEntity b set b.isWork = 0 where b.description !=:description and b.userId =:userId", BasicApplyEntity.class);
+        applyQuery2.setParameter("description", apply);
+        applyQuery2.setParameter("userId", userId);
+        applyQuery2.executeUpdate();
+        // control
+        TypedQuery<BasicControlEntity> controlQuery1;
+        controlQuery1 = entityManager.createQuery("update BasicControlEntity b set b.isWork = 1 where b.description =:description and b.userId =:userId", BasicControlEntity.class);
+        controlQuery1.setParameter("description", control);
+        controlQuery1.setParameter("userId", userId);
+        controlQuery1.executeUpdate();
+        TypedQuery<BasicControlEntity> controlQuery2;
+        controlQuery2 = entityManager.createQuery("update BasicControlEntity b set b.isWork = 0 where b.description !=:description and b.userId =:userId", BasicControlEntity.class);
+        controlQuery2.setParameter("description", control);
+        controlQuery2.setParameter("userId", userId);
+        controlQuery2.executeUpdate();
+        // discBrake
+        TypedQuery<BasicDiscBrakeEntity> discBrakeQuery1;
+        discBrakeQuery1 = entityManager.createQuery("update BasicDiscBrakeEntity b set b.isWork = 1 where b.description =:description and b.userId =:userId", BasicDiscBrakeEntity.class);
+        discBrakeQuery1.setParameter("description", discBrake);
+        discBrakeQuery1.setParameter("userId", userId);
+        discBrakeQuery1.executeUpdate();
+        TypedQuery<BasicDiscBrakeEntity> discBrakeQuery2;
+        discBrakeQuery2 = entityManager.createQuery("update BasicDiscBrakeEntity b set b.isWork = 0 where b.description !=:description and b.userId =:userId", BasicDiscBrakeEntity.class);
+        discBrakeQuery2.setParameter("description", discBrake);
+        discBrakeQuery2.setParameter("userId", userId);
+        discBrakeQuery2.executeUpdate();
+        // drumBrake
+        TypedQuery<BasicDrumBrakeEntity> drumBrakeQuery1;
+        drumBrakeQuery1 = entityManager.createQuery("update BasicDrumBrakeEntity b set b.isWork = 1 where b.description =:description and b.userId =:userId", BasicDrumBrakeEntity.class);
+        drumBrakeQuery1.setParameter("description", drumBrake);
+        drumBrakeQuery1.setParameter("userId", userId);
+        drumBrakeQuery1.executeUpdate();
+        TypedQuery<BasicDrumBrakeEntity> drumBrakeQuery2;
+        drumBrakeQuery2 = entityManager.createQuery("update BasicDrumBrakeEntity b set b.isWork = 0 where b.description !=:description and b.userId =:userId", BasicDrumBrakeEntity.class);
+        drumBrakeQuery2.setParameter("description", drumBrake);
+        drumBrakeQuery2.setParameter("userId", userId);
+        drumBrakeQuery2.executeUpdate();
+        // require
+        TypedQuery<BasicRequirementEntity> requireQuery1;
+        requireQuery1 = entityManager.createQuery("update BasicRequirementEntity b set b.isWork = 1 where b.description =:description and b.userId =:userId", BasicRequirementEntity.class);
+        requireQuery1.setParameter("description", require);
+        requireQuery1.setParameter("userId", userId);
+        requireQuery1.executeUpdate();
+        TypedQuery<BasicRequirementEntity> requireQuery2;
+        requireQuery2 = entityManager.createQuery("update BasicRequirementEntity b set b.isWork = 0 where b.description !=:description and b.userId =:userId", BasicRequirementEntity.class);
+        requireQuery2.setParameter("description", require);
+        requireQuery2.setParameter("userId", userId);
+        requireQuery2.executeUpdate();
+        // tire
+        TypedQuery<BasicTireEntity> tireQuery1;
+        tireQuery1 = entityManager.createQuery("update BasicTireEntity b set b.isWork = 1 where b.description =:description and b.userId =:userId", BasicTireEntity.class);
+        tireQuery1.setParameter("description", tire);
+        tireQuery1.setParameter("userId", userId);
+        tireQuery1.executeUpdate();
+        TypedQuery<BasicTireEntity> tireQuery2;
+        tireQuery2 = entityManager.createQuery("update BasicTireEntity b set b.isWork = 0 where b.description !=:description and b.userId =:userId", BasicTireEntity.class);
+        tireQuery2.setParameter("description", tire);
+        tireQuery2.setParameter("userId", userId);
+        tireQuery2.executeUpdate();
+        // vehicle
+        TypedQuery<BasicVehicleEntity> vehicleQuery1;
+        vehicleQuery1 = entityManager.createQuery("update BasicVehicleEntity b set b.isWork = 1 where b.description =:description and b.userId =:userId", BasicVehicleEntity.class);
+        vehicleQuery1.setParameter("description", vehicle);
+        vehicleQuery1.setParameter("userId", userId);
+        vehicleQuery1.executeUpdate();
+        TypedQuery<BasicVehicleEntity> vehicleQuery2;
+        vehicleQuery2 = entityManager.createQuery("update BasicVehicleEntity b set b.isWork = 0 where b.description !=:description and b.userId =:userId", BasicVehicleEntity.class);
+        vehicleQuery2.setParameter("description", vehicle);
+        vehicleQuery2.setParameter("userId", userId);
+        vehicleQuery2.executeUpdate();
+    }
+
+    public Map<String, String> getWorkspace(int userId) {
+        Map<String, String> desc = new HashedMap();
+        // apply
+        TypedQuery<BasicApplyEntity> applyQuery;
+        applyQuery = entityManager.createQuery("select b from BasicApplyEntity b where b.isWork = 1 and b.userId =:userId",
+                BasicApplyEntity.class);
+        applyQuery.setParameter("userId", userId);
+        desc.put("apply", applyQuery.getSingleResult().getDescription());
+        // control
+        TypedQuery<BasicControlEntity> controlQuery;
+        controlQuery = entityManager.createQuery("select b from BasicControlEntity b where b.isWork = 1 and b.userId =:userId",
+                BasicControlEntity.class);
+        controlQuery.setParameter("userId", userId);
+        desc.put("control", controlQuery.getSingleResult().getDescription());
+        // discBrake
+        TypedQuery<BasicDiscBrakeEntity> discBrakeQuery;
+        discBrakeQuery = entityManager.createQuery("select b from BasicDiscBrakeEntity b where b.isWork = 1 and b.userId =:userId",
+                BasicDiscBrakeEntity.class);
+        discBrakeQuery.setParameter("userId", userId);
+        desc.put("discBrake", discBrakeQuery.getSingleResult().getDescription());
+        // drumBrake
+        TypedQuery<BasicDrumBrakeEntity> drumBrakeQuery;
+        drumBrakeQuery = entityManager.createQuery("select b from BasicDrumBrakeEntity b where b.isWork = 1 and b.userId =:userId",
+                BasicDrumBrakeEntity.class);
+        drumBrakeQuery.setParameter("userId", userId);
+        desc.put("drumBrake", drumBrakeQuery.getSingleResult().getDescription());
+        // require
+        TypedQuery<BasicRequirementEntity> requireQuery;
+        requireQuery = entityManager.createQuery("select b from BasicRequirementEntity b where b.isWork = 1 and b.userId =:userId",
+                BasicRequirementEntity.class);
+        requireQuery.setParameter("userId", userId);
+        desc.put("requirement", requireQuery.getSingleResult().getDescription());
+        // tire
+        TypedQuery<BasicTireEntity> tireQuery;
+        tireQuery = entityManager.createQuery("select b from BasicTireEntity b where b.isWork = 1 and b.userId =:userId",
+                BasicTireEntity.class);
+        tireQuery.setParameter("userId", userId);
+        desc.put("tire", tireQuery.getSingleResult().getDescription());
+        // vehicle
+        TypedQuery<BasicVehicleEntity> vehicleQuery;
+        vehicleQuery = entityManager.createQuery("select b from BasicVehicleEntity b where b.isWork = 1 and b.userId =:userId",
+                BasicVehicleEntity.class);
+        vehicleQuery.setParameter("userId", userId);
+        desc.put("vehicle", vehicleQuery.getSingleResult().getDescription());
+        return desc;
     }
 }

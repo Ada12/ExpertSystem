@@ -3,7 +3,7 @@ package entity;
 import javax.persistence.*;
 
 /**
- * Created by yangchen on 17/12/31.
+ * Created by yangchen on 2018/3/13.
  */
 @Entity
 @Table(name = "configuration", schema = "expert_system", catalog = "")
@@ -17,7 +17,9 @@ public class ConfigurationEntity {
     private String discBrakeDesc;
     private String drumBrakeDesc;
     private String requireDesc;
+    private Integer isWork;
     private String notes;
+    private Integer userId;
 
     @Id
     @Column(name = "id")
@@ -111,6 +113,16 @@ public class ConfigurationEntity {
     }
 
     @Basic
+    @Column(name = "is_work")
+    public Integer getIsWork() {
+        return isWork;
+    }
+
+    public void setIsWork(Integer isWork) {
+        this.isWork = isWork;
+    }
+
+    @Basic
     @Column(name = "notes")
     public String getNotes() {
         return notes;
@@ -120,25 +132,37 @@ public class ConfigurationEntity {
         this.notes = notes;
     }
 
+    @Basic
+    @Column(name = "userId")
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ConfigurationEntity entity = (ConfigurationEntity) o;
+        ConfigurationEntity that = (ConfigurationEntity) o;
 
-        if (id != entity.id) return false;
-        if (description != null ? !description.equals(entity.description) : entity.description != null) return false;
-        if (vehicleDesc != null ? !vehicleDesc.equals(entity.vehicleDesc) : entity.vehicleDesc != null) return false;
-        if (tireDesc != null ? !tireDesc.equals(entity.tireDesc) : entity.tireDesc != null) return false;
-        if (applyDesc != null ? !applyDesc.equals(entity.applyDesc) : entity.applyDesc != null) return false;
-        if (controlDesc != null ? !controlDesc.equals(entity.controlDesc) : entity.controlDesc != null) return false;
-        if (discBrakeDesc != null ? !discBrakeDesc.equals(entity.discBrakeDesc) : entity.discBrakeDesc != null)
+        if (id != that.id) return false;
+        if (description != null ? !description.equals(that.description) : that.description != null) return false;
+        if (vehicleDesc != null ? !vehicleDesc.equals(that.vehicleDesc) : that.vehicleDesc != null) return false;
+        if (tireDesc != null ? !tireDesc.equals(that.tireDesc) : that.tireDesc != null) return false;
+        if (applyDesc != null ? !applyDesc.equals(that.applyDesc) : that.applyDesc != null) return false;
+        if (controlDesc != null ? !controlDesc.equals(that.controlDesc) : that.controlDesc != null) return false;
+        if (discBrakeDesc != null ? !discBrakeDesc.equals(that.discBrakeDesc) : that.discBrakeDesc != null)
             return false;
-        if (drumBrakeDesc != null ? !drumBrakeDesc.equals(entity.drumBrakeDesc) : entity.drumBrakeDesc != null)
+        if (drumBrakeDesc != null ? !drumBrakeDesc.equals(that.drumBrakeDesc) : that.drumBrakeDesc != null)
             return false;
-        if (requireDesc != null ? !requireDesc.equals(entity.requireDesc) : entity.requireDesc != null) return false;
-        if (notes != null ? !notes.equals(entity.notes) : entity.notes != null) return false;
+        if (requireDesc != null ? !requireDesc.equals(that.requireDesc) : that.requireDesc != null) return false;
+        if (isWork != null ? !isWork.equals(that.isWork) : that.isWork != null) return false;
+        if (notes != null ? !notes.equals(that.notes) : that.notes != null) return false;
+        if (userId != null ? !userId.equals(that.userId) : that.userId != null) return false;
 
         return true;
     }
@@ -154,7 +178,9 @@ public class ConfigurationEntity {
         result = 31 * result + (discBrakeDesc != null ? discBrakeDesc.hashCode() : 0);
         result = 31 * result + (drumBrakeDesc != null ? drumBrakeDesc.hashCode() : 0);
         result = 31 * result + (requireDesc != null ? requireDesc.hashCode() : 0);
+        result = 31 * result + (isWork != null ? isWork.hashCode() : 0);
         result = 31 * result + (notes != null ? notes.hashCode() : 0);
+        result = 31 * result + (userId != null ? userId.hashCode() : 0);
         return result;
     }
 }

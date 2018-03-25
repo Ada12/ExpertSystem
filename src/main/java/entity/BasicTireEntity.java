@@ -3,7 +3,7 @@ package entity;
 import javax.persistence.*;
 
 /**
- * Created by yangchen on 18/1/8.
+ * Created by yangchen on 2018/3/13.
  */
 @Entity
 @Table(name = "basic_tire", schema = "expert_system", catalog = "")
@@ -19,6 +19,8 @@ public class BasicTireEntity {
     private Double tracCoeff;
     private Double s;
     private Double fR;
+    private Integer userId;
+    private Integer isWork;
     private String notes;
 
     @Id
@@ -133,6 +135,26 @@ public class BasicTireEntity {
     }
 
     @Basic
+    @Column(name = "user_id")
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    @Basic
+    @Column(name = "is_work")
+    public Integer getIsWork() {
+        return isWork;
+    }
+
+    public void setIsWork(Integer isWork) {
+        this.isWork = isWork;
+    }
+
+    @Basic
     @Column(name = "notes")
     public String getNotes() {
         return notes;
@@ -161,6 +183,8 @@ public class BasicTireEntity {
         if (tracCoeff != null ? !tracCoeff.equals(that.tracCoeff) : that.tracCoeff != null) return false;
         if (s != null ? !s.equals(that.s) : that.s != null) return false;
         if (fR != null ? !fR.equals(that.fR) : that.fR != null) return false;
+        if (userId != null ? !userId.equals(that.userId) : that.userId != null) return false;
+        if (isWork != null ? !isWork.equals(that.isWork) : that.isWork != null) return false;
         if (notes != null ? !notes.equals(that.notes) : that.notes != null) return false;
 
         return true;
@@ -179,6 +203,8 @@ public class BasicTireEntity {
         result = 31 * result + (tracCoeff != null ? tracCoeff.hashCode() : 0);
         result = 31 * result + (s != null ? s.hashCode() : 0);
         result = 31 * result + (fR != null ? fR.hashCode() : 0);
+        result = 31 * result + (userId != null ? userId.hashCode() : 0);
+        result = 31 * result + (isWork != null ? isWork.hashCode() : 0);
         result = 31 * result + (notes != null ? notes.hashCode() : 0);
         return result;
     }

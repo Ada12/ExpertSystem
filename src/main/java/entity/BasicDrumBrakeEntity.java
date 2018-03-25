@@ -3,7 +3,7 @@ package entity;
 import javax.persistence.*;
 
 /**
- * Created by yangchen on 18/1/8.
+ * Created by yangchen on 2018/3/13.
  */
 @Entity
 @Table(name = "basic_drum_brake", schema = "expert_system", catalog = "")
@@ -15,7 +15,8 @@ public class BasicDrumBrakeEntity {
     private Double pstD;
     private Integer pstNum;
     private Double pstArea;
-    private Double hfP;
+    private Double hfPT;
+    private Double hfPV;
     private String pVcurve;
     private Double pvK;
     private Double pvB;
@@ -35,7 +36,9 @@ public class BasicDrumBrakeEntity {
     private Double inPerCorner;
     private String rtType;
     private Integer rtId;
+    private Integer isWork;
     private String notes;
+    private Integer userId;
 
     @Id
     @Column(name = "id")
@@ -109,13 +112,23 @@ public class BasicDrumBrakeEntity {
     }
 
     @Basic
-    @Column(name = "hf_P")
-    public Double getHfP() {
-        return hfP;
+    @Column(name = "hf_P_T")
+    public Double getHfPT() {
+        return hfPT;
     }
 
-    public void setHfP(Double hfP) {
-        this.hfP = hfP;
+    public void setHfPT(Double hfPT) {
+        this.hfPT = hfPT;
+    }
+
+    @Basic
+    @Column(name = "hf_P_V")
+    public Double getHfPV() {
+        return hfPV;
+    }
+
+    public void setHfPV(Double hfPV) {
+        this.hfPV = hfPV;
     }
 
     @Basic
@@ -309,6 +322,16 @@ public class BasicDrumBrakeEntity {
     }
 
     @Basic
+    @Column(name = "is_work")
+    public Integer getIsWork() {
+        return isWork;
+    }
+
+    public void setIsWork(Integer isWork) {
+        this.isWork = isWork;
+    }
+
+    @Basic
     @Column(name = "notes")
     public String getNotes() {
         return notes;
@@ -316,6 +339,16 @@ public class BasicDrumBrakeEntity {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    @Basic
+    @Column(name = "user_id")
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     @Override
@@ -332,7 +365,8 @@ public class BasicDrumBrakeEntity {
         if (pstD != null ? !pstD.equals(that.pstD) : that.pstD != null) return false;
         if (pstNum != null ? !pstNum.equals(that.pstNum) : that.pstNum != null) return false;
         if (pstArea != null ? !pstArea.equals(that.pstArea) : that.pstArea != null) return false;
-        if (hfP != null ? !hfP.equals(that.hfP) : that.hfP != null) return false;
+        if (hfPT != null ? !hfPT.equals(that.hfPT) : that.hfPT != null) return false;
+        if (hfPV != null ? !hfPV.equals(that.hfPV) : that.hfPV != null) return false;
         if (pVcurve != null ? !pVcurve.equals(that.pVcurve) : that.pVcurve != null) return false;
         if (pvK != null ? !pvK.equals(that.pvK) : that.pvK != null) return false;
         if (pvB != null ? !pvB.equals(that.pvB) : that.pvB != null) return false;
@@ -354,7 +388,9 @@ public class BasicDrumBrakeEntity {
         if (inPerCorner != null ? !inPerCorner.equals(that.inPerCorner) : that.inPerCorner != null) return false;
         if (rtType != null ? !rtType.equals(that.rtType) : that.rtType != null) return false;
         if (rtId != null ? !rtId.equals(that.rtId) : that.rtId != null) return false;
+        if (isWork != null ? !isWork.equals(that.isWork) : that.isWork != null) return false;
         if (notes != null ? !notes.equals(that.notes) : that.notes != null) return false;
+        if (userId != null ? !userId.equals(that.userId) : that.userId != null) return false;
 
         return true;
     }
@@ -368,7 +404,8 @@ public class BasicDrumBrakeEntity {
         result = 31 * result + (pstD != null ? pstD.hashCode() : 0);
         result = 31 * result + (pstNum != null ? pstNum.hashCode() : 0);
         result = 31 * result + (pstArea != null ? pstArea.hashCode() : 0);
-        result = 31 * result + (hfP != null ? hfP.hashCode() : 0);
+        result = 31 * result + (hfPT != null ? hfPT.hashCode() : 0);
+        result = 31 * result + (hfPV != null ? hfPV.hashCode() : 0);
         result = 31 * result + (pVcurve != null ? pVcurve.hashCode() : 0);
         result = 31 * result + (pvK != null ? pvK.hashCode() : 0);
         result = 31 * result + (pvB != null ? pvB.hashCode() : 0);
@@ -388,7 +425,9 @@ public class BasicDrumBrakeEntity {
         result = 31 * result + (inPerCorner != null ? inPerCorner.hashCode() : 0);
         result = 31 * result + (rtType != null ? rtType.hashCode() : 0);
         result = 31 * result + (rtId != null ? rtId.hashCode() : 0);
+        result = 31 * result + (isWork != null ? isWork.hashCode() : 0);
         result = 31 * result + (notes != null ? notes.hashCode() : 0);
+        result = 31 * result + (userId != null ? userId.hashCode() : 0);
         return result;
     }
 }

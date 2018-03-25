@@ -3,7 +3,7 @@ package entity;
 import javax.persistence.*;
 
 /**
- * Created by yangchen on 18/1/8.
+ * Created by yangchen on 2018/3/13.
  */
 @Entity
 @Table(name = "basic_control", schema = "expert_system", catalog = "")
@@ -15,6 +15,8 @@ public class BasicControlEntity {
     private Double effAbsFrt;
     private Double effAbsRr;
     private Integer ebd;
+    private Integer userId;
+    private Integer isWork;
     private String notes;
 
     @Id
@@ -89,6 +91,26 @@ public class BasicControlEntity {
     }
 
     @Basic
+    @Column(name = "user_id")
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    @Basic
+    @Column(name = "is_work")
+    public Integer getIsWork() {
+        return isWork;
+    }
+
+    public void setIsWork(Integer isWork) {
+        this.isWork = isWork;
+    }
+
+    @Basic
     @Column(name = "notes")
     public String getNotes() {
         return notes;
@@ -103,16 +125,18 @@ public class BasicControlEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        BasicControlEntity entity = (BasicControlEntity) o;
+        BasicControlEntity that = (BasicControlEntity) o;
 
-        if (id != entity.id) return false;
-        if (description != null ? !description.equals(entity.description) : entity.description != null) return false;
-        if (absSpl != null ? !absSpl.equals(entity.absSpl) : entity.absSpl != null) return false;
-        if (absType != null ? !absType.equals(entity.absType) : entity.absType != null) return false;
-        if (effAbsFrt != null ? !effAbsFrt.equals(entity.effAbsFrt) : entity.effAbsFrt != null) return false;
-        if (effAbsRr != null ? !effAbsRr.equals(entity.effAbsRr) : entity.effAbsRr != null) return false;
-        if (ebd != null ? !ebd.equals(entity.ebd) : entity.ebd != null) return false;
-        if (notes != null ? !notes.equals(entity.notes) : entity.notes != null) return false;
+        if (id != that.id) return false;
+        if (description != null ? !description.equals(that.description) : that.description != null) return false;
+        if (absSpl != null ? !absSpl.equals(that.absSpl) : that.absSpl != null) return false;
+        if (absType != null ? !absType.equals(that.absType) : that.absType != null) return false;
+        if (effAbsFrt != null ? !effAbsFrt.equals(that.effAbsFrt) : that.effAbsFrt != null) return false;
+        if (effAbsRr != null ? !effAbsRr.equals(that.effAbsRr) : that.effAbsRr != null) return false;
+        if (ebd != null ? !ebd.equals(that.ebd) : that.ebd != null) return false;
+        if (userId != null ? !userId.equals(that.userId) : that.userId != null) return false;
+        if (isWork != null ? !isWork.equals(that.isWork) : that.isWork != null) return false;
+        if (notes != null ? !notes.equals(that.notes) : that.notes != null) return false;
 
         return true;
     }
@@ -126,6 +150,8 @@ public class BasicControlEntity {
         result = 31 * result + (effAbsFrt != null ? effAbsFrt.hashCode() : 0);
         result = 31 * result + (effAbsRr != null ? effAbsRr.hashCode() : 0);
         result = 31 * result + (ebd != null ? ebd.hashCode() : 0);
+        result = 31 * result + (userId != null ? userId.hashCode() : 0);
+        result = 31 * result + (isWork != null ? isWork.hashCode() : 0);
         result = 31 * result + (notes != null ? notes.hashCode() : 0);
         return result;
     }

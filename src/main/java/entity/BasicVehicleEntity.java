@@ -3,7 +3,7 @@ package entity;
 import javax.persistence.*;
 
 /**
- * Created by yangchen on 18/1/8.
+ * Created by yangchen on 2018/3/13.
  */
 @Entity
 @Table(name = "basic_vehicle", schema = "expert_system", catalog = "")
@@ -26,7 +26,9 @@ public class BasicVehicleEntity {
     private Double coastDecel;
     private Double cd;
     private Double a;
+    private Integer isWork;
     private String notes;
+    private Integer userId;
 
     @Id
     @Column(name = "id")
@@ -210,6 +212,16 @@ public class BasicVehicleEntity {
     }
 
     @Basic
+    @Column(name = "is_work")
+    public Integer getIsWork() {
+        return isWork;
+    }
+
+    public void setIsWork(Integer isWork) {
+        this.isWork = isWork;
+    }
+
+    @Basic
     @Column(name = "notes")
     public String getNotes() {
         return notes;
@@ -219,32 +231,44 @@ public class BasicVehicleEntity {
         this.notes = notes;
     }
 
+    @Basic
+    @Column(name = "user_id")
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        BasicVehicleEntity entity = (BasicVehicleEntity) o;
+        BasicVehicleEntity that = (BasicVehicleEntity) o;
 
-        if (id != entity.id) return false;
-        if (description != null ? !description.equals(entity.description) : entity.description != null) return false;
-        if (carModel != null ? !carModel.equals(entity.carModel) : entity.carModel != null) return false;
-        if (carYear != null ? !carYear.equals(entity.carYear) : entity.carYear != null) return false;
-        if (carDa != null ? !carDa.equals(entity.carDa) : entity.carDa != null) return false;
-        if (carAddInfo != null ? !carAddInfo.equals(entity.carAddInfo) : entity.carAddInfo != null) return false;
-        if (lvwM != null ? !lvwM.equals(entity.lvwM) : entity.lvwM != null) return false;
-        if (lvwFrtR != null ? !lvwFrtR.equals(entity.lvwFrtR) : entity.lvwFrtR != null) return false;
-        if (lvwCgh != null ? !lvwCgh.equals(entity.lvwCgh) : entity.lvwCgh != null) return false;
-        if (gvwM != null ? !gvwM.equals(entity.gvwM) : entity.gvwM != null) return false;
-        if (gvwFrtR != null ? !gvwFrtR.equals(entity.gvwFrtR) : entity.gvwFrtR != null) return false;
-        if (gvwCgh != null ? !gvwCgh.equals(entity.gvwCgh) : entity.gvwCgh != null) return false;
-        if (l != null ? !l.equals(entity.l) : entity.l != null) return false;
-        if (vmax != null ? !vmax.equals(entity.vmax) : entity.vmax != null) return false;
-        if (wot != null ? !wot.equals(entity.wot) : entity.wot != null) return false;
-        if (coastDecel != null ? !coastDecel.equals(entity.coastDecel) : entity.coastDecel != null) return false;
-        if (cd != null ? !cd.equals(entity.cd) : entity.cd != null) return false;
-        if (a != null ? !a.equals(entity.a) : entity.a != null) return false;
-        if (notes != null ? !notes.equals(entity.notes) : entity.notes != null) return false;
+        if (id != that.id) return false;
+        if (description != null ? !description.equals(that.description) : that.description != null) return false;
+        if (carModel != null ? !carModel.equals(that.carModel) : that.carModel != null) return false;
+        if (carYear != null ? !carYear.equals(that.carYear) : that.carYear != null) return false;
+        if (carDa != null ? !carDa.equals(that.carDa) : that.carDa != null) return false;
+        if (carAddInfo != null ? !carAddInfo.equals(that.carAddInfo) : that.carAddInfo != null) return false;
+        if (lvwM != null ? !lvwM.equals(that.lvwM) : that.lvwM != null) return false;
+        if (lvwFrtR != null ? !lvwFrtR.equals(that.lvwFrtR) : that.lvwFrtR != null) return false;
+        if (lvwCgh != null ? !lvwCgh.equals(that.lvwCgh) : that.lvwCgh != null) return false;
+        if (gvwM != null ? !gvwM.equals(that.gvwM) : that.gvwM != null) return false;
+        if (gvwFrtR != null ? !gvwFrtR.equals(that.gvwFrtR) : that.gvwFrtR != null) return false;
+        if (gvwCgh != null ? !gvwCgh.equals(that.gvwCgh) : that.gvwCgh != null) return false;
+        if (l != null ? !l.equals(that.l) : that.l != null) return false;
+        if (vmax != null ? !vmax.equals(that.vmax) : that.vmax != null) return false;
+        if (wot != null ? !wot.equals(that.wot) : that.wot != null) return false;
+        if (coastDecel != null ? !coastDecel.equals(that.coastDecel) : that.coastDecel != null) return false;
+        if (cd != null ? !cd.equals(that.cd) : that.cd != null) return false;
+        if (a != null ? !a.equals(that.a) : that.a != null) return false;
+        if (isWork != null ? !isWork.equals(that.isWork) : that.isWork != null) return false;
+        if (notes != null ? !notes.equals(that.notes) : that.notes != null) return false;
+        if (userId != null ? !userId.equals(that.userId) : that.userId != null) return false;
 
         return true;
     }
@@ -269,7 +293,9 @@ public class BasicVehicleEntity {
         result = 31 * result + (coastDecel != null ? coastDecel.hashCode() : 0);
         result = 31 * result + (cd != null ? cd.hashCode() : 0);
         result = 31 * result + (a != null ? a.hashCode() : 0);
+        result = 31 * result + (isWork != null ? isWork.hashCode() : 0);
         result = 31 * result + (notes != null ? notes.hashCode() : 0);
+        result = 31 * result + (userId != null ? userId.hashCode() : 0);
         return result;
     }
 }

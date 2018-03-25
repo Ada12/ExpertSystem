@@ -3,7 +3,7 @@ package entity;
 import javax.persistence.*;
 
 /**
- * Created by yangchen on 18/1/8.
+ * Created by yangchen on 2018/3/13.
  */
 @Entity
 @Table(name = "basic_apply", schema = "expert_system", catalog = "")
@@ -33,6 +33,8 @@ public class BasicApplyEntity {
     private Double mcdTEff;
     private Double apyFEff;
     private Double apyTEff;
+    private Integer isWork;
+    private Integer userId;
     private String notes;
 
     @Id
@@ -287,6 +289,26 @@ public class BasicApplyEntity {
     }
 
     @Basic
+    @Column(name = "is_work")
+    public Integer getIsWork() {
+        return isWork;
+    }
+
+    public void setIsWork(Integer isWork) {
+        this.isWork = isWork;
+    }
+
+    @Basic
+    @Column(name = "user_id")
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    @Basic
     @Column(name = "notes")
     public String getNotes() {
         return notes;
@@ -301,34 +323,36 @@ public class BasicApplyEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        BasicApplyEntity entity = (BasicApplyEntity) o;
+        BasicApplyEntity that = (BasicApplyEntity) o;
 
-        if (id != entity.id) return false;
-        if (description != null ? !description.equals(entity.description) : entity.description != null) return false;
-        if (pedSpl != null ? !pedSpl.equals(entity.pedSpl) : entity.pedSpl != null) return false;
-        if (pedRatio != null ? !pedRatio.equals(entity.pedRatio) : entity.pedRatio != null) return false;
-        if (pedFEff != null ? !pedFEff.equals(entity.pedFEff) : entity.pedFEff != null) return false;
-        if (pedTEff != null ? !pedTEff.equals(entity.pedTEff) : entity.pedTEff != null) return false;
-        if (pedType != null ? !pedType.equals(entity.pedType) : entity.pedType != null) return false;
-        if (bstSpl != null ? !bstSpl.equals(entity.bstSpl) : entity.bstSpl != null) return false;
-        if (bstSize != null ? !bstSize.equals(entity.bstSize) : entity.bstSize != null) return false;
-        if (bstGain != null ? !bstGain.equals(entity.bstGain) : entity.bstGain != null) return false;
-        if (bstFTotal != null ? !bstFTotal.equals(entity.bstFTotal) : entity.bstFTotal != null) return false;
-        if (bstFEff != null ? !bstFEff.equals(entity.bstFEff) : entity.bstFEff != null) return false;
-        if (bstTEff != null ? !bstTEff.equals(entity.bstTEff) : entity.bstTEff != null) return false;
-        if (bstFLsNp != null ? !bstFLsNp.equals(entity.bstFLsNp) : entity.bstFLsNp != null) return false;
-        if (bstFLsWp != null ? !bstFLsWp.equals(entity.bstFLsWp) : entity.bstFLsWp != null) return false;
-        if (bstFJmp != null ? !bstFJmp.equals(entity.bstFJmp) : entity.bstFJmp != null) return false;
-        if (bstTLs != null ? !bstTLs.equals(entity.bstTLs) : entity.bstTLs != null) return false;
-        if (bstVcm != null ? !bstVcm.equals(entity.bstVcm) : entity.bstVcm != null) return false;
-        if (altBstVcm != null ? !altBstVcm.equals(entity.altBstVcm) : entity.altBstVcm != null) return false;
-        if (mcdSpl != null ? !mcdSpl.equals(entity.mcdSpl) : entity.mcdSpl != null) return false;
-        if (mcdD != null ? !mcdD.equals(entity.mcdD) : entity.mcdD != null) return false;
-        if (mcdFEff != null ? !mcdFEff.equals(entity.mcdFEff) : entity.mcdFEff != null) return false;
-        if (mcdTEff != null ? !mcdTEff.equals(entity.mcdTEff) : entity.mcdTEff != null) return false;
-        if (apyFEff != null ? !apyFEff.equals(entity.apyFEff) : entity.apyFEff != null) return false;
-        if (apyTEff != null ? !apyTEff.equals(entity.apyTEff) : entity.apyTEff != null) return false;
-        if (notes != null ? !notes.equals(entity.notes) : entity.notes != null) return false;
+        if (id != that.id) return false;
+        if (description != null ? !description.equals(that.description) : that.description != null) return false;
+        if (pedSpl != null ? !pedSpl.equals(that.pedSpl) : that.pedSpl != null) return false;
+        if (pedRatio != null ? !pedRatio.equals(that.pedRatio) : that.pedRatio != null) return false;
+        if (pedFEff != null ? !pedFEff.equals(that.pedFEff) : that.pedFEff != null) return false;
+        if (pedTEff != null ? !pedTEff.equals(that.pedTEff) : that.pedTEff != null) return false;
+        if (pedType != null ? !pedType.equals(that.pedType) : that.pedType != null) return false;
+        if (bstSpl != null ? !bstSpl.equals(that.bstSpl) : that.bstSpl != null) return false;
+        if (bstSize != null ? !bstSize.equals(that.bstSize) : that.bstSize != null) return false;
+        if (bstGain != null ? !bstGain.equals(that.bstGain) : that.bstGain != null) return false;
+        if (bstFTotal != null ? !bstFTotal.equals(that.bstFTotal) : that.bstFTotal != null) return false;
+        if (bstFEff != null ? !bstFEff.equals(that.bstFEff) : that.bstFEff != null) return false;
+        if (bstTEff != null ? !bstTEff.equals(that.bstTEff) : that.bstTEff != null) return false;
+        if (bstFLsNp != null ? !bstFLsNp.equals(that.bstFLsNp) : that.bstFLsNp != null) return false;
+        if (bstFLsWp != null ? !bstFLsWp.equals(that.bstFLsWp) : that.bstFLsWp != null) return false;
+        if (bstFJmp != null ? !bstFJmp.equals(that.bstFJmp) : that.bstFJmp != null) return false;
+        if (bstTLs != null ? !bstTLs.equals(that.bstTLs) : that.bstTLs != null) return false;
+        if (bstVcm != null ? !bstVcm.equals(that.bstVcm) : that.bstVcm != null) return false;
+        if (altBstVcm != null ? !altBstVcm.equals(that.altBstVcm) : that.altBstVcm != null) return false;
+        if (mcdSpl != null ? !mcdSpl.equals(that.mcdSpl) : that.mcdSpl != null) return false;
+        if (mcdD != null ? !mcdD.equals(that.mcdD) : that.mcdD != null) return false;
+        if (mcdFEff != null ? !mcdFEff.equals(that.mcdFEff) : that.mcdFEff != null) return false;
+        if (mcdTEff != null ? !mcdTEff.equals(that.mcdTEff) : that.mcdTEff != null) return false;
+        if (apyFEff != null ? !apyFEff.equals(that.apyFEff) : that.apyFEff != null) return false;
+        if (apyTEff != null ? !apyTEff.equals(that.apyTEff) : that.apyTEff != null) return false;
+        if (isWork != null ? !isWork.equals(that.isWork) : that.isWork != null) return false;
+        if (userId != null ? !userId.equals(that.userId) : that.userId != null) return false;
+        if (notes != null ? !notes.equals(that.notes) : that.notes != null) return false;
 
         return true;
     }
@@ -360,6 +384,8 @@ public class BasicApplyEntity {
         result = 31 * result + (mcdTEff != null ? mcdTEff.hashCode() : 0);
         result = 31 * result + (apyFEff != null ? apyFEff.hashCode() : 0);
         result = 31 * result + (apyTEff != null ? apyTEff.hashCode() : 0);
+        result = 31 * result + (isWork != null ? isWork.hashCode() : 0);
+        result = 31 * result + (userId != null ? userId.hashCode() : 0);
         result = 31 * result + (notes != null ? notes.hashCode() : 0);
         return result;
     }

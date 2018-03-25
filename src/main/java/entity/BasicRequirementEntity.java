@@ -3,7 +3,7 @@ package entity;
 import javax.persistence.*;
 
 /**
- * Created by yangchen on 2018/1/9.
+ * Created by yangchen on 2018/3/13.
  */
 @Entity
 @Table(name = "basic_requirement", schema = "expert_system", catalog = "")
@@ -25,7 +25,9 @@ public class BasicRequirementEntity {
     private String bet;
     private String brakeStop;
     private String pedalFeel;
+    private Integer userId;
     private String notes;
+    private Integer isWork;
 
     @Id
     @Column(name = "id")
@@ -199,6 +201,16 @@ public class BasicRequirementEntity {
     }
 
     @Basic
+    @Column(name = "user_id")
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    @Basic
     @Column(name = "notes")
     public String getNotes() {
         return notes;
@@ -206,6 +218,16 @@ public class BasicRequirementEntity {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    @Basic
+    @Column(name = "is_work")
+    public Integer getIsWork() {
+        return isWork;
+    }
+
+    public void setIsWork(Integer isWork) {
+        this.isWork = isWork;
     }
 
     @Override
@@ -232,7 +254,9 @@ public class BasicRequirementEntity {
         if (bet != null ? !bet.equals(that.bet) : that.bet != null) return false;
         if (brakeStop != null ? !brakeStop.equals(that.brakeStop) : that.brakeStop != null) return false;
         if (pedalFeel != null ? !pedalFeel.equals(that.pedalFeel) : that.pedalFeel != null) return false;
+        if (userId != null ? !userId.equals(that.userId) : that.userId != null) return false;
         if (notes != null ? !notes.equals(that.notes) : that.notes != null) return false;
+        if (isWork != null ? !isWork.equals(that.isWork) : that.isWork != null) return false;
 
         return true;
     }
@@ -256,7 +280,9 @@ public class BasicRequirementEntity {
         result = 31 * result + (bet != null ? bet.hashCode() : 0);
         result = 31 * result + (brakeStop != null ? brakeStop.hashCode() : 0);
         result = 31 * result + (pedalFeel != null ? pedalFeel.hashCode() : 0);
+        result = 31 * result + (userId != null ? userId.hashCode() : 0);
         result = 31 * result + (notes != null ? notes.hashCode() : 0);
+        result = 31 * result + (isWork != null ? isWork.hashCode() : 0);
         return result;
     }
 }
