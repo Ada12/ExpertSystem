@@ -45,6 +45,11 @@ public class UpdateWorkspace implements Runnable {
         this.vehicle = vehicle;
     }
 
+    public void setParking(String parking) {
+        this.parking = parking;
+    }
+
+
     private String apply;
     private String control;
     private String discBrake;
@@ -52,8 +57,9 @@ public class UpdateWorkspace implements Runnable {
     private String require;
     private String tire;
     private String vehicle;
+    private String parking;
 
     public void run() {
-        basicService.updateWorkspace(apply, control, discBrake, drumBrake, require, tire, vehicle, userId);
+        basicService.updateWorkspace(apply, control, discBrake, drumBrake, require, tire, vehicle, parking, userId);
     }
 }

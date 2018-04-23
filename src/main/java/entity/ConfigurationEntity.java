@@ -3,7 +3,7 @@ package entity;
 import javax.persistence.*;
 
 /**
- * Created by yangchen on 2018/3/13.
+ * Created by yangchen on 2018/4/9.
  */
 @Entity
 @Table(name = "configuration", schema = "expert_system", catalog = "")
@@ -17,9 +17,12 @@ public class ConfigurationEntity {
     private String discBrakeDesc;
     private String drumBrakeDesc;
     private String requireDesc;
+    private String parkingDesc;
     private Integer isWork;
-    private String notes;
+    private String fileName;
     private Integer userId;
+    private String notes;
+    private Integer changeFlag;
 
     @Id
     @Column(name = "id")
@@ -113,6 +116,16 @@ public class ConfigurationEntity {
     }
 
     @Basic
+    @Column(name = "parking_desc")
+    public String getParkingDesc() {
+        return parkingDesc;
+    }
+
+    public void setParkingDesc(String parkingDesc) {
+        this.parkingDesc = parkingDesc;
+    }
+
+    @Basic
     @Column(name = "is_work")
     public Integer getIsWork() {
         return isWork;
@@ -120,6 +133,26 @@ public class ConfigurationEntity {
 
     public void setIsWork(Integer isWork) {
         this.isWork = isWork;
+    }
+
+    @Basic
+    @Column(name = "file_name")
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    @Basic
+    @Column(name = "userId")
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     @Basic
@@ -133,13 +166,13 @@ public class ConfigurationEntity {
     }
 
     @Basic
-    @Column(name = "userId")
-    public Integer getUserId() {
-        return userId;
+    @Column(name = "change_flag")
+    public Integer getChangeFlag() {
+        return changeFlag;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setChangeFlag(Integer changeFlag) {
+        this.changeFlag = changeFlag;
     }
 
     @Override
@@ -160,9 +193,12 @@ public class ConfigurationEntity {
         if (drumBrakeDesc != null ? !drumBrakeDesc.equals(that.drumBrakeDesc) : that.drumBrakeDesc != null)
             return false;
         if (requireDesc != null ? !requireDesc.equals(that.requireDesc) : that.requireDesc != null) return false;
+        if (parkingDesc != null ? !parkingDesc.equals(that.parkingDesc) : that.parkingDesc != null) return false;
         if (isWork != null ? !isWork.equals(that.isWork) : that.isWork != null) return false;
-        if (notes != null ? !notes.equals(that.notes) : that.notes != null) return false;
+        if (fileName != null ? !fileName.equals(that.fileName) : that.fileName != null) return false;
         if (userId != null ? !userId.equals(that.userId) : that.userId != null) return false;
+        if (notes != null ? !notes.equals(that.notes) : that.notes != null) return false;
+        if (changeFlag != null ? !changeFlag.equals(that.changeFlag) : that.changeFlag != null) return false;
 
         return true;
     }
@@ -178,9 +214,12 @@ public class ConfigurationEntity {
         result = 31 * result + (discBrakeDesc != null ? discBrakeDesc.hashCode() : 0);
         result = 31 * result + (drumBrakeDesc != null ? drumBrakeDesc.hashCode() : 0);
         result = 31 * result + (requireDesc != null ? requireDesc.hashCode() : 0);
+        result = 31 * result + (parkingDesc != null ? parkingDesc.hashCode() : 0);
         result = 31 * result + (isWork != null ? isWork.hashCode() : 0);
-        result = 31 * result + (notes != null ? notes.hashCode() : 0);
+        result = 31 * result + (fileName != null ? fileName.hashCode() : 0);
         result = 31 * result + (userId != null ? userId.hashCode() : 0);
+        result = 31 * result + (notes != null ? notes.hashCode() : 0);
+        result = 31 * result + (changeFlag != null ? changeFlag.hashCode() : 0);
         return result;
     }
 }

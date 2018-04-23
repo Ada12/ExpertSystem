@@ -3,7 +3,7 @@ package entity;
 import javax.persistence.*;
 
 /**
- * Created by yangchen on 2018/3/13.
+ * Created by yangchen on 2018/4/3.
  */
 @Entity
 @Table(name = "basic_drum_brake", schema = "expert_system", catalog = "")

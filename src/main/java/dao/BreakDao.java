@@ -22,45 +22,6 @@ public class BreakDao {
         this.entityManager = entityManager;
     }
 
-    public VehicleEntity getSingleVehicle(int id) {
-        return entityManager.find(VehicleEntity.class, id);
-    }
-
-    public List<VehicleEntity> getAllVehicles() {
-        TypedQuery<VehicleEntity> query;
-        query = entityManager.createQuery("select v from VehicleEntity v", VehicleEntity.class);
-        List<VehicleEntity> entities = query.getResultList();
-        return entities;
-    }
-
-    public BoosterMcEntity getBoosterMc(int id) {
-        return entityManager.find(BoosterMcEntity.class, id);
-    }
-
-    public DiscCaliperEntity getDiscCaliper(int id) {
-        return entityManager.find(DiscCaliperEntity.class, id);
-    }
-
-    public DiscRotorEntity getDiscRotor(int id) {
-        return entityManager.find(DiscRotorEntity.class, id);
-    }
-
-    public DrumCaliperEntity getDrumCaliper(int id) {
-        return entityManager.find(DrumCaliperEntity.class, id);
-    }
-
-    public DrumRotorEntity getDrumRotor(int id) {
-        return entityManager.find(DrumRotorEntity.class, id);
-    }
-
-    public PedalEntity getPedal(int id) {
-        return entityManager.find(PedalEntity.class, id);
-    }
-
-    public VehicleEntity getVehicle(int id) {
-        return entityManager.find(VehicleEntity.class, id);
-    }
-
     public List<UnitsEntity> getAllUnits() {
         TypedQuery<UnitsEntity> query;
         query = entityManager.createQuery("select v from UnitsEntity v", UnitsEntity.class);

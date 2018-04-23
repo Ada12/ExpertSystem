@@ -53,6 +53,7 @@ public class BasicDao {
         try {
             entityManager.persist(entity);
             entityManager.flush();
+            updateConfigurationChangeFlag("apply", entity.getDescription(), entity.getUserId());
             return true;
         } catch (Exception e) {
             System.out.println(e);
@@ -104,6 +105,7 @@ public class BasicDao {
         try {
             entityManager.persist(entity);
             entityManager.flush();
+            updateConfigurationChangeFlag("control", entity.getDescription(), entity.getUserId());
             return true;
         } catch (Exception e) {
             System.out.println(e);
@@ -171,6 +173,7 @@ public class BasicDao {
         try {
             entityManager.persist(entity);
             entityManager.flush();
+            updateConfigurationChangeFlag("discBrake", entity.getDescription(), entity.getUserId());
             return true;
         } catch (Exception e) {
             System.out.println(e);
@@ -206,6 +209,7 @@ public class BasicDao {
         try {
             entityManager.persist(entity);
             entityManager.flush();
+            updateConfigurationChangeFlag("drumBrake", entity.getDescription(), entity.getUserId());
             return true;
         } catch (Exception e) {
             System.out.println(e);
@@ -384,6 +388,7 @@ public class BasicDao {
         try {
             entityManager.persist(entity);
             entityManager.flush();
+            updateConfigurationChangeFlag("tire", entity.getDescription(), entity.getUserId());
             return true;
         } catch (Exception e) {
             System.out.println(e);
@@ -435,6 +440,7 @@ public class BasicDao {
         try {
             entityManager.persist(entity);
             entityManager.flush();
+            updateConfigurationChangeFlag("vehicle", entity.getDescription(), entity.getUserId());
             return true;
         } catch (Exception e) {
             System.out.println(e);
@@ -486,6 +492,7 @@ public class BasicDao {
         try {
             entityManager.persist(entity);
             entityManager.flush();
+            updateConfigurationChangeFlag("require", entity.getDescription(), entity.getUserId());
             return true;
         } catch (Exception e) {
             System.out.println(e);
@@ -537,6 +544,7 @@ public class BasicDao {
         try {
             entityManager.persist(entity);
             entityManager.flush();
+            updateConfigurationChangeFlag("control", entity.getDescription(), entity.getUserId());
             return true;
         } catch (Exception e) {
             System.out.println(e);
@@ -549,6 +557,58 @@ public class BasicDao {
         try {
             query = entityManager.createQuery("delete from ConfigurationEntity b where b.description = '" + description + "' and b.userId = " + userId,
                     ConfigurationEntity.class).executeUpdate();
+            if (query > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    // parking
+    public List<BasicParkingEntity> getBasicParkingDesc(int userId) {
+        TypedQuery<BasicParkingEntity> query;
+        query = entityManager.createQuery("select b from BasicParkingEntity b where b.userId =:userId", BasicParkingEntity.class);
+        query.setParameter("userId", userId);
+        List<BasicParkingEntity> entities = query.getResultList();
+        return entities;
+    }
+
+    public BasicParkingEntity getBasicParking(String description, int userId) {
+        TypedQuery<BasicParkingEntity> query;
+        query = entityManager.createQuery("select b from BasicParkingEntity b where b.description = :description and b.userId =:userId", BasicParkingEntity.class);
+        query.setParameter("description", description);
+        query.setParameter("userId", userId);
+        BasicParkingEntity entities = new BasicParkingEntity();
+        try {
+            entities = query.getSingleResult();
+        } catch (NoResultException e) {
+            System.out.println(e);
+            entities = null;
+        }
+        return entities;
+    }
+
+    public boolean addNewParking(BasicParkingEntity entity) {
+        try {
+            entityManager.persist(entity);
+            entityManager.flush();
+            updateConfigurationChangeFlag("parking", entity.getDescription(), entity.getUserId());
+            return true;
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
+    }
+
+    public boolean deleteParking(String description, int userId) {
+        int query;
+        try {
+            query = entityManager.createQuery("delete from BasicParkingEntity b where b.description = '" + description + "' and b.userId = " + userId,
+                    BasicParkingEntity.class).executeUpdate();
             if (query > 0) {
                 return true;
             } else {
@@ -576,6 +636,7 @@ public class BasicDao {
             String require,
             String tire,
             String vehicle,
+            String parking,
             int userId
     ) {
         // apply
@@ -655,6 +716,17 @@ public class BasicDao {
         vehicleQuery2.setParameter("description", vehicle);
         vehicleQuery2.setParameter("userId", userId);
         vehicleQuery2.executeUpdate();
+        // parking
+        TypedQuery<BasicParkingEntity> parkingQuery1;
+        parkingQuery1 = entityManager.createQuery("update BasicParkingEntity b set b.isWork = 1 where b.description =:description and b.userId =:userId", BasicParkingEntity.class);
+        parkingQuery1.setParameter("description", parking);
+        parkingQuery1.setParameter("userId", userId);
+        parkingQuery1.executeUpdate();
+        TypedQuery<BasicParkingEntity> parkingQuery2;
+        parkingQuery2 = entityManager.createQuery("update BasicParkingEntity b set b.isWork = 0 where b.description !=:description and b.userId =:userId", BasicParkingEntity.class);
+        parkingQuery2.setParameter("description", parking);
+        parkingQuery2.setParameter("userId", userId);
+        parkingQuery2.executeUpdate();
     }
 
     public Map<String, String> getWorkspace(int userId) {
@@ -701,6 +773,98 @@ public class BasicDao {
                 BasicVehicleEntity.class);
         vehicleQuery.setParameter("userId", userId);
         desc.put("vehicle", vehicleQuery.getSingleResult().getDescription());
+        // parking
+        TypedQuery<BasicParkingEntity> parkingQuery;
+        parkingQuery = entityManager.createQuery("select b from BasicParkingEntity b where b.isWork = 1 and b.userId =:userId",
+                BasicParkingEntity.class);
+        parkingQuery.setParameter("userId", userId);
+        desc.put("parking", parkingQuery.getSingleResult().getDescription());
         return desc;
+    }
+
+    // for contrast
+    public void updateConfigurationChangeFlag(String type, String desc, int userId) {
+        try {
+            if (type.equals("vehicle")) {
+                entityManager.createQuery("update ConfigurationEntity b set b.changeFlag = 1 where b.vehicleDesc = '" + desc + "' and b.userId = " + userId,
+                        ConfigurationEntity.class).executeUpdate();
+            } else if (type.equals("tire")) {
+                entityManager.createQuery("update ConfigurationEntity b set b.changeFlag = 1 where b.tireDesc = '" + desc + "' and b.userId = " + userId,
+                        ConfigurationEntity.class).executeUpdate();
+            } else if (type.equals("apply")) {
+                entityManager.createQuery("update ConfigurationEntity b set b.changeFlag = 1 where b.applyDesc = '" + desc + "' and b.userId = " + userId,
+                        ConfigurationEntity.class).executeUpdate();
+            } else if (type.equals("control")) {
+                entityManager.createQuery("update ConfigurationEntity b set b.changeFlag = 1 where b.controlDesc = '" + desc + "' and b.userId = " + userId,
+                        ConfigurationEntity.class).executeUpdate();
+            } else if (type.equals("discBrake")) {
+                entityManager.createQuery("update ConfigurationEntity b set b.changeFlag = 1 where b.discBrakeDesc = '" + desc + "' and b.userId = " + userId,
+                        ConfigurationEntity.class).executeUpdate();
+            } else if (type.equals("drumBrake")) {
+                entityManager.createQuery("update ConfigurationEntity b set b.changeFlag = 1 where b.drumBrakeDesc = '" + desc + "' and b.userId = " + userId,
+                        ConfigurationEntity.class).executeUpdate();
+            } else if (type.equals("require")) {
+                entityManager.createQuery("update ConfigurationEntity b set b.changeFlag = 1 where b.requireDesc = '" + desc + "' and b.userId = " + userId,
+                        ConfigurationEntity.class).executeUpdate();
+            } else if (type.equals("parking")) {
+                entityManager.createQuery("update ConfigurationEntity b set b.changeFlag = 1 where b.parkingDesc = '" + desc + "' and b.userId = " + userId,
+                        ConfigurationEntity.class).executeUpdate();
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public boolean updateConfigurationFileName(String desc, String fileName, int userId) {
+        try {
+            int query = entityManager.createQuery("update ConfigurationEntity b set b.fileName = '"+ fileName +"', b.changeFlag = 0 where b.description = '" + desc + "' and b.userId = " + userId,
+                    ConfigurationEntity.class).executeUpdate();
+            if (query > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public String getConfigurationFileName(String desc, int userId) {
+        TypedQuery<ConfigurationEntity> query;
+        query = entityManager.createQuery("select b from ConfigurationEntity b where b.description = :description and b.userId =:userId and b.changeFlag = 0", ConfigurationEntity.class);
+        query.setParameter("description", desc);
+        query.setParameter("userId", userId);
+        ConfigurationEntity entities = new ConfigurationEntity();
+        String fileName;
+        try {
+            entities = query.getSingleResult();
+            fileName = entities.getFileName();
+        } catch (NoResultException e) {
+            System.out.println(e);
+            fileName = "";
+        }
+        if (fileName == null) {
+            return "";
+        } else {
+            return fileName;
+        }
+    }
+
+    public List<String> getUselessFileNames(int userId) {
+        TypedQuery<ConfigurationEntity> query;
+        query = entityManager.createQuery("select b from ConfigurationEntity b where b.userId =:userId and b.changeFlag = 1", ConfigurationEntity.class);
+        query.setParameter("userId", userId);
+        List<ConfigurationEntity> entities = new ArrayList<ConfigurationEntity>();
+        try {
+            entities = query.getResultList();
+        } catch (NoResultException e) {
+            System.out.println(e);
+        }
+        List<String> fileNames = new ArrayList<String>();
+        for (ConfigurationEntity entity: entities) {
+            fileNames.add(entity.getFileName());
+        }
+        return fileNames;
     }
 }

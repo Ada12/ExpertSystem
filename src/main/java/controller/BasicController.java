@@ -19,6 +19,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.*;
 
 /**
  * Created by yangchen on 17/9/5.
@@ -804,7 +805,10 @@ public class BasicController {
             entity.setDiscBrakeDesc(params.get("discBrakeDesc").toString());
             entity.setDrumBrakeDesc(params.get("drumBrakeDesc").toString());
             entity.setRequireDesc(params.get("requireDesc").toString());
+            entity.setParkingDesc(params.get("parkingDesc").toString());
             entity.setIsWork(0);
+            entity.setFileName("");
+            entity.setChangeFlag(1);
             entity.setUserId(getIntegerValue(params.get("userId").toString()));
             entity.setNotes(params.get("notes").toString());
             return getResponseBody(basicService.addNewConfiguration(entity));
@@ -821,6 +825,85 @@ public class BasicController {
             @RequestParam("userId") int userId
     ) {
         return getResponseBody(basicService.deleteConfiguration(description, userId));
+    }
+
+
+    // parking!
+    @RequestMapping(value = "basic/parking/desc", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> getBasicParkingDesc(
+            @RequestParam("userId") int userId
+    ) {
+        List<BasicParkingEntity> list = basicService.getBasicParkingDesc(userId);
+        List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
+        for (int i = 0; i < list.size(); i ++) {
+            Map<String, Object> single = new HashedMap();
+            single.put("id", list.get(i).getId());
+            single.put("desc", list.get(i).getDescription());
+            result.add(single);
+        }
+        return getResponseBody(result);
+    }
+
+    @RequestMapping(value = "basic/parking", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> getBasicParking(
+            @RequestParam("description") String description,
+            @RequestParam("userId") int userId
+    ) {
+        return getResponseBody(basicService.getBasicParking(description, userId));
+    }
+
+    @RequestMapping(value = "basic/parking/check", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> checkBasicParking(
+            @RequestParam("description") String description,
+            @RequestParam("userId") int userId
+    ) {
+        List<BasicParkingEntity> list = basicService.getBasicParkingDesc(userId);
+        List<String> descs = new ArrayList<String>();
+        for (int i = 0; i < list.size(); i ++) {
+            descs.add(list.get(i).getDescription());
+        }
+        return getResponseBody(descs.contains(description));
+    }
+
+    @RequestMapping(value = "basic/parking/add", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> addNewBasicParking(
+            @RequestBody Map<String, Object> params
+    ) {
+        BasicParkingEntity entity = new BasicParkingEntity();
+        try {
+            entity.setDescription(params.get("description").toString());
+            entity.setElf(getDoubleValue(params.get("elf").toString()));
+            entity.setEcf(getDoubleValue(params.get("ecf").toString()));
+            entity.setEct(getDoubleValue(params.get("ect").toString()));
+            entity.setA(getDoubleValue(params.get("a").toString()));
+            entity.setRv(getDoubleValue(params.get("rv").toString()));
+            entity.setAv(getDoubleValue(params.get("av").toString()));
+            entity.setAd(getDoubleValue(params.get("ad").toString()));
+            entity.setA0(getDoubleValue(params.get("a0").toString()));
+            entity.setDh(getDoubleValue(params.get("dh").toString()));
+            entity.setSigema0(getDoubleValue(params.get("sigema0").toString()));
+            entity.setSita(getDoubleValue(params.get("sita").toString()));
+            entity.setIsWork(0);
+            entity.setUserId(getIntegerValue(params.get("userId").toString()));
+            entity.setNotes(params.get("notes").toString());
+            return getResponseBody(basicService.addNewConfiguration(entity));
+        } catch (Exception e) {
+            System.out.println(e);
+            return getResponseBody(false);
+        }
+    }
+
+    @RequestMapping(value = "basic/parking/delete", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> deleteBasicParking(
+            @RequestParam("description") String description,
+            @RequestParam("userId") int userId
+    ) {
+        return getResponseBody(basicService.deleteParking(description, userId));
     }
 
     // units!
@@ -859,7 +942,7 @@ public class BasicController {
         String path = servletContext.getRealPath("/style/images/");
         Map<String, Object> result = new HashedMap();
         try {
-            Map<String, Map<String, Object>> parameter = getRealParams(params);
+            Map<String, Map<String, Object>> parameter = basicService.getRealParams(params);
             UpdateWorkspace updateWorkspace = new UpdateWorkspace();
             List<String> descList = getRealDesc(params);
             updateWorkspace.setBasicService(basicService);
@@ -873,7 +956,9 @@ public class BasicController {
             updateWorkspace.setUserId(getIntegerValue(params.get("userId").toString()));
             Thread updateThread = new Thread(updateWorkspace);
             updateThread.start();
-            result = MatlabManualCalculate.realCalculate(parameter, path);
+            SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+            String date = df.format(new Date());
+            result = MatlabManualCalculate.realCalculate(parameter, path, 1, date);
             SaveToXlsx myRunnable = new SaveToXlsx();
             myRunnable.setParams(parameter);
             if (Boolean.valueOf(result.get("flag").toString())) {
@@ -931,265 +1016,89 @@ public class BasicController {
         return list;
     }
 
-    public Map<String, Map<String, Object>> getRealParams(Map<String, Object> params) {
-        Map<String, Map<String, Object>> parameter = (Map<String, Map<String, Object>>) params.get("param");
-        Map<String, Object> desc = (Map<String, Object>) params.get("desc");
-        int userId = getIntegerValue(params.get("userId").toString());
-        String[] keys = new String[]{"apply", "control", "discBrake", "drumBrake",
-                "requirement", "tire", "vehicle"};
-        if (desc.get("vehicle") != null) {
-            BasicVehicleEntity vehicleEntity = basicService.getBasicVehicle(desc.get("vehicle").toString(), userId);
-            Map<String, Object> vehicleMap = new HashedMap();
-            vehicleMap.put("description", vehicleEntity.getDescription());
-            vehicleMap.put("carModel", vehicleEntity.getCarModel());
-            vehicleMap.put("carYear", vehicleEntity.getCarYear());
-            vehicleMap.put("carAddInfo", vehicleEntity.getCarAddInfo());
-            vehicleMap.put("lvwM", vehicleEntity.getLvwM());
-            vehicleMap.put("gvwM", vehicleEntity.getGvwM());
-            vehicleMap.put("lvwFrtR", vehicleEntity.getLvwFrtR());
-            vehicleMap.put("gvwFrtR", vehicleEntity.getGvwFrtR());
-            vehicleMap.put("lvwCgh", vehicleEntity.getLvwCgh());
-            vehicleMap.put("gvwCgh", vehicleEntity.getGvwCgh());
-            vehicleMap.put("l", vehicleEntity.getL());
-            vehicleMap.put("vmax", vehicleEntity.getVmax());
-            vehicleMap.put("wot", vehicleEntity.getWot());
-            vehicleMap.put("coastDecel", vehicleEntity.getCoastDecel());
-            vehicleMap.put("cd", vehicleEntity.getCd());
-            vehicleMap.put("a", vehicleEntity.getA());
-            vehicleMap.put("carDa", vehicleEntity.getCarDa());
-            vehicleMap.put("notes", vehicleEntity.getNotes());
-            parameter.put("vehicle", vehicleMap);
+    @RequestMapping(value = "basic/contrast/test", method = RequestMethod.POST)
+    public ResponseEntity<Map<String, Object>> getContrastResultTest(
+            @RequestBody Map<String, Object> params
+    ) {
+        ArrayList<String> descs = (ArrayList<String>) params.get("descs");
+        int userId = (Integer) params.get("userId");
+        // thread pool
+        ExecutorService executorService = Executors.newCachedThreadPool();
+        List<Future<Map<String, Object>>> futureList = new ArrayList<Future<Map<String, Object>>>();
+        String path = servletContext.getRealPath("/style/images/");
+        for (String desc: descs) {
+            Future<Map<String, Object>> future = executorService.submit(new ParallelCalculate(basicService, desc, userId, path));
+            futureList.add(future);
+            System.out.println("----------------------------------------------------------future" + desc);
         }
-        if (desc.get("tire") != null) {
-            BasicTireEntity tireEntity = basicService.getBasicTireWheel(desc.get("tire").toString(), userId);
-            Map<String, Object> tireMap = new HashedMap();
-            tireMap.put("description", tireEntity.getDescription());
-            tireMap.put("lvwTrFrt", tireEntity.getLvwTrFrt());
-            tireMap.put("gvwTrFrt", tireEntity.getGvwTrFrt());
-            tireMap.put("lvwTrRr", tireEntity.getLvwTrRr());
-            tireMap.put("gvwTrRr", tireEntity.getGvwTrRr());
-            tireMap.put("peakAdhesLong", tireEntity.getPeakAdhesLong());
-            tireMap.put("peakAdhesLat", tireEntity.getPeakAdhesLat());
-            tireMap.put("tracCoeff", tireEntity.getTracCoeff());
-            tireMap.put("s", tireEntity.getS());
-            tireMap.put("fR", tireEntity.getfR());
-            tireMap.put("notes", tireEntity.getNotes());
-            parameter.put("tire", tireMap);
-        }
-        if (desc.get("apply") != null) {
-            BasicApplyEntity applyEntity = basicService.getBasicApply(desc.get("apply").toString(), userId);
-            Map<String, Object> applyMap = new HashedMap();
-            applyMap.put("description", applyEntity.getDescription());
-            applyMap.put("pedSpl", applyEntity.getPedSpl());
-            applyMap.put("pedRatio", applyEntity.getPedRatio());
-            applyMap.put("pedFEff", applyEntity.getPedFEff());
-            applyMap.put("pedTEff", applyEntity.getPedTEff());
-            applyMap.put("mcdSpl", applyEntity.getMcdSpl());
-            applyMap.put("mcdD", applyEntity.getMcdD());
-            applyMap.put("bstSpl", applyEntity.getBstSpl());
-            applyMap.put("bstSize", applyEntity.getBstSize());
-            applyMap.put("bstGain", applyEntity.getBstGain());
-            applyMap.put("bstFTotal", applyEntity.getBstFTotal());
-            applyMap.put("apyFEff", applyEntity.getApyFEff());
-            applyMap.put("bstFEff", applyEntity.getBstFEff());
-            applyMap.put("mcdFEff", applyEntity.getMcdD());
-            applyMap.put("apyTEff", applyEntity.getApyTEff());
-            applyMap.put("bstTEff", applyEntity.getBstTEff());
-            applyMap.put("mcdTEff", applyEntity.getMcdTEff());
-            applyMap.put("bstFLsNp", applyEntity.getBstFLsNp());
-            applyMap.put("bstTLs", applyEntity.getBstTLs());
-            applyMap.put("bstFLsWp", applyEntity.getBstFLsWp());
-            applyMap.put("bstFJmp", applyEntity.getBstFJmp());
-            applyMap.put("bstVcm", applyEntity.getBstVcm());
-            applyMap.put("altBstVcm", applyEntity.getAltBstVcm());
-            applyMap.put("pedType", applyEntity.getPedType());
-            applyMap.put("notes", applyEntity.getNotes());
-            parameter.put("apply", applyMap);
-        }
-        if (desc.get("control") != null) {
-            BasicControlEntity controlEntity = basicService.getBasicControl(desc.get("control").toString(), userId);
-            Map<String, Object> controlMap = new HashedMap();
-            controlMap.put("description", controlEntity.getDescription());
-            controlMap.put("absSpl", controlEntity.getAbsSpl());
-            controlMap.put("absType", controlEntity.getEffAbsFrt());
-            controlMap.put("effAbsFrt", controlEntity.getEffAbsFrt());
-            controlMap.put("effAbsRr", controlEntity.getEffAbsRr());
-            controlMap.put("ebd", controlEntity.getEbd());
-            controlMap.put("notes", controlEntity.getNotes());
-            parameter.put("control", controlMap);
-        }
-        if (desc.get("discBrake") != null) {
-            BasicDiscBrakeEntity discBrakeEntity = basicService.getBasicDiscBrake(desc.get("discBrake").toString(), userId);
-            Map<String, Object> discBrakeMap = new HashedMap();
-            discBrakeMap.put("rtType", discBrakeEntity.getRtType());
-            discBrakeMap.put("description", discBrakeEntity.getDescription());
-            discBrakeMap.put("frtType", discBrakeEntity.getFrtType());
-            discBrakeMap.put("frtManu", discBrakeEntity.getFrtManu());
-            discBrakeMap.put("pstD", discBrakeEntity.getPstD());
-            discBrakeMap.put("pstNum", discBrakeEntity.getPstNum());
-            discBrakeMap.put("hfPT", discBrakeEntity.getHfPT());
-            discBrakeMap.put("hfPV", discBrakeEntity.getHfPV());
-            discBrakeMap.put("pvK", discBrakeEntity.getPvK());
-            discBrakeMap.put("pvB", discBrakeEntity.getPvB());
-            discBrakeMap.put("pvC", discBrakeEntity.getPvC());
-            discBrakeMap.put("linSpl", discBrakeEntity.getLinSpl());
-            discBrakeMap.put("linMat", discBrakeEntity.getLinMat());
-            discBrakeMap.put("linMuK", discBrakeEntity.getLinMuK());
-            discBrakeMap.put("linMuE", discBrakeEntity.getLinMuE());
-            discBrakeMap.put("linMuNp", discBrakeEntity.getLinMuNp());
-            discBrakeMap.put("linArea", discBrakeEntity.getLinArea());
-            discBrakeMap.put("linWearLim", discBrakeEntity.getLinWearLim());
-            discBrakeMap.put("inPerCorner", discBrakeEntity.getInPerCorner());
-            discBrakeMap.put("pstArea", discBrakeEntity.getPstArea());
-            discBrakeMap.put("notes", discBrakeEntity.getNotes());
-            discBrakeMap.put("frtRtTempIn", getList(discBrakeEntity.getFrtRtTempIn().toString()));
-            discBrakeMap.put("frtLinWearOut", getList(discBrakeEntity.getFrtLinWearOut().toString()));
-            discBrakeMap.put("frtLinFrictOut", getList(discBrakeEntity.getFrtLinFrictOut().toString()));
-            discBrakeMap.put("pVcurve", getList(discBrakeEntity.getpVcurve().toString()));
-            discBrakeMap.put("linMu", getList(discBrakeEntity.getLinMu().toString()));
-            Map<String, Object> brakeLast = getRotorParam(discBrakeMap, discBrakeEntity.getRtType(), discBrakeEntity.getRtId());
-            parameter.put("discBrake", brakeLast);
-        }
-        if (desc.get("drumBrake") != null) {
-            BasicDrumBrakeEntity drumBrakeEntity = basicService.getBasicDrumBrake(desc.get("drumBrake").toString(), userId);
-
-            Map<String, Object> drumBrakeMap = new HashedMap();
-            drumBrakeMap.put("rtType", drumBrakeEntity.getRtType());
-            drumBrakeMap.put("description", drumBrakeEntity.getDescription());
-            drumBrakeMap.put("pstArea", drumBrakeEntity.getPstArea());
-            drumBrakeMap.put("frtType", drumBrakeEntity.getFrtType());
-            drumBrakeMap.put("frtManu", drumBrakeEntity.getFrtManu());
-            drumBrakeMap.put("pstD", drumBrakeEntity.getPstD());
-            drumBrakeMap.put("pstNum", drumBrakeEntity.getPstNum());
-            drumBrakeMap.put("hfPT", drumBrakeEntity.getHfPT());
-            drumBrakeMap.put("hfPV", drumBrakeEntity.getHfPV());
-            drumBrakeMap.put("pvK", drumBrakeEntity.getPvK());
-            drumBrakeMap.put("pvB", drumBrakeEntity.getPvB());
-            drumBrakeMap.put("pvC", drumBrakeEntity.getPvC());
-            drumBrakeMap.put("linSpl", drumBrakeEntity.getLinSpl());
-            drumBrakeMap.put("linMat", drumBrakeEntity.getLinMat());
-            drumBrakeMap.put("insulator", drumBrakeEntity.getInsulator());
-            drumBrakeMap.put("linMuK", drumBrakeEntity.getLinMuK());
-            drumBrakeMap.put("linMuE", drumBrakeEntity.getLinMuE());
-            drumBrakeMap.put("linMuNp", drumBrakeEntity.getLinMuNp());
-            drumBrakeMap.put("linArea", drumBrakeEntity.getLinArea());
-            drumBrakeMap.put("linWearLim", drumBrakeEntity.getLinWearLim());
-            drumBrakeMap.put("inPerCorner", drumBrakeEntity.getInPerCorner());
-            drumBrakeMap.put("notes", drumBrakeEntity.getNotes());
-            drumBrakeMap.put("frtRtTempIn", getList(drumBrakeEntity.getFrtRtTempIn().toString()));
-            drumBrakeMap.put("frtLinWearOut", getList(drumBrakeEntity.getFrtLinWearOut().toString()));
-            drumBrakeMap.put("frtLinFrictOut", getList(drumBrakeEntity.getFrtLinFrictOut().toString()));
-            drumBrakeMap.put("pVcurve", getList(drumBrakeEntity.getpVcurve().toString()));
-            drumBrakeMap.put("linMu", getList(drumBrakeEntity.getLinMu().toString()));
-            Map<String, Object> brakeLast = getRotorParam(drumBrakeMap, drumBrakeEntity.getRtType(), drumBrakeEntity.getRtId());
-            parameter.put("drumBrake", brakeLast);
-        }
-        if (desc.get("requirement") != null) {
-            BasicRequirementEntity requirementEntity = basicService.getBasicRequirement(desc.get("requirement").toString(), userId);
-            Map<String, Object> requirement = new HashedMap();
-            requirement.put("description", requirementEntity.getDescription());
-            requirement.put("sglVi", requirementEntity.getSglVi());
-            requirement.put("sglV0", requirementEntity.getSglV0());
-            requirement.put("frtSglTmp", requirementEntity.getFrtSglTmp());
-            requirement.put("rrSglTmp", requirementEntity.getRrSglTmp());
-            requirement.put("linVi", requirementEntity.getLinVi());
-            requirement.put("linV0", requirementEntity.getLinV0());
-            requirement.put("frtLinPwr", requirementEntity.getFrtLinPwr());
-            requirement.put("rrLinPwr", requirementEntity.getRrLinPwr());
-            requirement.put("hftVi", requirementEntity.getHftVi());
-            requirement.put("hftV0", requirementEntity.getHftV0());
-            requirement.put("frtHftPwr", requirementEntity.getFrtHftPwr());
-            requirement.put("rrHftPwr", requirementEntity.getRrHftPwr());
-            requirement.put("notes", requirementEntity.getNotes());
-            requirement.put("bet", getList(requirementEntity.getBet()));
-            requirement.put("brakeStop", getList(requirementEntity.getBrakeStop()));
-            requirement.put("pedalFeel", getList(requirementEntity.getPedalFeel()));
-            parameter.put("requirement", requirement);
-        }
-        return parameter;
-    }
-
-    public Map<String, Object> getRotorParam(Map<String, Object> brake, String type, int rotorId) {
-        if (type.equals("Vented") || type.equals("vented")) {
-            BasicVentedRotorEntity ventedRotorEntity = basicService.getBasicVentedRotor(rotorId);
-            brake.put("rrManu", ventedRotorEntity.getRrManu());
-            brake.put("rrMat", ventedRotorEntity.getRrMat());
-            brake.put("efcR", ventedRotorEntity.getEfcR());
-            brake.put("outD", ventedRotorEntity.getOutD());
-            brake.put("inD", ventedRotorEntity.getInD());
-            brake.put("ckTIn", ventedRotorEntity.getCkTIn());
-            brake.put("ckTOut", ventedRotorEntity.getCkTOut());
-            brake.put("rtT", ventedRotorEntity.getRtT());
-            brake.put("vaneNum", ventedRotorEntity.getVaneNum());
-            brake.put("vaneLen", ventedRotorEntity.getVaneLen());
-            brake.put("vaneHigh", ventedRotorEntity.getVaneHigh());
-            brake.put("vanT", ventedRotorEntity.getVanT());
-            brake.put("wm", ventedRotorEntity.getWm());
-            brake.put("wa", ventedRotorEntity.getWa());
-            brake.put("rho", ventedRotorEntity.getRho());
-            brake.put("cc50", ventedRotorEntity.getCc50());
-            brake.put("cc80", ventedRotorEntity.getCc80());
-            brake.put("cc110", ventedRotorEntity.getCc110());
-            brake.put("cvr50", ventedRotorEntity.getCvr50());
-            brake.put("cvr80", ventedRotorEntity.getCvr80());
-            brake.put("cvr110", ventedRotorEntity.getCvr110());
-            brake.put("rtTempIn", getList(ventedRotorEntity.getRtTempIn()));
-            brake.put("rtSpecOut", getList(ventedRotorEntity.getRtSpecOut()));
-        } else if (type.equals("Solid") || type.equals("solid")) {
-            BasicSolidRotorEntity solidRotorEntity = basicService.getBasicSolidRotor(rotorId);
-            brake.put("manu", solidRotorEntity.getRrManu());
-            brake.put("rrMat", solidRotorEntity.getRrMat());
-            brake.put("rtEfcR", solidRotorEntity.getEfcR());
-            brake.put("outD", solidRotorEntity.getOutD());
-            brake.put("inD", solidRotorEntity.getInD());
-            brake.put("rtT", solidRotorEntity.getRtT());
-            brake.put("wm", solidRotorEntity.getWm());
-            brake.put("wa", solidRotorEntity.getWa());
-            brake.put("rho", solidRotorEntity.getRho());
-            brake.put("cc50", solidRotorEntity.getCc50());
-            brake.put("cc80", solidRotorEntity.getCc80());
-            brake.put("cc110", solidRotorEntity.getCc110());
-            brake.put("cvr50", solidRotorEntity.getCvr50());
-            brake.put("cvr80", solidRotorEntity.getCvr80());
-            brake.put("cvr110", solidRotorEntity.getCvr110());
-            brake.put("rtTempIn", getList(solidRotorEntity.getRtTempIn()));
-            brake.put("rtSpecOut", getList(solidRotorEntity.getRtSpecOut()));
-        } else {
-            BasicDrumRotorEntity drumRotorEntity = basicService.getBasicDrumRotor(rotorId);
-            brake.put("rrManu", drumRotorEntity.getRrManu());
-            brake.put("rrMat", drumRotorEntity.getRrMat());
-            //  basicDrumRotorEntity.setSwpArea(null);
-            brake.put("efcR", drumRotorEntity.getEfcR());
-            brake.put("outD", drumRotorEntity.getOutD());
-            brake.put("inD", drumRotorEntity.getInD());
-            brake.put("rtThick", drumRotorEntity.getRtThick());
-            brake.put("ribThick", drumRotorEntity.getRibThick());
-            brake.put("ribWidth", drumRotorEntity.getRibWidth());
-            brake.put("rtWidth", drumRotorEntity.getRtWidth());
-            brake.put("wm", drumRotorEntity.getWm());
-            brake.put("wa", drumRotorEntity.getWa());
-            brake.put("rho", drumRotorEntity.getRho());
-            brake.put("cc50", drumRotorEntity.getCc50());
-            brake.put("cc80", drumRotorEntity.getCc80());
-            brake.put("cc110", drumRotorEntity.getCc110());
-            brake.put("cvr50", drumRotorEntity.getCvr50());
-            brake.put("cvr80", drumRotorEntity.getCvr80());
-            brake.put("cvr110", drumRotorEntity.getCvr110());
-            brake.put("dmTempIn", getList(drumRotorEntity.getDmTempIn()));
-            brake.put("dmTempOut", getList(drumRotorEntity.getDmTempOut()));
-        }
-        return brake;
-    }
-
-    public List<String> getList(String str) {
-        String[] strArray = str.split("\\[|\\]|, ");
-        List<String> last = new ArrayList<String>();
-        for (int i = 0; i < strArray.length; i ++) {
-            if ((strArray[i] != null) && (!strArray[i].equals(""))) {
-                last.add(strArray[i]);
+        List<Map<String, Object>> resultList = new ArrayList<Map<String, Object>>();
+        for (Future<Map<String, Object>> fm: futureList) {
+            try {
+                while (!fm.isDone()) {
+                    resultList.add(fm.get());
+                    System.out.println("----------------------------------------------------------fm.get()");
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                System.out.println("----------------------------------------------------------InterruptedException");
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+                System.out.println("----------------------------------------------------------ExecutionException");
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("----------------------------------------------------------Execution");
+            } finally {
+                executorService.shutdown();
+                System.out.println("----------------------------------------------------------shutdown");
             }
         }
-        return last;
+        return getResponseBody(resultList);
+    }
+
+    @RequestMapping(value = "basic/contrast", method = RequestMethod.POST)
+    public ResponseEntity<Map<String, Object>> getContrastResult(
+            @RequestBody Map<String, Object> params
+    ) {
+        ArrayList<String> descs = (ArrayList<String>) params.get("descs");
+        int userId = (Integer) params.get("userId");
+        String path = servletContext.getRealPath("/style/images/");
+        List<Map<String, Object>> resultList = new ArrayList<Map<String, Object>>();
+        for (String desc: descs) {
+            // construct parameters
+            ConfigurationEntity configurationEntity = basicService.getBasicConfiguration(desc, userId);
+            Map<String, Object> parameter = new HashedMap();
+            Map<String, Object> descContent = new HashedMap();
+            descContent.put("vehicle", configurationEntity.getVehicleDesc());
+            descContent.put("tire", configurationEntity.getTireDesc());
+            descContent.put("apply", configurationEntity.getApplyDesc());
+            descContent.put("control", configurationEntity.getControlDesc());
+            descContent.put("discBrake", configurationEntity.getDiscBrakeDesc());
+            descContent.put("drumBrake", configurationEntity.getDrumBrakeDesc());
+            descContent.put("requirement", configurationEntity.getRequireDesc());
+            descContent.put("parking", configurationEntity.getParkingDesc());
+            parameter.put("desc", descContent);
+            parameter.put("userId", userId);
+            Map<String, Map<String, Object>> formParam = new HashedMap();
+            parameter.put("param", formParam);
+            // real calculate without generate images and file
+            SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+            String date = df.format(new Date());
+            System.out.println(desc + ":" + date);
+            Map<String, Map<String, Object>> parameters = basicService.getRealParams(parameter);
+            Map<String, Object> result = new HashedMap();
+            basicService.deleteUselessFiles(path, userId);
+            if (!basicService.getConfigurationFileName(desc, userId).equals("")) {
+                String filePath = path + basicService.getConfigurationFileName(desc, userId);
+                result = MatlabManualCalculate.getContrastResult(parameters, filePath);
+            } else {
+                String fileName = "result_" + date + ".xlsx";
+                MatlabManualCalculate.realCalculate(parameters, path, 0, date);
+                result = MatlabManualCalculate.getContrastResult(parameters, path + fileName);
+                basicService.updateConfigurationFileName(desc, fileName, userId);
+            }
+            resultList.add(result);
+        }
+        return getResponseBody(resultList);
     }
 
     @RequestMapping(value = "download/figure/{figure_id}", method = RequestMethod.GET, consumes="*")

@@ -3,7 +3,7 @@ package entity;
 import javax.persistence.*;
 
 /**
- * Created by yangchen on 17/7/1.
+ * Created by yangchen on 2018/4/3.
  */
 @Entity
 @Table(name = "model_process", schema = "expert_system", catalog = "")
@@ -15,6 +15,7 @@ public class ModelProcessEntity {
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     public int getId() {
         return id;
     }

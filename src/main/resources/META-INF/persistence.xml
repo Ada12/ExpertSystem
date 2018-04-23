@@ -3,20 +3,13 @@
 
     <persistence-unit name="ExpertSystemUnit">
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-        <class>entity.BoosterMcEntity</class>
-        <class>entity.DiscCaliperEntity</class>
-        <class>entity.DiscRotorEntity</class>
-        <class>entity.DrumCaliperEntity</class>
-        <class>entity.DrumRotorEntity</class>
         <class>entity.MetaCalculateListEntity</class>
         <class>entity.ModelProcessEntity</class>
         <class>entity.ModelProcessListEntity</class>
-        <class>entity.PedalEntity</class>
         <class>entity.PrivilegeEntity</class>
         <class>entity.RoleEntity</class>
         <class>entity.RolePrrivilegeEntity</class>
         <class>entity.UserEntity</class>
-        <class>entity.VehicleEntity</class>
         <class>entity.UnitsEntity</class>
         <class>entity.InstanceLibEntity</class>
         <class>entity.ConfigurationEntity</class>
@@ -30,6 +23,18 @@
         <class>entity.BasicSolidRotorEntity</class>
         <class>entity.BasicTireEntity</class>
         <class>entity.BasicVentedRotorEntity</class>
+        <class>entity.BasicParkingEntity</class>
+        <class>entity.LibBstMcEntity</class>
+        <class>entity.LibCaliperEntity</class>
+        <class>entity.LibControlEntity</class>
+        <class>entity.LibDrumRotorEntity</class>
+        <class>entity.LibLiningEntity</class>
+        <class>entity.LibPedalEntity</class>
+        <class>entity.LibSolidRotorEntity</class>
+        <class>entity.LibTireEntity</class>
+        <class>entity.LibVehicleEntity</class>
+        <class>entity.LibVentedRotorEntity</class>
+        <class>entity.LibRotorEntity</class>
         <properties>
             <property name="eclipselink.jdbc.url" value="jdbc:mysql://180.169.165.19:3306/expert_system"/>
             <property name="eclipselink.jdbc.driver" value="com.mysql.jdbc.Driver"/>

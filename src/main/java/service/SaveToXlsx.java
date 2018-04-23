@@ -781,12 +781,19 @@ public class SaveToXlsx implements Runnable {
             rotorKey = new String[]{"rrManu", "rrMat", "efcR", "outD", "inD", "rtThick", "ribThick", "ribWidth", "rtWidth",
                     "wm", "wa", "rho", "cc50", "cc80", "cc110", "cvr50", "cvr80", "cvr110"};
         }
-        for (int i = startRow + 3; i < startRow + 3 + rotorParam.length; i ++) {
-            rotorRow = rotor.createRow(i);
-            rotorRow.createCell(0).setCellValue(rotorParam[i-startRow-3]);
-            rotor.addMergedRegion(new CellRangeAddress(i,i,1,2));
-            rotorRow.createCell(1).setCellValue(brakeMap.get(rotorKey[i-startRow-3]).toString());
-            rotorRow.createCell(3).setCellValue(rotorUnit[i-startRow-3]);
+        // i < startRow + 3 + rotorParam.length
+        for (int i = startRow + 3; i < startRow + rotorParam.length; i ++) {
+            try {
+                rotorRow = rotor.createRow(i);
+                rotorRow.createCell(0).setCellValue(rotorParam[i-startRow-3]);
+                rotor.addMergedRegion(new CellRangeAddress(i,i,1,2));
+                rotorRow.createCell(1).setCellValue(brakeMap.get(rotorKey[i-startRow-3]).toString());
+                rotorRow.createCell(3).setCellValue(rotorUnit[i-startRow-3]);
+            } catch (NullPointerException e) {
+                System.out.println(rotorType);
+                System.out.println(i);
+                System.out.println(startRow);
+            }
         }
         // Rotor Temperature Input
         rotor.addMergedRegion(new CellRangeAddress(startRow + 3 + rotorParam.length,startRow + 8 + rotorParam.length,0,0));

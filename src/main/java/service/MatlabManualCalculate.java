@@ -3,6 +3,7 @@ package service;
 import com.mathworks.toolbox.javabuilder.*;
 //import com.mathworks.toolbox.javabuilder.MWException;
 import ExternalMatlab.*;
+import org.apache.commons.collections.ArrayStack;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
@@ -20,7 +21,7 @@ import java.util.Map;
  */
 public class MatlabManualCalculate {
 
-    public static Map<String, Object> realCalculate(Map<String, Map<String, Object>> params, String path) {
+    public static Map<String, Object> realCalculate(Map<String, Map<String, Object>> params, String path, int geneFlag, String timeStamp) {
         Map<String, Object> applyMap = params.get("apply");
         Map<String, Object> controlMap = params.get("control");
         Map<String, Object> discBrakeMap = params.get("discBrake");
@@ -28,6 +29,7 @@ public class MatlabManualCalculate {
         Map<String, Object> tireMap = params.get("tire");
         Map<String, Object> vehicleMap = params.get("vehicle");
         Map<String, Object> requireMap = params.get("requirement");
+        Map<String, Object> parkingMap = params.get("parking");
         Map<String, Object> result = new HashedMap();
         boolean flag;
         String message = "";
@@ -418,10 +420,23 @@ public class MatlabManualCalculate {
             requirement.set(new int[]{1,32}, getDoubleValue(pedalFeel.get(10)));
             requirement.set(new int[]{1,33}, getDoubleValue(pedalFeel.get(13)));
             requirement.set(new int[]{1,34}, getDoubleValue(pedalFeel.get(16)));
+            // parking
+            MWCellArray parking = new MWCellArray(new int[]{1,11});
+            parking.set(new int[]{1,1}, getDoubleValue(parkingMap.get("elf")));
+            parking.set(new int[]{1,2}, getDoubleValue(parkingMap.get("ecf")));
+            parking.set(new int[]{1,3}, getDoubleValue(parkingMap.get("ect")));
+            parking.set(new int[]{1,4}, getDoubleValue(parkingMap.get("a")));
+            parking.set(new int[]{1,5}, getDoubleValue(parkingMap.get("rv")));
+            parking.set(new int[]{1,6}, getDoubleValue(parkingMap.get("av")));
+            parking.set(new int[]{1,7}, getDoubleValue(parkingMap.get("a0")));
+            parking.set(new int[]{1,8}, getDoubleValue(parkingMap.get("ad")));
+            parking.set(new int[]{1,9}, getDoubleValue(parkingMap.get("dh")));
+            parking.set(new int[]{1,10}, getDoubleValue(parkingMap.get("sigema0")));
+            parking.set(new int[]{1,11}, getDoubleValue(parkingMap.get("sita")));
             // calculate begin
             ManualCalculate calculate = new ManualCalculate();
             calculate.main(pedal, booster, masterCylinder, tyre, vehicle, absControl,
-                    discCaliper, discRotor, drumCaliper, drumRotor, requirement);
+                    discCaliper, discRotor, drumCaliper, drumRotor, requirement, parking, geneFlag, timeStamp);
             // calculate end
             String relativePath = System.getenv("CATALINA_HOME");
             System.out.println(relativePath);
@@ -467,11 +482,21 @@ public class MatlabManualCalculate {
             String resultNowPath = "";
             String resultAfterPath = "";
             if (systemType.contains("Windows")) {
-                resultNowPath = relativePath + "\\bin\\result.xlsx";
-                resultAfterPath = path + "\\result.xlsx";
+                if (geneFlag == 1) {
+                    resultNowPath = relativePath + "\\bin\\result.xlsx";
+                    resultAfterPath = path + "\\result.xlsx";
+                } else {
+                    resultNowPath = relativePath + "\\bin\\result_" +timeStamp + ".xlsx";
+                    resultAfterPath = path + "\\result_" + timeStamp + ".xlsx";
+                }
             } else {
-                resultNowPath = relativePath + "/bin/result.xlsx";
-                resultAfterPath = path + "/result.xlsx";
+                if (geneFlag == 1) {
+                    resultNowPath = relativePath + "/bin/result.xlsx";
+                    resultAfterPath = path + "/result.xlsx";
+                } else {
+                    resultNowPath = relativePath + "/bin/result_" + timeStamp + ".xlsx";
+                    resultAfterPath = path + "/result_" + timeStamp + ".xlsx";
+                }
             }
             File resultNowFile = new File(resultNowPath);
             if (resultNowFile.exists()) {
@@ -504,7 +529,9 @@ public class MatlabManualCalculate {
                 pic.add("/expert/img/figure"+ i +".png");
                 abUrl.add(pic);
             }
-            result.put("img", abUrl);
+            if (geneFlag == 1) {
+                result.put("img", abUrl);
+            }
             result.put("numerical", getNewResult(params, resultAfterPath));
             flag = true;
         } catch (MWException e) {
@@ -963,6 +990,123 @@ public class MatlabManualCalculate {
             noneVP.add("--");
             noneVP.add("--");
             result.put("noneVP",noneVP);
+            XSSFSheet parkingRst = wb.getSheet("parking");
+            List<String> parkingList = new ArrayList<String>();
+            parkingList.add(parkingRst.getRow(0).getCell(0).getRawValue());
+            parkingList.add(parkingRst.getRow(0).getCell(1).getRawValue());
+            parkingList.add(parkingRst.getRow(1).getCell(0).getRawValue());
+            parkingList.add(parkingRst.getRow(1).getCell(1).getRawValue());
+            parkingList.add(parkingRst.getRow(2).getCell(0).getRawValue());
+            parkingList.add(parkingRst.getRow(2).getCell(1).getRawValue());
+            parkingList.add(parkingRst.getRow(3).getCell(0).getRawValue());
+            parkingList.add(parkingRst.getRow(3).getCell(1).getRawValue());
+            result.put("parking", parkingList);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public static Map<String, Object> getContrastResult(Map<String, Map<String, Object>> params, String filePath) {
+        Map<String, Object> vehicleMap = params.get("vehicle");
+        Map<String, Object> tireMap = params.get("tire");
+        Map<String, Object> applyMap = params.get("apply");
+        Map<String, Object> discBrakeMap = params.get("discBrake");
+        Map<String, Object> drumBrakeMap = params.get("drumBrake");
+        Map<String, Object> result = new HashedMap();
+        // vehicleMap
+        List<Object> vehicleList = new ArrayList<Object>();
+        vehicleList.add(vehicleMap.get("lvwM"));
+        vehicleList.add(vehicleMap.get("gvwM"));
+        vehicleList.add(vehicleMap.get("lvwFrtR"));
+        vehicleList.add(vehicleMap.get("gvwFrtR"));
+        vehicleList.add(vehicleMap.get("lvwCgh"));
+        vehicleList.add(vehicleMap.get("gvwCgh"));
+        vehicleList.add(vehicleMap.get("l"));
+        result.put("vehicle", vehicleList);
+        // tireMap
+        List<Object> tireList = new ArrayList<Object>();
+        tireList.add(tireMap.get("lvwTrFrt"));
+        tireList.add(tireMap.get("gvwTrFrt"));
+        tireList.add(tireMap.get("lvwTrRr"));
+        tireList.add(tireMap.get("gvwTrRr"));
+        result.put("tire", tireList);
+        // discBrakeMap
+        List<Object> discBrakeList = new ArrayList<Object>();
+        discBrakeList.add(discBrakeMap.get("outD"));
+        discBrakeList.add(discBrakeMap.get("pstD"));
+        discBrakeList.add(discBrakeMap.get("linMuNp"));
+        result.put("frtCorner", discBrakeList);
+        // drumBrakeMap
+        List<Object> drumBrakeList = new ArrayList<Object>();
+        drumBrakeList.add(drumBrakeMap.get("outD"));
+        drumBrakeList.add(drumBrakeMap.get("pstD"));
+        drumBrakeList.add(drumBrakeMap.get("linMuNp"));
+        result.put("rrCorner", drumBrakeList);
+        // applyMap
+        List<Object> applyList = new ArrayList<Object>();
+        applyList.add(applyMap.get("pedRatio"));
+        applyList.add(applyMap.get("mcdD"));
+        applyList.add(applyMap.get("bstGain"));
+        applyList.add(applyMap.get("bstFTotal"));
+        applyList.add(applyMap.get("bstTLs"));
+        applyList.add(applyMap.get("bstFJmp"));
+        applyList.add(applyMap.get("bstFLsNp"));
+        applyList.add(applyMap.get("bstFLsWp"));
+        result.put("apply", applyList);
+        // file
+        File file = new File(filePath);
+        FileInputStream fis = null;
+        try {
+            fis = new FileInputStream(file);
+            XSSFWorkbook wb = new XSSFWorkbook(fis);
+            XSSFSheet vehicleTab = wb.getSheet("Sheet1");
+            XSSFSheet hotModalTab = wb.getSheet("hot_modal");
+            XSSFSheet distanceModalTab = wb.getSheet("distance_modal");
+            XSSFSheet betModalTab = wb.getSheet("BET_modal");
+            List<Object> bfiList = new ArrayList<Object>();
+            // bfi
+            bfiList.add(vehicleTab.getRow(9).getCell(2).getRawValue());
+            bfiList.add(vehicleTab.getRow(10).getCell(2).getRawValue());
+            bfiList.add(vehicleTab.getRow(11).getCell(2).getRawValue());
+            bfiList.add(vehicleTab.getRow(12).getCell(2).getRawValue());
+            bfiList.add(vehicleTab.getRow(13).getCell(2).getRawValue());
+            result.put("BFI", bfiList);
+            // brake
+            List<Object> brakeList = new ArrayList<Object>();
+            brakeList.add(vehicleTab.getRow(1).getCell(2).getRawValue());
+            brakeList.add("--");
+            brakeList.add("--");
+            brakeList.add(distanceModalTab.getRow(0).getCell(1).getRawValue());
+            brakeList.add(distanceModalTab.getRow(1).getCell(1).getRawValue());
+            brakeList.add(distanceModalTab.getRow(2).getCell(1).getRawValue());
+            brakeList.add(distanceModalTab.getRow(3).getCell(1).getRawValue());
+            brakeList.add(distanceModalTab.getRow(4).getCell(1).getRawValue());
+            brakeList.add(distanceModalTab.getRow(5).getCell(1).getRawValue());
+            brakeList.add(distanceModalTab.getRow(6).getCell(1).getRawValue());
+            brakeList.add(distanceModalTab.getRow(7).getCell(1).getRawValue());
+            brakeList.add(distanceModalTab.getRow(8).getCell(1).getRawValue());
+            brakeList.add(distanceModalTab.getRow(9).getCell(1).getRawValue());
+            brakeList.add(distanceModalTab.getRow(10).getCell(1).getRawValue());
+            brakeList.add(distanceModalTab.getRow(11).getCell(1).getRawValue());
+            result.put("brake", brakeList);
+            // thermal
+            List<Object> thermalList = new ArrayList<Object>();
+            thermalList.add(betModalTab.getRow(0).getCell(1).getRawValue());
+            thermalList.add(betModalTab.getRow(1).getCell(1).getRawValue());
+            thermalList.add(betModalTab.getRow(2).getCell(1).getRawValue());
+            thermalList.add(betModalTab.getRow(3).getCell(1).getRawValue());
+            thermalList.add("--");
+            thermalList.add("--");
+            thermalList.add("--");
+            thermalList.add("--");
+            thermalList.add(hotModalTab.getRow(2).getCell(1).getRawValue());
+            thermalList.add(hotModalTab.getRow(3).getCell(1).getRawValue());
+            thermalList.add(hotModalTab.getRow(0).getCell(1).getRawValue());
+            thermalList.add(hotModalTab.getRow(1).getCell(1).getRawValue());
+            result.put("thermal", thermalList);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -1047,7 +1191,7 @@ public class MatlabManualCalculate {
     }
 
     public static Map<String, Double> PVCurve2Param(Map<String, Object> params) {
-        double hfPT = getDoubleValue(params.get("hfPT").toString());
+        double hfPV = getDoubleValue(params.get("hfPV").toString());
         double pstArea = getDoubleValue(params.get("pstArea").toString());
         double pstNum = getDoubleValue(params.get("pstNum").toString());
         List<Object> linMuList = (List<Object>) params.get("pVcurve");
@@ -1062,7 +1206,7 @@ public class MatlabManualCalculate {
         try {
             ManualCalculate manualCalculate = new ManualCalculate();
             Object[] result = null;
-            result = manualCalculate.PVCurve2ParamLinkage(3,hfPT,pVcurve,pstArea,pstNum);
+            result = manualCalculate.PVCurve2ParamLinkage(3,hfPV,pVcurve,pstArea,pstNum);
             coeff.put("pvK", getDoubleValue(result[0].toString()));
             coeff.put("pvB", getDoubleValue(result[1].toString()));
             coeff.put("pvC", getDoubleValue(result[2].toString()));

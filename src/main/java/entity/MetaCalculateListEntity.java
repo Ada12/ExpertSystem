@@ -3,7 +3,7 @@ package entity;
 import javax.persistence.*;
 
 /**
- * Created by yangchen on 17/7/1.
+ * Created by yangchen on 2018/4/3.
  */
 @Entity
 @Table(name = "meta_calculate_list", schema = "expert_system", catalog = "")
@@ -14,6 +14,7 @@ public class MetaCalculateListEntity {
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     public int getId() {
         return id;
     }

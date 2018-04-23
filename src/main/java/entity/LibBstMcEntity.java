@@ -3,13 +3,14 @@ package entity;
 import javax.persistence.*;
 
 /**
- * Created by yangchen on 17/12/23.
+ * Created by yangchen on 2018/4/3.
  */
 @Entity
-@Table(name = "booster_mc", schema = "expert_system", catalog = "")
-public class BoosterMcEntity {
+@Table(name = "lib_bst_mc", schema = "expert_system", catalog = "")
+public class LibBstMcEntity {
     private int id;
-    private Double applyVw;
+    private String description;
+    private String bstSpl;
     private Double bstSize;
     private Double bstGain;
     private Double bstFTotal;
@@ -19,12 +20,18 @@ public class BoosterMcEntity {
     private Double bstFLsWp;
     private Double bstFJmp;
     private Double bstTLs;
-    private Double mcdD;
-    private Double mcdTravel;
-    private String bstMcSpl;
+    private Double bstVcum;
+    private Double bstVcumAlt;
+    private String mcSpl;
+    private Double mcD;
+    private Double mcFEff;
+    private Double mcTEff;
+    private Integer userId;
+    private String notes;
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     public int getId() {
         return id;
     }
@@ -34,13 +41,23 @@ public class BoosterMcEntity {
     }
 
     @Basic
-    @Column(name = "apply_vw")
-    public Double getApplyVw() {
-        return applyVw;
+    @Column(name = "description")
+    public String getDescription() {
+        return description;
     }
 
-    public void setApplyVw(Double applyVw) {
-        this.applyVw = applyVw;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    @Basic
+    @Column(name = "bst_spl")
+    public String getBstSpl() {
+        return bstSpl;
+    }
+
+    public void setBstSpl(String bstSpl) {
+        this.bstSpl = bstSpl;
     }
 
     @Basic
@@ -134,33 +151,83 @@ public class BoosterMcEntity {
     }
 
     @Basic
-    @Column(name = "mcd_d")
-    public Double getMcdD() {
-        return mcdD;
+    @Column(name = "bst_vcum")
+    public Double getBstVcum() {
+        return bstVcum;
     }
 
-    public void setMcdD(Double mcdD) {
-        this.mcdD = mcdD;
-    }
-
-    @Basic
-    @Column(name = "mcd_travel")
-    public Double getMcdTravel() {
-        return mcdTravel;
-    }
-
-    public void setMcdTravel(Double mcdTravel) {
-        this.mcdTravel = mcdTravel;
+    public void setBstVcum(Double bstVcum) {
+        this.bstVcum = bstVcum;
     }
 
     @Basic
-    @Column(name = "bst_mc_spl")
-    public String getBstMcSpl() {
-        return bstMcSpl;
+    @Column(name = "bst_vcum_alt")
+    public Double getBstVcumAlt() {
+        return bstVcumAlt;
     }
 
-    public void setBstMcSpl(String bstMcSpl) {
-        this.bstMcSpl = bstMcSpl;
+    public void setBstVcumAlt(Double bstVcumAlt) {
+        this.bstVcumAlt = bstVcumAlt;
+    }
+
+    @Basic
+    @Column(name = "mc_spl")
+    public String getMcSpl() {
+        return mcSpl;
+    }
+
+    public void setMcSpl(String mcSpl) {
+        this.mcSpl = mcSpl;
+    }
+
+    @Basic
+    @Column(name = "mc_d")
+    public Double getMcD() {
+        return mcD;
+    }
+
+    public void setMcD(Double mcD) {
+        this.mcD = mcD;
+    }
+
+    @Basic
+    @Column(name = "mc_F_eff")
+    public Double getMcFEff() {
+        return mcFEff;
+    }
+
+    public void setMcFEff(Double mcFEff) {
+        this.mcFEff = mcFEff;
+    }
+
+    @Basic
+    @Column(name = "mc_T_eff")
+    public Double getMcTEff() {
+        return mcTEff;
+    }
+
+    public void setMcTEff(Double mcTEff) {
+        this.mcTEff = mcTEff;
+    }
+
+    @Basic
+    @Column(name = "user_id")
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    @Basic
+    @Column(name = "notes")
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 
     @Override
@@ -168,10 +235,11 @@ public class BoosterMcEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        BoosterMcEntity that = (BoosterMcEntity) o;
+        LibBstMcEntity that = (LibBstMcEntity) o;
 
         if (id != that.id) return false;
-        if (applyVw != null ? !applyVw.equals(that.applyVw) : that.applyVw != null) return false;
+        if (description != null ? !description.equals(that.description) : that.description != null) return false;
+        if (bstSpl != null ? !bstSpl.equals(that.bstSpl) : that.bstSpl != null) return false;
         if (bstSize != null ? !bstSize.equals(that.bstSize) : that.bstSize != null) return false;
         if (bstGain != null ? !bstGain.equals(that.bstGain) : that.bstGain != null) return false;
         if (bstFTotal != null ? !bstFTotal.equals(that.bstFTotal) : that.bstFTotal != null) return false;
@@ -181,9 +249,14 @@ public class BoosterMcEntity {
         if (bstFLsWp != null ? !bstFLsWp.equals(that.bstFLsWp) : that.bstFLsWp != null) return false;
         if (bstFJmp != null ? !bstFJmp.equals(that.bstFJmp) : that.bstFJmp != null) return false;
         if (bstTLs != null ? !bstTLs.equals(that.bstTLs) : that.bstTLs != null) return false;
-        if (mcdD != null ? !mcdD.equals(that.mcdD) : that.mcdD != null) return false;
-        if (mcdTravel != null ? !mcdTravel.equals(that.mcdTravel) : that.mcdTravel != null) return false;
-        if (bstMcSpl != null ? !bstMcSpl.equals(that.bstMcSpl) : that.bstMcSpl != null) return false;
+        if (bstVcum != null ? !bstVcum.equals(that.bstVcum) : that.bstVcum != null) return false;
+        if (bstVcumAlt != null ? !bstVcumAlt.equals(that.bstVcumAlt) : that.bstVcumAlt != null) return false;
+        if (mcSpl != null ? !mcSpl.equals(that.mcSpl) : that.mcSpl != null) return false;
+        if (mcD != null ? !mcD.equals(that.mcD) : that.mcD != null) return false;
+        if (mcFEff != null ? !mcFEff.equals(that.mcFEff) : that.mcFEff != null) return false;
+        if (mcTEff != null ? !mcTEff.equals(that.mcTEff) : that.mcTEff != null) return false;
+        if (userId != null ? !userId.equals(that.userId) : that.userId != null) return false;
+        if (notes != null ? !notes.equals(that.notes) : that.notes != null) return false;
 
         return true;
     }
@@ -191,7 +264,8 @@ public class BoosterMcEntity {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + (applyVw != null ? applyVw.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (bstSpl != null ? bstSpl.hashCode() : 0);
         result = 31 * result + (bstSize != null ? bstSize.hashCode() : 0);
         result = 31 * result + (bstGain != null ? bstGain.hashCode() : 0);
         result = 31 * result + (bstFTotal != null ? bstFTotal.hashCode() : 0);
@@ -201,9 +275,14 @@ public class BoosterMcEntity {
         result = 31 * result + (bstFLsWp != null ? bstFLsWp.hashCode() : 0);
         result = 31 * result + (bstFJmp != null ? bstFJmp.hashCode() : 0);
         result = 31 * result + (bstTLs != null ? bstTLs.hashCode() : 0);
-        result = 31 * result + (mcdD != null ? mcdD.hashCode() : 0);
-        result = 31 * result + (mcdTravel != null ? mcdTravel.hashCode() : 0);
-        result = 31 * result + (bstMcSpl != null ? bstMcSpl.hashCode() : 0);
+        result = 31 * result + (bstVcum != null ? bstVcum.hashCode() : 0);
+        result = 31 * result + (bstVcumAlt != null ? bstVcumAlt.hashCode() : 0);
+        result = 31 * result + (mcSpl != null ? mcSpl.hashCode() : 0);
+        result = 31 * result + (mcD != null ? mcD.hashCode() : 0);
+        result = 31 * result + (mcFEff != null ? mcFEff.hashCode() : 0);
+        result = 31 * result + (mcTEff != null ? mcTEff.hashCode() : 0);
+        result = 31 * result + (userId != null ? userId.hashCode() : 0);
+        result = 31 * result + (notes != null ? notes.hashCode() : 0);
         return result;
     }
 }

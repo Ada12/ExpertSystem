@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
- * Created by yangchen on 17/7/2.
+ * Created by yangchen on 2018/4/3.
  */
 @Entity
 @Table(name = "instance_lib", schema = "expert_system", catalog = "")
@@ -26,8 +26,9 @@ public class InstanceLibEntity {
     private Integer evaId;
     private Integer type;
 
-    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Id
     @Column(name = "id")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     public int getId() {
         return id;
     }
@@ -191,24 +192,24 @@ public class InstanceLibEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        InstanceLibEntity entity = (InstanceLibEntity) o;
+        InstanceLibEntity that = (InstanceLibEntity) o;
 
-        if (id != entity.id) return false;
-        if (w != null ? !w.equals(entity.w) : entity.w != null) return false;
-        if (hg != null ? !hg.equals(entity.hg) : entity.hg != null) return false;
-        if (wr != null ? !wr.equals(entity.wr) : entity.wr != null) return false;
-        if (carL != null ? !carL.equals(entity.carL) : entity.carL != null) return false;
-        if (carSlr != null ? !carSlr.equals(entity.carSlr) : entity.carSlr != null) return false;
-        if (frtCaliper != null ? !frtCaliper.equals(entity.frtCaliper) : entity.frtCaliper != null) return false;
-        if (frtRotor != null ? !frtRotor.equals(entity.frtRotor) : entity.frtRotor != null) return false;
-        if (rrCaliper != null ? !rrCaliper.equals(entity.rrCaliper) : entity.rrCaliper != null) return false;
-        if (rrRotor != null ? !rrRotor.equals(entity.rrRotor) : entity.rrRotor != null) return false;
-        if (bstMc != null ? !bstMc.equals(entity.bstMc) : entity.bstMc != null) return false;
-        if (ped != null ? !ped.equals(entity.ped) : entity.ped != null) return false;
-        if (userId != null ? !userId.equals(entity.userId) : entity.userId != null) return false;
-        if (geneTime != null ? !geneTime.equals(entity.geneTime) : entity.geneTime != null) return false;
-        if (evaId != null ? !evaId.equals(entity.evaId) : entity.evaId != null) return false;
-        if (type != null ? !type.equals(entity.type) : entity.type != null) return false;
+        if (id != that.id) return false;
+        if (w != null ? !w.equals(that.w) : that.w != null) return false;
+        if (hg != null ? !hg.equals(that.hg) : that.hg != null) return false;
+        if (wr != null ? !wr.equals(that.wr) : that.wr != null) return false;
+        if (carL != null ? !carL.equals(that.carL) : that.carL != null) return false;
+        if (carSlr != null ? !carSlr.equals(that.carSlr) : that.carSlr != null) return false;
+        if (frtCaliper != null ? !frtCaliper.equals(that.frtCaliper) : that.frtCaliper != null) return false;
+        if (frtRotor != null ? !frtRotor.equals(that.frtRotor) : that.frtRotor != null) return false;
+        if (rrCaliper != null ? !rrCaliper.equals(that.rrCaliper) : that.rrCaliper != null) return false;
+        if (rrRotor != null ? !rrRotor.equals(that.rrRotor) : that.rrRotor != null) return false;
+        if (bstMc != null ? !bstMc.equals(that.bstMc) : that.bstMc != null) return false;
+        if (ped != null ? !ped.equals(that.ped) : that.ped != null) return false;
+        if (userId != null ? !userId.equals(that.userId) : that.userId != null) return false;
+        if (geneTime != null ? !geneTime.equals(that.geneTime) : that.geneTime != null) return false;
+        if (evaId != null ? !evaId.equals(that.evaId) : that.evaId != null) return false;
+        if (type != null ? !type.equals(that.type) : that.type != null) return false;
 
         return true;
     }

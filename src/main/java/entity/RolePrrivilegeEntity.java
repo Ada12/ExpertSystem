@@ -3,7 +3,7 @@ package entity;
 import javax.persistence.*;
 
 /**
- * Created by yangchen on 17/7/1.
+ * Created by yangchen on 2018/4/3.
  */
 @Entity
 @Table(name = "role_prrivilege", schema = "expert_system", catalog = "")
@@ -13,6 +13,7 @@ public class RolePrrivilegeEntity {
 
     @Id
     @Column(name = "role_id")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     public int getRoleId() {
         return roleId;
     }
