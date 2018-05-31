@@ -339,7 +339,7 @@ public class BasicService {
             applyMap.put("bstFTotal", applyEntity.getBstFTotal());
             applyMap.put("apyFEff", applyEntity.getApyFEff());
             applyMap.put("bstFEff", applyEntity.getBstFEff());
-            applyMap.put("mcdFEff", applyEntity.getMcdD());
+            applyMap.put("mcdFEff", applyEntity.getMcdFEff());
             applyMap.put("apyTEff", applyEntity.getApyTEff());
             applyMap.put("bstTEff", applyEntity.getBstTEff());
             applyMap.put("mcdTEff", applyEntity.getMcdTEff());
