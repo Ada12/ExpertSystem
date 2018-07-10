@@ -1,9 +1,13 @@
 package service;
 
 import dao.OptimalDao;
+import entity.BasicApplyEntity;
+import entity.PreOptimizationInstanceEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * Created by yangchen on 2018/4/7.
@@ -34,5 +38,21 @@ public class OptimalService {
         } else {
             return "Please enter a right type";
         }
+    }
+
+    public List<PreOptimizationInstanceEntity> getOptimizationDesc(int userId) {
+        return optimalDao.getOptimizationDesc(userId);
+    }
+
+    public PreOptimizationInstanceEntity getOptimization(String description, int userId) {
+        return optimalDao.getOptimization(description, userId);
+    }
+
+    public boolean addNewOptimization(PreOptimizationInstanceEntity entity) {
+        return optimalDao.addNewOptimization(entity);
+    }
+
+    public boolean deleteOptimization(String description, int userId) {
+        return optimalDao.deleteOptimization(description, userId);
     }
 }

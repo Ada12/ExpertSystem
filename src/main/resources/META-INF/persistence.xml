@@ -35,6 +35,7 @@
         <class>entity.LibVehicleEntity</class>
         <class>entity.LibVentedRotorEntity</class>
         <class>entity.LibRotorEntity</class>
+        <class>entity.PreOptimizationInstanceEntity</class>
         <properties>
             <property name="eclipselink.jdbc.url" value="jdbc:mysql://180.169.165.19:3306/expert_system"/>
             <property name="eclipselink.jdbc.driver" value="com.mysql.jdbc.Driver"/>

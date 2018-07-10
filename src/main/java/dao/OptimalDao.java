@@ -4,6 +4,7 @@ import entity.*;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.ArrayList;
@@ -88,5 +89,57 @@ public class OptimalDao {
         TypedQuery<LibRotorEntity> query = entityManager.createQuery("select l from LibRotorEntity l", LibRotorEntity.class);
         List<LibRotorEntity> entities = query.getResultList();
         return entities;
+    }
+
+    // pre optimization descs
+    public List<PreOptimizationInstanceEntity> getOptimizationDesc(int userId) {
+        TypedQuery<PreOptimizationInstanceEntity> query;
+        query = entityManager.createQuery("select b from PreOptimizationInstanceEntity b where b.userId = :userId", PreOptimizationInstanceEntity.class);
+        query.setParameter("userId", userId);
+        List<PreOptimizationInstanceEntity> entities = query.getResultList();
+        return entities;
+    }
+
+    public PreOptimizationInstanceEntity getOptimization(String description, int userId) {
+        TypedQuery<PreOptimizationInstanceEntity> query;
+        query = entityManager.createQuery("select b from PreOptimizationInstanceEntity b where b.description = :description and b.userId = :userId",
+                PreOptimizationInstanceEntity.class);
+        query.setParameter("description", description);
+        query.setParameter("userId", userId);
+        PreOptimizationInstanceEntity entities = new PreOptimizationInstanceEntity();
+        try {
+            entities = query.getSingleResult();
+        } catch (NoResultException e) {
+            System.out.println(e);
+            entities = null;
+        }
+        return entities;
+    }
+
+    public boolean addNewOptimization(PreOptimizationInstanceEntity entity) {
+        try {
+            entityManager.persist(entity);
+            entityManager.flush();
+            return true;
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
+    }
+
+    public boolean deleteOptimization(String description, int userId) {
+        int query;
+        try {
+            query = entityManager.createQuery("delete from PreOptimizationInstanceEntity b where b.description = '" + description + "' and b.userId = " + userId,
+                    PreOptimizationInstanceEntity.class).executeUpdate();
+            if (query > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
     }
 }

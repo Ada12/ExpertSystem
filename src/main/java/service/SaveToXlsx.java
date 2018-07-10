@@ -682,7 +682,7 @@ public class SaveToXlsx implements Runnable {
         frontBrakeRow.createCell(3).setCellValue("N/A");
         String[] frontBrakeParam3 = new String[]{"K for Output Force", "Exp. For Output Force", "No Power Lining mu",
                 "Lining Area", "Lining Wear Limit"};
-        String[] frontBrakeUnit3 = new String[]{"N·m/kPa", "N/A", "N/A", "N/A", "mm^2", "mm"};
+        String[] frontBrakeUnit3 = new String[]{"N·m/kPa", "N/A", "N/A", "mm^2", "mm"};
         String[] frontBrakeKey3 = new String[]{"linMuK", "linMuE", "linMuNp", "linArea", "linWearLim"};
         for (int i = 22; i < 27; i ++) {
             frontBrakeRow = frontBrake.createRow(i);
@@ -712,7 +712,7 @@ public class SaveToXlsx implements Runnable {
             }
             frontBrake.addMergedRegion(new CellRangeAddress(i,i,1,2));
             frontBrakeRow.createCell(1).setCellValue(getListContent(frtLinWearOut, i-33));
-            frontBrakeRow.createCell(3).setCellValue("℃");
+            frontBrakeRow.createCell(3).setCellValue("mm");
         }
         frontBrake.addMergedRegion(new CellRangeAddress(39,44,0,0));
         List<Object> frtLinFrictOut = (List<Object>) discBrakeMap.get("frtLinFrictOut");
@@ -723,7 +723,7 @@ public class SaveToXlsx implements Runnable {
             }
             frontBrake.addMergedRegion(new CellRangeAddress(i,i,1,2));
             frontBrakeRow.createCell(1).setCellValue(getListContent(frtLinFrictOut, i-39));
-            frontBrakeRow.createCell(3).setCellValue("℃");
+            frontBrakeRow.createCell(3).setCellValue("N/A");
         }
         frontBrakeRow = frontBrake.createRow(45);
         frontBrakeRow.createCell(0).setCellValue("Inertia Per Corner");
@@ -782,7 +782,7 @@ public class SaveToXlsx implements Runnable {
                     "wm", "wa", "rho", "cc50", "cc80", "cc110", "cvr50", "cvr80", "cvr110"};
         }
         // i < startRow + 3 + rotorParam.length
-        for (int i = startRow + 3; i < startRow + rotorParam.length; i ++) {
+        for (int i = startRow + 3; i < startRow + rotorParam.length + 3; i ++) {
             try {
                 rotorRow = rotor.createRow(i);
                 rotorRow.createCell(0).setCellValue(rotorParam[i-startRow-3]);

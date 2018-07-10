@@ -3,6 +3,7 @@ package service;
 import com.mathworks.toolbox.javabuilder.*;
 //import com.mathworks.toolbox.javabuilder.MWException;
 import ExternalMatlab.*;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.apache.commons.collections.ArrayStack;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -1116,15 +1117,23 @@ public class MatlabManualCalculate {
     }
 
     public static void main(String[] args) {
-        String a = "[100, 150, 200, 250, 300, 400]";
-        String[] b = a.split("\\[|\\]|, ");
-        List<String> last = new ArrayList<String>();
-        for (int i = 0; i < b.length; i ++) {
-            if ((b[i] != null) && (!b[i].equals(""))) {
-                last.add(b[i]);
-            }
+//        String a = "[100, 150, 200, 250, 300, 400]";
+//        String[] b = a.split("\\[|\\]|, ");
+//        List<String> last = new ArrayList<String>();
+//        for (int i = 0; i < b.length; i ++) {
+//            if ((b[i] != null) && (!b[i].equals(""))) {
+//                last.add(b[i]);
+//            }
+//        }
+//        System.out.println(last.toString());
+        System.out.println(setPartDetail("False"));
+    }
+
+    public static int setPartDetail(Object detail) {
+        if (detail.toString().equals("false") || (detail.toString().equals("FALSE") || detail.toString().equals("False"))) {
+            return -1000;
         }
-        System.out.println(last.toString());
+        return Integer.parseInt(detail.toString());
     }
 
     public static String downloadFigureData(String path, int figureId) {
